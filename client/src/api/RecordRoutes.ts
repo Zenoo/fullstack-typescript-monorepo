@@ -1,28 +1,16 @@
+import { Record } from '@fullstack-typescript-monorepo/prisma';
 import Fetch from '../utils/fetcher';
 import Super from './Super';
 import { User } from './UserRoutes';
 
-export interface Record {
-  id: number;
-  actionTime: string;
-  actionType: string;
-  objectType: string;
+export type RecordWithAuthor = Record & {
   author: User;
-}
-
-interface RecordListProps {
-  object?: string;
-  fetchPath: string;
-}
+};
 
 const RecordRoutes = {
   ...Super<Record>('record'),
-  list: ({
+  list: (object?: string) => Fetch<RecordWithAuthor[]>('/api/record/list', {
     object,
-    fetchPath,
-  }: RecordListProps) => Fetch<Record[]>('/api/record/list', {
-    object,
-    fetchPath,
   }),
 };
 

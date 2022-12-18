@@ -1,6 +1,6 @@
 import { Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import moment from 'moment';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import RecordRoutes from '../api/RecordRoutes';
 import useStateAsync from '../hooks/useStateAsync';
@@ -18,15 +18,10 @@ const ActionsTable = ({
 }: ActionsTableProps) => {
   const { t } = useTranslation('actions');
 
-  const recordsFetchProps = useMemo(() => ({
-    object,
-    fetchPath: '(id, actionTime, actionType, objectType, author(person(firstName, lastName)))',
-  }), [object]);
-
   const { data: records, reload: reloadRecords } = useStateAsync(
     [],
     RecordRoutes.list,
-    recordsFetchProps,
+    object,
   );
 
   // Reload table when new record is added and/or when reloadActions is updated
@@ -67,10 +62,10 @@ const ActionsTable = ({
                     <TableCell component="th" scope="row">{t('anonymousAuthor')}</TableCell>
                   )}
                   {!object && (
-                    <TableCell align="right">{action.objectType}</TableCell>
+                    <TableCell align="right">{action.object}</TableCell>
                   )}
-                  <TableCell align="right">{action.actionType}</TableCell>
-                  <TableCell align="right">{moment(action.actionTime).format('DD/MM/YYYY HH:mm')}</TableCell>
+                  <TableCell align="right">{action.action}</TableCell>
+                  <TableCell align="right">{moment(action.date).format('DD/MM/YYYY HH:mm')}</TableCell>
                 </TableRow>
               ))
             ) : (

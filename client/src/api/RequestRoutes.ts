@@ -1,10 +1,10 @@
+import { Request as _Request } from '@fullstack-typescript-monorepo/prisma';
 import Super from './Super';
 
-export interface Request {
-  id: number;
-  status: 'pending' | 'success' | 'error';
-  response: object;
-}
+// Typescript reference error hack
+export type Request = {
+  [key in keyof _Request]: Request[key];
+};
 
 const RequestRoutes = {
   ...Super<Request>('request'),

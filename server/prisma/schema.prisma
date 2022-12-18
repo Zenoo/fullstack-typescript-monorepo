@@ -35,12 +35,42 @@ model Person {
 }
 
 model User {
-  id             Int     @id @default(autoincrement())
-  login          String  @unique @db.VarChar(255)
-  admin          Boolean @default(false)
+  id             Int      @id @default(autoincrement())
+  login          String   @unique @db.VarChar(255)
+  admin          Boolean  @default(false)
   password       String?  @db.VarChar(255)
-  active         Boolean @default(true)
-  connexionToken String  @default("") @db.VarChar(255)
-  person         Person  @relation(fields: [personId], references: [id])
-  personId       Int     @unique
+  active         Boolean  @default(true)
+  connexionToken String   @default("") @db.VarChar(255)
+  person         Person   @relation(fields: [personId], references: [id])
+  personId       Int      @unique
+  records        Record[]
+}
+
+enum RequestStatus {
+  PENDING
+  SUCCESS
+  ERROR
+}
+
+model Request {
+  id       Int           @id @default(autoincrement())
+  date     DateTime      @default(now())
+  status   RequestStatus
+  response Json
+}
+
+enum RecordAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+model Record {
+  id       Int          @id @default(autoincrement())
+  date     DateTime     @default(now())
+  action   RecordAction
+  object   String       @db.VarChar(255)
+  newValue String       @db.VarChar(255)
+  author   User         @relation(fields: [authorId], references: [id])
+  authorId Int
 }

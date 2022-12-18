@@ -2,15 +2,19 @@ import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
 import { Request, Response } from 'express';
 import auth from '../utils/auth';
 import sendError from '../utils/sendError';
+import TableUtils, { TableRequestBody } from '../utils/TableUtils';
 
-interface GenericPrisma extends PrismaClient {
+export interface GenericPrisma extends PrismaClient {
   [key: string]: unknown;
 }
 
-interface PrismaModel {
+export interface MOCK_PrismaModel {
   create: (prop: { data: unknown }) => Promise<unknown>;
   findUniqueOrThrow: (prop: { where: { id: number } }) => Promise<unknown>;
-  findMany: () => Promise<unknown[]>;
+  findMany: (prop?: Record<string, unknown>) => Promise<unknown[]>;
+  count: (prop: Record<string, unknown>) => Promise<number>;
+  update: (prop: { where: { id: number }; data: unknown }) => Promise<unknown>;
+  delete: (prop: { where: { id: number } }) => Promise<unknown>;
 }
 
 /**
@@ -25,7 +29,7 @@ const insert = (model: string) => (prisma: PrismaClient) => async (
     await auth(prisma, req);
 
     const { body } = req;
-    const prismaModel = (prisma as GenericPrisma)[model] as PrismaModel;
+    const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
     const object = await prismaModel.create({
       data: body,
@@ -46,7 +50,7 @@ const get = (model: string) => (prisma: PrismaClient) => async (req: Request, re
     await auth(prisma, req);
 
     const { id } = req.params;
-    const prismaModel = (prisma as GenericPrisma)[model] as PrismaModel;
+    const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
     const object = await prismaModel.findUniqueOrThrow({
       where: { id: +id },
@@ -66,7 +70,7 @@ const getAll = (model: string) => (prisma: PrismaClient) => async (req: Request,
   try {
     await auth(prisma, req);
 
-    const prismaModel = (prisma as GenericPrisma)[model] as PrismaModel;
+    const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
     const objects = await prismaModel.findMany();
 
@@ -87,7 +91,7 @@ const getAllAsCsv = (model: string) => (prisma: PrismaClient) => async (
   try {
     await auth(prisma, req);
 
-    const prismaModel = (prisma as GenericPrisma)[model] as PrismaModel;
+    const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
     const objects = await prismaModel.findMany() as Record<string, unknown>[];
 
@@ -115,11 +119,79 @@ const getAllAsCsv = (model: string) => (prisma: PrismaClient) => async (
   }
 };
 
+/**
+ * Get objects for a paginated table
+ * @param model
+ */
+const table = (model: string) => (prisma: PrismaClient) => async (
+  req: Request<never, unknown, TableRequestBody>,
+  res: Response,
+) => {
+  try {
+    await auth(prisma, req);
+
+    const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
+
+    res.json(TableUtils.getData(req, prismaModel));
+  } catch (error) {
+    sendError(res, error);
+  }
+};
+
+/**
+ * Update an object in the database
+ * @param model
+ */
+const update = (model: string) => (prisma: PrismaClient) => async (
+  req: Request<{ id: string }, unknown, Record<string, unknown>>,
+  res: Response,
+) => {
+  try {
+    await auth(prisma, req);
+
+    const { id } = req.params;
+    const { body } = req;
+    const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
+
+    const updatedObject = await prismaModel.update({
+      where: { id: +id },
+      data: { ...body },
+    });
+
+    res.json(updatedObject);
+  } catch (error) {
+    sendError(res, error);
+  }
+};
+
+const deleteObject = (model: string) => (prisma: PrismaClient) => async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    await auth(prisma, req);
+
+    const { id } = req.params;
+    const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
+
+    await prismaModel.delete({
+      where: { id: +id },
+    });
+
+    res.send();
+  } catch (error) {
+    sendError(res, error);
+  }
+};
+
 const REST = (model: string) => ({
   insert: insert(model),
   get: get(model),
   getAll: getAll(model),
   getAllAsCsv: getAllAsCsv(model),
+  table: table(model),
+  update: update(model),
+  delete: deleteObject(model),
 });
 
 export default REST;

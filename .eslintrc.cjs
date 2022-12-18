@@ -39,6 +39,7 @@ module.exports = {
     "no-nested-ternary": "off",
     "no-console": ["warn", { allow: ["warn", "error"] }],
     'import/prefer-default-export': 'off',
+    'camelcase': 'off',
   },
   settings: {
     node: {

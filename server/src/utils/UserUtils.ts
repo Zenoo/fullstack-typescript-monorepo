@@ -1,6 +1,10 @@
 import { User } from '@fullstack-typescript-monorepo/prisma';
 import moment from 'moment';
 
+/**
+ * Get the token expiration date
+ * @param user
+ */
 const getTokenExpiration = (user: User) => {
   // Set yesterday as the expiration date
   const expired = moment().subtract(1, 'day');

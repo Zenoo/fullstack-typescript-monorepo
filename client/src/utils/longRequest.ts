@@ -1,3 +1,4 @@
+import { RequestStatus } from '@fullstack-typescript-monorepo/prisma';
 import RequestRoutes from '../api/RequestRoutes';
 
 const longRequest = async (
@@ -12,7 +13,7 @@ const longRequest = async (
   const promise = new Promise((resolve, reject) => {
     const interval = setInterval(() => {
       RequestRoutes.get({ id: requestId, fetchPath: '(status, response)' }).then((req) => {
-        if (req.status === 'success') {
+        if (req.status === RequestStatus.SUCCESS) {
           resolve(req.response);
           clearInterval(interval);
 
@@ -20,7 +21,7 @@ const longRequest = async (
           RequestRoutes.delete(requestId).catch(() => {
             console.error('Error while deleting request', requestId);
           });
-        } else if (req.status === 'error') {
+        } else if (req.status === RequestStatus.ERROR) {
           reject(req.response);
           clearInterval(interval);
 

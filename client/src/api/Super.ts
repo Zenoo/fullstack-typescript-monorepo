@@ -30,9 +30,7 @@ const Super = <Model>(model: string) => ({
     state,
   }, 'POST'),
   update: (id: number, data: RecursivePartial<Model>, fetchPath?: string) => Fetch<Model>(`/api/${model}/${id}`, data, 'POST', { fetchPath }),
-  import: (data: FormData) => Fetch<never>(`/api/${model}/import`, data, 'POST'),
   delete: (id: number) => Fetch<never>(`/api/${model}/${id}`, {}, 'DELETE'),
-  empty: () => Fetch<never>(`/api/${model}/empty`),
 });
 
 export default Super;
