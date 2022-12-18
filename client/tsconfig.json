@@ -25,6 +25,9 @@
     "noEmit": true,
     "jsx": "react"
   },
+  "include": [
+    "src"
+  ],
   "references": [
     { "path": "../core" },
     { "path": "../prisma" }

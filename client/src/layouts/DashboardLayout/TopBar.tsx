@@ -29,7 +29,7 @@ const TopBar = ({
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="/app/data/table/lptp/sites">
+        <RouterLink to="/app/home">
           <Logo sx={{ height: 50 }} />
         </RouterLink>
         <Box flexGrow={1} />

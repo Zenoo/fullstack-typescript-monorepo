@@ -1,7 +1,7 @@
 import { TableState } from '../components/Datatable';
 import Fetch from '../utils/fetcher';
 
-type RecursivePartial<T> = {
+export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
 

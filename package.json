@@ -15,6 +15,7 @@
     "dev": "concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run back\" \"npm run front\"",
     "db:sync:dev": "npm run db:sync:dev --workspace=server",
     "db:sync:prod": "npm run db:sync:prod --workspace=server",
+    "db:seed": "npm run db:seed --workspace=server",
     "postinstall": "bash ./postInstall.sh && npm run compile"
   },
   "devDependencies": {

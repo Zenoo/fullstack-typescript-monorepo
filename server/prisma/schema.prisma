@@ -30,7 +30,7 @@ model Person {
   phone     String?  @db.VarChar(255)
   phone2    String?  @db.VarChar(255)
   address   Address? @relation(fields: [addressId], references: [id])
-  addressId Int      @unique
+  addressId Int?     @unique
   user      User?
 }
 

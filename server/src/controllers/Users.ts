@@ -39,7 +39,7 @@ const authenticate = (prisma: PrismaClient) => async (
     });
 
     // Check password against connexion token
-    const passwordIsToken = await bcrypt.compare(password, user.connexionToken);
+    const passwordIsToken = password === user.connexionToken;
 
     // User is aleady logged in with the token
     if (passwordIsToken) {
@@ -80,6 +80,8 @@ const authenticate = (prisma: PrismaClient) => async (
       // Return user
       res.json(user);
     }
+
+    throw new Error('Invalid password');
   } catch (error) {
     sendError(res, error);
   }

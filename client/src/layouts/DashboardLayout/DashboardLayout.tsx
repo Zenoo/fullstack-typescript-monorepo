@@ -24,6 +24,7 @@ const DashboardLayout = () => {
     if (!auth.authed) {
       const user = localStorage.getItem('user');
       const token = localStorage.getItem('token') || '';
+
       if (user) {
         auth.signin(user, token).catch((error: ErrorType) => {
           localStorage.removeItem('user');

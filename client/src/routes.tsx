@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import HomeView from './HomeView';
 import AdminLayout from './layouts/AdminLayout';
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout';
 import MainLayout from './layouts/MainLayout/MainLayout';
@@ -15,6 +16,7 @@ const routes = [
     path: 'app',
     element: <DashboardLayout />,
     children: [
+      { path: 'home', element: <HomeView /> },
       { path: 'account', element: <AccountView /> },
       {
         path: 'admin',

@@ -22,8 +22,6 @@ const getTokenExpiration = (user: User) => {
     return expired;
   }
 
-  console.log(decodedToken.split('|')[1]);
-
   return moment(decodedToken.split('|')[1]);
 };
 

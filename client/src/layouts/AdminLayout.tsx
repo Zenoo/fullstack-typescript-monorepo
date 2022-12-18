@@ -6,7 +6,7 @@ import { useAuth } from '../hooks/useAuth';
 const AdminLayout = () => {
   const auth = useAuth();
 
-  return auth.user.admin ? <Outlet /> : <Navigate to="/app/data/table/lptp/sites" />;
+  return auth.user.admin ? <Outlet /> : <Navigate to="/app/home" />;
 };
 
 export default AdminLayout;

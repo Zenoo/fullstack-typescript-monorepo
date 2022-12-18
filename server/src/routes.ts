@@ -15,6 +15,8 @@ const initRoutes = (app: Express, prisma: PrismaClient) => {
   }));
 
   // User
+  app.post('/api/user/authenticate', Users.authenticate(prisma));
+  app.post('/api/user/reset-password', Users.resetPassword(prisma));
   app.get('/api/user/all', Users.getAll(prisma));
   app.get('/api/user/all/csv', Users.getAllAsCsv(prisma));
   app.put('/api/user', Users.insert(prisma));
@@ -22,11 +24,9 @@ const initRoutes = (app: Express, prisma: PrismaClient) => {
   app.post('/api/user/table', Users.table(prisma));
   app.post('/api/user/:id', Users.update(prisma));
   app.delete('/api/user/:id', Users.delete(prisma));
-  app.post('/api/user/authenticate', Users.authenticate(prisma));
   app.post('/api/user/:id/change-password', Users.changePassword(prisma));
   app.get('/api/user/:login/send-password-reset-mail', Users.sendPasswordResetEmail(prisma));
   app.get('/api/user/:login/reset-code-check', Users.checkResetCodeValidity(prisma));
-  app.post('/api/user/reset-password', Users.resetPassword(prisma));
 
   // Record
   app.get('/api/record/list', Records.list(prisma));

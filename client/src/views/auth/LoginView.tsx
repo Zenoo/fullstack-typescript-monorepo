@@ -41,7 +41,7 @@ const LoginView = () => {
     Loader.open();
     auth.signin(formData.login, formData.password).then(() => {
       Loader.close();
-      navigate('/app/data/table/lptp/sites', { replace: true });
+      navigate('/app/home', { replace: true });
     }).catch((response: string) => {
       catchError(Alert, t)(response);
       Loader.close();
@@ -64,7 +64,7 @@ const LoginView = () => {
       });
     }
     if (auth.authed) {
-      navigate('/app/data/table/lptp/sites', { replace: true });
+      navigate('/app/home', { replace: true });
     }
   }, [Alert, Loader, auth, navigate, t]);
 
