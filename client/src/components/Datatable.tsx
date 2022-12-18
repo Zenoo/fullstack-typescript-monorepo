@@ -19,9 +19,8 @@ export interface TableState {
 }
 
 interface DatatableProps<DataType, Model> extends Omit<DataGridProps, 'columns' | 'rows'> {
-  fetchPath: string;
   getter: (params: TableState) => Promise<{ data: DataType[], count: number }>;
-  setter?: (id: number, data: Partial<DataType>, fetchPath: string) => Promise<Model>;
+  setter?: (id: number, data: Partial<DataType>) => Promise<Model>;
   columns: GridColumns;
   options?: Omit<DataGridProps, 'columns' | 'rows'>;
   globalCsvExport: GlobalCsvExport;
@@ -33,7 +32,6 @@ interface DatatableProps<DataType, Model> extends Omit<DataGridProps, 'columns' 
  * Datatable component
  */
 const Datatable = <DataType extends WithId, Model>({
-  fetchPath,
   getter,
   columns,
   options,
@@ -140,7 +138,7 @@ const Datatable = <DataType extends WithId, Model>({
     },
     processRowUpdate: (row: DataType) => {
       if (setter) {
-        const response = setter(row.id, row, fetchPath);
+        const response = setter(row.id, row);
         Alert.open('success', t('updateSuccess'));
         return response;
       }

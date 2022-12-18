@@ -4,8 +4,6 @@ import UserRoutes, { User } from '../../../api/UserRoutes';
 import Page from '../../../components/Page';
 import TableLayout from '../../../layouts/TableLayout';
 
-const fetchPath = '(id, login, person(firstName, lastName))';
-
 const UserListView = () => {
   const navigate = useNavigate();
 
@@ -33,11 +31,9 @@ const UserListView = () => {
       title="User list"
     >
       <TableLayout
-        fetchPath={fetchPath}
         getter={UserRoutes.table}
         globalCsvExport={{
           fetcher: UserRoutes.getAllAsCsv,
-          fetchPath,
           title: 'User list',
         }}
         mapper={mapper}

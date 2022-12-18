@@ -1,3 +1,5 @@
+import { PrismaInclude } from '@fullstack-typescript-monorepo/core';
+import { Prisma } from '@fullstack-typescript-monorepo/prisma';
 import { Request } from 'express';
 import { MOCK_PrismaModel } from '../controllers/REST';
 
@@ -43,8 +45,12 @@ export interface TableRequestBody {
       operatorValue: keyof typeof operatorMapper;
     }[];
     filtersOperator: 'or' | 'and';
-  }
+  },
+  include?: PrismaInclude;
 }
+
+export type PrismaModel = MOCK_PrismaModel
+  | Prisma.UserDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>;
 
 /**
  * Get data for the table request
@@ -54,18 +60,15 @@ export interface TableRequestBody {
  */
 const getData = async (
   req: Request<never, unknown, TableRequestBody>,
-  prismaModel: MOCK_PrismaModel,
-  where?: Record<string, unknown>,
+  prismaModel: PrismaModel,
+  where?: object,
+  include?: object,
 ) => {
   const {
     state: {
       page, rowsPerPage, sortOrder, filters, filtersOperator,
     },
   } = req.body;
-
-  if (!page || !rowsPerPage) {
-    throw new Error('Missing parameters');
-  }
 
   // Generate prisma filters
   const prismaFilters = filters.map((filter) => {
@@ -87,6 +90,7 @@ const getData = async (
     orderBy: { [sortOrder?.name || 'id']: sortOrder?.direction || 'asc' },
     skip: page * rowsPerPage,
     take: rowsPerPage,
+    include,
   }) as Record<string, unknown>[];
 
   // Get total count

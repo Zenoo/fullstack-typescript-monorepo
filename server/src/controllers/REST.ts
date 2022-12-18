@@ -1,3 +1,4 @@
+import { PrismaInclude } from '@fullstack-typescript-monorepo/core';
 import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
 import { Request, Response } from 'express';
 import auth from '../utils/auth';
@@ -10,11 +11,11 @@ export interface GenericPrisma extends PrismaClient {
 
 export interface MOCK_PrismaModel {
   create: (prop: { data: unknown }) => Promise<unknown>;
-  findUniqueOrThrow: (prop: { where: { id: number } }) => Promise<unknown>;
-  findMany: (prop?: Record<string, unknown>) => Promise<unknown[]>;
-  count: (prop: Record<string, unknown>) => Promise<number>;
-  update: (prop: { where: { id: number }; data: unknown }) => Promise<unknown>;
-  delete: (prop: { where: { id: number } }) => Promise<unknown>;
+  findUniqueOrThrow: (prop?: object) => Promise<unknown>;
+  findMany: (prop?: object) => Promise<unknown[]>;
+  count: (prop: object) => Promise<number>;
+  update: (prop: object) => Promise<unknown>;
+  delete: (prop: object) => Promise<unknown>;
 }
 
 /**
@@ -45,15 +46,21 @@ const insert = (model: string) => (prisma: PrismaClient) => async (
  * Get an object from the database
  * @param model
  */
-const get = (model: string) => (prisma: PrismaClient) => async (req: Request, res: Response) => {
+const get = (model: string) => (prisma: PrismaClient) => async (
+  req: Request<{ id: string }, unknown, { include?: PrismaInclude }>,
+  res: Response,
+) => {
   try {
     await auth(prisma, req);
 
     const { id } = req.params;
+    const { include } = req.body;
+
     const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
     const object = await prismaModel.findUniqueOrThrow({
       where: { id: +id },
+      include,
     });
 
     res.json(object);
@@ -66,13 +73,20 @@ const get = (model: string) => (prisma: PrismaClient) => async (req: Request, re
  * Get all objects from the database
  * @param model
  */
-const getAll = (model: string) => (prisma: PrismaClient) => async (req: Request, res: Response) => {
+const getAll = (model: string) => (prisma: PrismaClient) => async (
+  req: Request<never, unknown, { include?: PrismaInclude }>,
+  res: Response,
+) => {
   try {
     await auth(prisma, req);
 
+    const { include } = req.body;
+
     const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
-    const objects = await prismaModel.findMany();
+    const objects = await prismaModel.findMany({
+      include,
+    });
 
     res.json(objects);
   } catch (error) {
@@ -132,7 +146,8 @@ const table = (model: string) => (prisma: PrismaClient) => async (
 
     const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
-    res.json(TableUtils.getData(req, prismaModel));
+    const data = await TableUtils.getData(req, prismaModel, undefined, req.body.include);
+    res.json(data);
   } catch (error) {
     sendError(res, error);
   }
@@ -143,19 +158,20 @@ const table = (model: string) => (prisma: PrismaClient) => async (
  * @param model
  */
 const update = (model: string) => (prisma: PrismaClient) => async (
-  req: Request<{ id: string }, unknown, Record<string, unknown>>,
+  req: Request<{ id: string }, unknown, { data: object, include: PrismaInclude }>,
   res: Response,
 ) => {
   try {
     await auth(prisma, req);
 
     const { id } = req.params;
-    const { body } = req;
+    const { data, include } = req.body;
     const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
     const updatedObject = await prismaModel.update({
       where: { id: +id },
-      data: { ...body },
+      data,
+      include,
     });
 
     res.json(updatedObject);
@@ -178,7 +194,7 @@ const deleteObject = (model: string) => (prisma: PrismaClient) => async (
       where: { id: +id },
     });
 
-    res.send();
+    res.send({ success: true });
   } catch (error) {
     sendError(res, error);
   }

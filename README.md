@@ -24,6 +24,8 @@
 
 ### How to seed your database
 
+- Edit `server/prisma/seed.ts`
+
 - Run `npm run db:seed`
 
 ## Deployment

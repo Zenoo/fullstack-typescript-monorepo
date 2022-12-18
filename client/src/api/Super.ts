@@ -1,35 +1,38 @@
+import { PrismaInclude } from '@fullstack-typescript-monorepo/core';
 import { TableState } from '../components/Datatable';
 import Fetch from '../utils/fetcher';
 
-export type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
-};
-
 export interface getProps {
   id: number;
-  fetchPath: string;
+  include?: PrismaInclude;
 }
 
-const Super = <Model>(model: string) => ({
-  insert: (data: Partial<Model>, fetchPath?: string) => Fetch<Model>(`/api/${model}`, data, 'PUT', { fetchPath }),
-  get: ({ id, fetchPath }: getProps) => Fetch<Model>(`/api/${model}/${id}`, {
-    fetchPath,
-  }),
-  getAll: (fetchPath: string) => Fetch<Model[]>(`/api/${model}/all`, {
-    fetchPath,
-  }),
-  getAllAsCsv: (fetchPath: string, title: string) => Fetch<Blob>(`/api/${model}/all/csv`, {
-    fetchPath,
+const Super = <Model, Setter extends object>(model: string) => ({
+  insert: (data: Setter) => Fetch<Model>(`/api/${model}`, data, 'PUT'),
+  get: ({ id, include }: getProps) => Fetch<Model>(`/api/${model}/${id}/get`, {
+    include,
+  }, 'POST'),
+  getAll: (include: PrismaInclude) => Fetch<Model[]>(`/api/${model}/all`, {
+    include,
+  }, 'POST'),
+  getAllAsCsv: (title: string) => Fetch<Blob>(`/api/${model}/all/csv`, {
     title,
   }),
   table: (
-    fetchPath: string,
     state: TableState,
+    include?: PrismaInclude,
   ) => Fetch<{ data: Model[], count: number }>(`/api/${model}/table`, {
-    fetchPath,
     state,
+    include,
   }, 'POST'),
-  update: (id: number, data: RecursivePartial<Model>, fetchPath?: string) => Fetch<Model>(`/api/${model}/${id}`, data, 'POST', { fetchPath }),
+  update: (
+    id: number,
+    data: Setter,
+    include?: PrismaInclude
+  ) => Fetch<Model>(`/api/${model}/${id}/update`, {
+    data,
+    include,
+  }, 'POST'),
   delete: (id: number) => Fetch<never>(`/api/${model}/${id}`, {}, 'DELETE'),
 });
 

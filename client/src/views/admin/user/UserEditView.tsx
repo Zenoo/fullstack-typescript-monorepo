@@ -12,7 +12,7 @@ const UserEditView = () => {
 
   const callParams = useMemo(() => ({
     id: id ? +id : 0,
-    fetchPath: '(id, admin, login, person(id, firstName, lastName, phone, email))',
+    include: { person: true },
   }), [id]);
   const { data: user } = useStateAsync(
     null,

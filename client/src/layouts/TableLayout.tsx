@@ -1,3 +1,4 @@
+import { PrismaInclude } from '@fullstack-typescript-monorepo/core';
 import { Box, BoxProps, Button, ButtonGroup, Paper } from '@mui/material';
 import { DataGridProps, GridRowId } from '@mui/x-data-grid';
 import React, { useCallback, useState } from 'react';
@@ -15,12 +16,12 @@ interface TableOptions extends Omit<DataGridProps, 'rows'> {
 }
 
 interface TableLayoutProps<DataType, Model> {
-  fetchPath: string;
+  include?: PrismaInclude;
   getter: (
-    fetchPath: string,
     state: TableState,
+    include?: PrismaInclude,
   ) => Promise<{ data: Model[], count: number }>;
-  setter?: (id: number, data: Partial<DataType>, fetchPath: string) => Promise<Model>;
+  setter?: (id: number, data: Partial<DataType>, include?: object) => Promise<Model>;
   mapper?: (rows: Model) => DataType;
   add?: () => void;
   edit?: (id: number) => void;
@@ -39,7 +40,7 @@ interface TableLayoutProps<DataType, Model> {
  * Datatable component
  */
 const TableLayout = <DataType extends WithId, Model extends WithId>({
-  fetchPath,
+  include,
   getter,
   setter,
   mapper,
@@ -70,7 +71,7 @@ const TableLayout = <DataType extends WithId, Model extends WithId>({
    */
   const handleGetter = useCallback((params: TableState) => {
     if (authed) {
-      return getter(fetchPath, params).then((response) => ({
+      return getter(params, include).then((response) => ({
         data: response.data.map((item) => ({
           deleted, // Hack to force data reload on deletion, useless server-side
           ...mapper ? mapper(item) : item as unknown as DataType,
@@ -82,23 +83,22 @@ const TableLayout = <DataType extends WithId, Model extends WithId>({
       });
     }
     return Promise.resolve({ data: [], count: 0 });
-  }, [Alert, authed, deleted, fetchPath, getter, mapper, t]);
+  }, [Alert, authed, deleted, getter, include, mapper, t]);
 
   // Update actions table on setter call
   const handleSetter = useCallback((
     id: number,
     data: Partial<DataType>,
-    path: string,
   ) => new Promise<Model>((resolve, reject) => {
     if (setter) {
-      setter(id, data, path).then((response) => {
+      setter(id, data, include).then((response) => {
         resolve(response);
         setNewRecord((prev) => prev + 1);
       }).catch(reject);
     } else {
       reject();
     }
-  }), [setter]);
+  }), [include, setter]);
 
   // Enable/disable buttons based on row selection
   const handleSelection = useCallback((data: GridRowId[]) => {
@@ -182,7 +182,6 @@ const TableLayout = <DataType extends WithId, Model extends WithId>({
             <Datatable<DataType, Model>
               {...tableOptions}
               onSelectionModelChange={handleSelection}
-              fetchPath={fetchPath}
               getter={handleGetter}
               setter={setter ? handleSetter : undefined}
               globalCsvExport={globalCsvExport}

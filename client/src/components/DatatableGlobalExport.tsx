@@ -7,8 +7,7 @@ import { useLoader } from '../hooks/useLoader';
 import catchError from '../utils/catchError';
 
 export type GlobalCsvExport = {
-  fetcher: (fetchPath: string, title: string) => Promise<Blob>;
-  fetchPath: string;
+  fetcher: (title: string) => Promise<Blob>;
   title: string;
 };
 
@@ -27,7 +26,6 @@ const DatatableGlobalExport = (props: DatatableGlobalExportProps) => {
   const globalExport = useCallback(async () => {
     Loader.open();
     const blob = await globalCsvExport.fetcher(
-      globalCsvExport.fetchPath,
       globalCsvExport.title,
     ).catch(catchError(Alert, t));
 

@@ -12,7 +12,7 @@ const longRequest = async (
 
   const promise = new Promise((resolve, reject) => {
     const interval = setInterval(() => {
-      RequestRoutes.get({ id: requestId, fetchPath: '(status, response)' }).then((req) => {
+      RequestRoutes.get({ id: requestId }).then((req) => {
         if (req.status === RequestStatus.SUCCESS) {
           resolve(req.response);
           clearInterval(interval);

@@ -1,9 +1,9 @@
-import { User } from '@fullstack-typescript-monorepo/prisma';
 import { LoadingButton } from '@mui/lab';
 import { Box, Checkbox, Divider, FormControlLabel, Grid, TextField } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import UserRoutes from '../../api/UserRoutes';
+import { useNavigate } from 'react-router';
+import UserRoutes, { UserUpdate } from '../../api/UserRoutes';
 import { useAlert } from '../../hooks/useAlert';
 import useForm from '../../hooks/useForm';
 import { useLoader } from '../../hooks/useLoader';
@@ -30,6 +30,7 @@ const UserForm = ({ data }: Props) => {
   const Alert = useAlert();
   const Loader = useLoader();
   const { t } = useTranslation('user');
+  const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { isSubmitting }, reset } = useForm<Data>('user', {
     defaultValues: data,
@@ -37,16 +38,13 @@ const UserForm = ({ data }: Props) => {
 
   // Submit user data
   const onSubmit = async (formData: Data) => {
-    const processedData: Partial<User> = {
+    const processedData: UserUpdate = {
       admin: formData.admin,
       login: formData.login,
       active: true,
-      personId: formData.idperson,
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const personData = {
-      id: formData.idperson,
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
@@ -55,12 +53,16 @@ const UserForm = ({ data }: Props) => {
 
     Loader.open();
     if (formData.id) { // Edition
-      processedData.id = formData.id;
       if (formData.password.length) {
         await UserRoutes.changePassword(formData.id, formData.password);
       }
 
-      await UserRoutes.update(formData.id, processedData).then(() => {
+      await UserRoutes.update(formData.id, {
+        ...processedData,
+        person: {
+          update: personData,
+        },
+      }).then(() => {
         Alert.open('success', 'Saved');
       }).catch(catchError(Alert, t));
     } else { // Addition
@@ -68,8 +70,12 @@ const UserForm = ({ data }: Props) => {
       await UserRoutes.insert({
         ...processedData,
         connexionToken: '',
+        person: {
+          create: personData,
+        },
       }).then(() => {
         Alert.open('success', 'New user added');
+        navigate('/app/admin/user/list');
         reset();
       }).catch(catchError(Alert, t));
     }
@@ -79,7 +85,7 @@ const UserForm = ({ data }: Props) => {
   return (
     <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3} sx={{ pb: 2 }}>
-        <Grid item md={6} xs={12}>
+        <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox {...register('admin', 'checkbox')} defaultChecked={data.admin} />}
             label={t('giveAdminRights')}

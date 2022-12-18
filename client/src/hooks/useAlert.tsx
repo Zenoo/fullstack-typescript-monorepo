@@ -41,7 +41,7 @@ export const AlertProvider = ({ children }: AlertProviderProps) => {
   return (
     <AlertContext.Provider value={methods}>
       {children}
-      <Snackbar onClose={closeAlert} open={alert} sx={{ zIndex: 100 }}>
+      <Snackbar onClose={closeAlert} open={alert} sx={{ zIndex: 2100 }}>
         <Alert onClose={closeAlert} severity={alertSeverity} sx={{ boxShadow: 8 }} variant="filled">
           {alertMessage}
         </Alert>

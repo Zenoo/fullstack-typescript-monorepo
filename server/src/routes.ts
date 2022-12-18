@@ -17,12 +17,12 @@ const initRoutes = (app: Express, prisma: PrismaClient) => {
   // User
   app.post('/api/user/authenticate', Users.authenticate(prisma));
   app.post('/api/user/reset-password', Users.resetPassword(prisma));
-  app.get('/api/user/all', Users.getAll(prisma));
+  app.post('/api/user/all', Users.getAll(prisma));
   app.get('/api/user/all/csv', Users.getAllAsCsv(prisma));
   app.put('/api/user', Users.insert(prisma));
-  app.get('/api/user/:id', Users.get(prisma));
+  app.post('/api/user/:id/get', Users.get(prisma));
   app.post('/api/user/table', Users.table(prisma));
-  app.post('/api/user/:id', Users.update(prisma));
+  app.post('/api/user/:id/update', Users.update(prisma));
   app.delete('/api/user/:id', Users.delete(prisma));
   app.post('/api/user/:id/change-password', Users.changePassword(prisma));
   app.get('/api/user/:login/send-password-reset-mail', Users.sendPasswordResetEmail(prisma));
@@ -30,21 +30,21 @@ const initRoutes = (app: Express, prisma: PrismaClient) => {
 
   // Record
   app.get('/api/record/list', Records.list(prisma));
-  app.get('/api/record/all', Records.getAll(prisma));
+  app.post('/api/record/all', Records.getAll(prisma));
   app.get('/api/record/all/csv', Records.getAllAsCsv(prisma));
   app.put('/api/record', Records.insert(prisma));
-  app.get('/api/record/:id', Records.get(prisma));
+  app.post('/api/record/:id/get', Records.get(prisma));
   app.post('/api/record/table', Records.table(prisma));
-  app.post('/api/record/:id', Records.update(prisma));
+  app.post('/api/record/:id/update', Records.update(prisma));
   app.delete('/api/record/:id', Records.delete(prisma));
 
   // Request
-  app.get('/api/request/all', Requests.getAll(prisma));
+  app.post('/api/request/all', Requests.getAll(prisma));
   app.get('/api/request/all/csv', Requests.getAllAsCsv(prisma));
   app.put('/api/request', Requests.insert(prisma));
-  app.get('/api/request/:id', Requests.get(prisma));
+  app.post('/api/request/:id/get', Requests.get(prisma));
   app.post('/api/request/table', Requests.table(prisma));
-  app.post('/api/request/:id', Requests.update(prisma));
+  app.post('/api/request/:id/update', Requests.update(prisma));
   app.delete('/api/request/:id', Requests.delete(prisma));
 
   // Client index

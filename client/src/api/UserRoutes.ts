@@ -1,4 +1,4 @@
-import { Person, User as _User } from '@fullstack-typescript-monorepo/prisma';
+import { Person, Prisma, User as _User } from '@fullstack-typescript-monorepo/prisma';
 import Fetch from '../utils/fetcher';
 import Super from './Super';
 
@@ -6,8 +6,15 @@ export interface User extends Omit<_User, 'password'> {
   person: Person;
 }
 
+export type UserUpdate = Partial<_User> & {
+  person?: {
+    create?: Prisma.PersonCreateWithoutUserInput;
+    update?: Prisma.PersonUpdateWithoutUserInput;
+  }
+};
+
 const UserRoutes = {
-  ...Super<User>('user'),
+  ...Super<User, UserUpdate>('user'),
   authenticate: (login: string, password: string): Promise<User> => Fetch<User>('/api/user/authenticate', {
     login,
     password,

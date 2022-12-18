@@ -1,11 +1,12 @@
 import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
-import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import { Request, Response } from 'express';
 import moment from 'moment';
-import sendError from '../utils/sendError';
-import UserUtils from '../utils/UserUtils';
 import auth from '../utils/auth';
 import MailUtils from '../utils/MailUtils';
+import sendError from '../utils/sendError';
+import TableUtils, { TableRequestBody } from '../utils/TableUtils';
+import UserUtils from '../utils/UserUtils';
 import REST from './REST';
 
 /**
@@ -248,6 +249,26 @@ const resetPassword = (prisma: PrismaClient) => async (
   }
 };
 
+/**
+ * Get users for a paginated table
+ * @param model
+ */
+const table = (prisma: PrismaClient) => async (
+  req: Request<never, unknown, TableRequestBody>,
+  res: Response,
+) => {
+  try {
+    await auth(prisma, req);
+
+    const data = await TableUtils.getData(req, prisma.user, undefined, {
+      person: true,
+    });
+    res.json(data);
+  } catch (error) {
+    sendError(res, error);
+  }
+};
+
 export default {
   ...REST('user'),
   authenticate,
@@ -255,4 +276,5 @@ export default {
   sendPasswordResetEmail,
   checkResetCodeValidity,
   resetPassword,
+  table,
 };

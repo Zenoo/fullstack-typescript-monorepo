@@ -42,13 +42,11 @@ const ProfileDetails = ({ ...rest }) => {
 
   const onSubmit = async (data: FormData) => {
     const processedData = {
-      person: {
-        id: auth.user.person.id,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        phone: data.phone,
-      },
+      id: auth.user.person.id,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
     };
 
     if (data.password) {
@@ -59,7 +57,9 @@ const ProfileDetails = ({ ...rest }) => {
     }
 
     Loader.open();
-    await UserRoutes.update(auth.user.id, processedData, '(id, login, admin, person(id, firstName, lastName, phone, email))').then((newData) => {
+    await UserRoutes.update(auth.user.id, {
+      person: { update: processedData }
+    }, { person: true }).then((newData) => {
       auth.updateData(newData);
       Alert.open('success', 'Saved');
     }).catch(catchError(Alert, t));
