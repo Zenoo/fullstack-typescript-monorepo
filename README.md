@@ -6,7 +6,11 @@
 
 > Made with [MUI's](https://mui.com/) components, [React](https://reactjs.org/) and [create-react-app](https://facebook.github.io/create-react-app/).
 
-## Local development
+## How to use
+
+- Create a new project from this template
+
+![](https://i.imgur.com/Hc0JsXs.png)
 
 - Copy `.env.sample` to `.env` and adapt the database URL
 
@@ -14,7 +18,17 @@
 
 - Start both the server and the client with `npm run dev`
 
+### How to sync your database with your new Prisma schema
+
+- Run `npm run db:sync:dev`
+
+### How to seed your database
+
+- Run `npm run db:seed`
+
 ## Deployment
+
+*This project should deploy successfully as-is on Heroku*
 
 - Set the DATABASE_URL environment variable
 
