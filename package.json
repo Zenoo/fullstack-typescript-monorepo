@@ -1,0 +1,31 @@
+{
+  "name": "fullstack-typescript-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "npm": "8.1.2",
+    "node": "16.13.1"
+  },
+  "scripts": {
+    "clean": "rimraf \"node_modules\" \"client/build\" \"core/lib\" \"server/node_modules\" \"server/lib\" \"**/tsconfig.tsbuildinfo\"",
+    "compile": "tsc -b tsconfig.build.json",
+    "front": "npm run start --workspace=client",
+    "back": "npm run start:watch --workspace=server",
+    "start": "npm run start --workspace=server",
+    "dev": "concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run back\" \"npm run front\"",
+    "db:sync:dev": "npm run db:sync:dev --workspace=server",
+    "db:sync:prod": "npm run db:sync:prod --workspace=server",
+    "postinstall": "bash ./postInstall.sh && npm run compile"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.4"
+  },
+  "workspaces": [
+    "client",
+    "core",
+    "prisma",
+    "server"
+  ]
+}

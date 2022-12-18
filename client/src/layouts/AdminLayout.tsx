@@ -1,0 +1,12 @@
+import { Navigate, Outlet } from 'react-router-dom';
+
+import React from 'react';
+import { useAuth } from '../hooks/useAuth';
+
+const AdminLayout = () => {
+  const auth = useAuth();
+
+  return auth.user.admin ? <Outlet /> : <Navigate to="/app/data/table/lptp/sites" />;
+};
+
+export default AdminLayout;

@@ -1,0 +1,12 @@
+{
+  "informationCanBeEdited": "The information can be edited",
+  "profile": "Profile",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "login": "Login",
+  "email": "Email",
+  "phone": "Phone",
+  "password": "Password",
+  "passwordConfirm": "Confirm Password",
+  "giveAdminRights": "Give admin rights"
+}

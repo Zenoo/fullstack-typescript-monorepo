@@ -1,0 +1,11 @@
+{
+  "informationCanBeEdited": "Ces informations peuvent être modifiées",
+  "profile": "Profil",
+  "firstName": "Prénom",
+  "lastName": "Nom",
+  "email": "Email",
+  "phone": "Téléphone",
+  "password": "Mot de passe",
+  "passwordConfirm": "Confirmer le mot de passe",
+  "giveAdminRights": "Donner les droits d'administrateur"
+}

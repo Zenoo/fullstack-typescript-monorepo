@@ -1,0 +1,13 @@
+{
+  "updateSuccess": "Update Success",
+  "updateError": "Update Error",
+  "add": "Add new object",
+  "createdSuccessfully": "Created Successfully",
+  "globalExport": "Download global CSV",
+  "import": "Import",
+  "importSuccess": "Import Success",
+  "empty": "Empty",
+  "emptyTable": "Empty Table",
+  "emptyTableDescription": "Are you sure you want to empty the table?",
+  "emptySuccess": "Empty Success"
+}

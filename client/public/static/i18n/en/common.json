@@ -1,0 +1,28 @@
+{
+  "userList": "User list",
+  "Examples": "Examples",
+  "giveAdminRights": "Give admin rights",
+  "cancel": "Cancel",
+  "save": "Save",
+  "minimize": "Minimize",
+  "maximize": "Maximize",
+  
+  "input.required": "Please enter a value in this field",
+  "input.min": "This input must be at least {{number}} characters long",
+  "input.max": "This input must be at most {{number}} characters long",
+  "number.min": "This number must be at least {{number}}",
+  "number.max": "This number must be at most {{number}}",
+  "input.match": "This input must match {{match}}",
+  "input.hours": "This input must match the format HH:MM",
+  "input.boolean": "This input can only be 0 or 1",
+  "email.valid": "Must be a valid email",
+  "mustMatch": "Passwords must match",
+  "requiredCheckbox": "This checkbox must be checked",
+  "only0Or1": "This field must be 0 or 1",
+  "integer": "This field must be an integer",
+  "input.unique": "This input must be unique",
+
+  "empty": "Empty",
+
+  "continue": "Continue"
+}

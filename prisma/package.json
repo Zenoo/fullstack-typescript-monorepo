@@ -1,0 +1,12 @@
+{
+  "name": "@fullstack-typescript-monorepo/prisma",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "compile": "tsc"
+  },
+  "types": "lib/index.d.ts",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}

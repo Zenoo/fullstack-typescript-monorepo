@@ -1,0 +1,28 @@
+{
+  "userList": "Utilisateurs",
+  "Examples": "Exemples",
+  "giveAdminRights": "Donner les droits admin",
+  "cancel": "Annuler",
+  "save": "Sauvegarder",
+  "minimize": "Minimiser",
+  "maximize": "Maximiser",
+  
+  "input.required": "Veuillez entrez une valeur dans ce champ",
+  "input.min": "Ce champ doit contenir au moins {{number}} caractères",
+  "input.max": "Ce champ ne doit pas faire plus de {{number}} caractères",
+  "number.min": "Ce champ doit contenir au minimum {{number}}",
+  "number.max": "Ce champ ne doit contenir plus que {{number}}",
+  "input.match": "Ce champ doit suivre la règle {{match}}",
+  "input.hours": "Ce champ doit suivre le format HH:MM",
+  "input.boolean": "Ce champ peut uniquement contenir 0 ou 1",
+  "email.valid": "L'adresse e-mail doit être valide",
+  "mustMatch": "Les mots de passe doivent correspondre",
+  "requiredCheckbox": "Ce champ est obligatoire",
+  "only0Or1": "Ce champ doit être 0 ou 1",
+  "integer": "Ce champ doit être un entier",
+  "input.unique": "Ce champ doit être unique",
+
+  "empty": "Vide",
+
+  "continue": "Continuer"
+}
