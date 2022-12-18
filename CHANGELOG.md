@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/v1.0.0...v1.0.1) (2022-12-18)
+
+
+### Bug Fixes
+
+* Replaced fetchpaths with includes ([ec67ee1](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/ec67ee1ebf67ed929b57cf84cc997bf1e71ee38b))
+
 ## 1.0.0 (2022-12-18)
 
 
