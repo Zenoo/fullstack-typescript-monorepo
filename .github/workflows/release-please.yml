@@ -15,7 +15,23 @@ jobs:
           default-branch: test
           extra-files: |
             client/src/utils/Version.ts
-            client/package.json
-            core/package.json
-            prisma/package.json
-            server/package.json
+            {
+              "type": "json",
+              "path": "client/package.json",
+              "jsonpath": "$.json.version"
+            }
+            {
+              "type": "json",
+              "path": "server/package.json",
+              "jsonpath": "$.json.version"
+            }
+            {
+              "type": "json",
+              "path": "core/package.json",
+              "jsonpath": "$.json.version"
+            }
+            {
+              "type": "json",
+              "path": "prisma/package.json",
+              "jsonpath": "$.json.version"
+            }
