@@ -13,9 +13,4 @@ jobs:
           package-name: fullstack-typescript-monorepo
           bump-minor-pre-major: true
           default-branch: test
-          extra-files: |
-            client/src/utils/Version.ts
-            client/package.json
-            core/package.json
-            prisma/package.json
-            server/package.json
+          command: manifest
