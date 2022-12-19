@@ -48,7 +48,7 @@ const initRoutes = (app: Express, prisma: PrismaClient) => {
   app.delete('/api/request/:id', Requests.delete(prisma));
 
   // Client index
-  app.get('/', (req, res) => {
+  app.get('*', (req, res) => {
     res.sendFile(CLIENT_INDEX);
   });
 };
