@@ -1,6 +1,6 @@
 {
   "name": "@fullstack-typescript-monorepo/core",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "scripts": {
     "compile": "tsc"
