@@ -80,6 +80,7 @@ const authenticate = (prisma: PrismaClient) => async (
 
       // Return user
       res.json(user);
+      return;
     }
 
     throw new Error('Invalid password');

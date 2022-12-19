@@ -1,4 +1,7 @@
-export { default as constants } from './constants';
-export * from './constants';
+export const LANGUAGES = ['en', 'fr'] as const;
+export const DEFAULT_LANGUAGE = LANGUAGES[0];
+export type Language = typeof LANGUAGES[number];
 
-export * from './types';
+export type PrismaInclude = {
+  [key: string]: boolean | PrismaInclude;
+};

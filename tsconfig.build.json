@@ -3,7 +3,6 @@
   "references": [
     { "path": "prisma" },
     { "path": "core" },
-    { "path": "client" },
     { "path": "server" }
   ]
 }

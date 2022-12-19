@@ -7,7 +7,7 @@
     "node": "16.13.1"
   },
   "scripts": {
-    "clean": "rimraf \"node_modules\" \"client/build\" \"core/lib\" \"server/node_modules\" \"server/lib\" \"**/tsconfig.tsbuildinfo\"",
+    "clean": "rimraf \"client/build\" \"core/lib\" \"prisma/lib\" \"server/lib\" \"**/node_modules\" \"**/tsconfig.tsbuildinfo\"",
     "compile": "tsc -b tsconfig.build.json",
     "front": "npm run start --workspace=client",
     "back": "npm run start:watch --workspace=server",
@@ -16,7 +16,7 @@
     "db:sync:dev": "npm run db:sync:dev --workspace=server",
     "db:sync:prod": "npm run db:sync:prod --workspace=server",
     "db:seed": "npm run db:seed --workspace=server",
-    "postinstall": "bash ./postInstall.sh && npm run compile"
+    "postinstall": "bash ./postInstall.sh"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
