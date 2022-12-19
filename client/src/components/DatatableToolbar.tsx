@@ -41,7 +41,7 @@ const DatatableToolbar = ({
 
     await importMethod(data).then(() => {
       Alert.open('success', t('importSuccess'));
-    }).catch(catchError(Alert, t));
+    }).catch(catchError(Alert));
 
     reload();
     Loader.close();
@@ -60,7 +60,7 @@ const DatatableToolbar = ({
         empty().then(() => {
           Alert.open('success', t('emptySuccess'));
           reload();
-        }).catch(catchError(Alert, t)).finally(() => {
+        }).catch(catchError(Alert)).finally(() => {
           Loader.close();
         });
       },

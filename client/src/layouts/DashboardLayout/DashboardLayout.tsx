@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import { useAlert } from '../../hooks/useAlert';
@@ -14,7 +13,6 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const Alert = useAlert();
-  const { t } = useTranslation();
 
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const onMobileNavOpen = useCallback(() => setMobileNavOpen(true), []);
@@ -30,13 +28,13 @@ const DashboardLayout = () => {
           localStorage.removeItem('user');
           localStorage.removeItem('token');
           navigate('/login', { replace: true });
-          catchError(Alert, t)(error);
+          catchError(Alert)(error);
         });
       } else {
         navigate('/login', { replace: true });
       }
     }
-  }, [Alert, auth, navigate, t]);
+  }, [Alert, auth, navigate]);
 
   return auth.authed ? (
     <Box sx={{

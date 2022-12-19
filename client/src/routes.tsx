@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import HomeView from './HomeView';
+import HomeView from './views/HomeView';
 import AdminLayout from './layouts/AdminLayout';
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout';
 import MainLayout from './layouts/MainLayout/MainLayout';

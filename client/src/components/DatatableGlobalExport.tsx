@@ -27,12 +27,12 @@ const DatatableGlobalExport = (props: DatatableGlobalExportProps) => {
     Loader.open();
     const blob = await globalCsvExport.fetcher(
       globalCsvExport.title,
-    ).catch(catchError(Alert, t));
+    ).catch(catchError(Alert));
 
     Loader.close();
 
     if (!blob) {
-      Alert.open('error', t('InternalServerError'));
+      Alert.open('error', 'Internal Server Error');
       return;
     }
 
@@ -47,7 +47,7 @@ const DatatableGlobalExport = (props: DatatableGlobalExportProps) => {
 
     // Hide the export menu after the export
     hideMenu?.();
-  }, [Alert, globalCsvExport, hideMenu, t, Loader]);
+  }, [Alert, globalCsvExport, hideMenu, Loader]);
 
   return (
     <MenuItem

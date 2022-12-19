@@ -43,7 +43,7 @@ const LoginView = () => {
       Loader.close();
       navigate('/app/home', { replace: true });
     }).catch((response: string) => {
-      catchError(Alert, t)(response);
+      catchError(Alert)(response);
       Loader.close();
     });
   };
@@ -58,7 +58,7 @@ const LoginView = () => {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
         navigate('/login', { replace: true });
-        catchError(Alert, t)(error);
+        catchError(Alert)(error);
       }).finally(() => {
         Loader.close();
       });
@@ -75,7 +75,7 @@ const LoginView = () => {
       return;
     }
     Loader.open();
-    await UserRoutes.sendPasswordResetMail(login).catch(catchError(Alert, t));
+    await UserRoutes.sendPasswordResetMail(login).catch(catchError(Alert));
     Loader.close();
     Alert.open('success', t('passwordResetMailSent'));
   }, [Alert, Loader, login, t]);
@@ -105,7 +105,7 @@ const LoginView = () => {
 
     UserRoutes.resetPassword(login, code || '', formData.password).then(() => {
       Alert.open('success', t('passwordResetSuccess'));
-    }).catch(catchError(Alert, t)).finally(() => {
+    }).catch(catchError(Alert)).finally(() => {
       setResetDialogOpen(false);
       resetForm();
     });
@@ -118,7 +118,7 @@ const LoginView = () => {
       const code = url.searchParams.get('reset');
       const log = url.searchParams.get('login');
       if (code) {
-        const isValid = await UserRoutes.checkResetCodeValidity(log || '', code).catch(catchError(Alert, t));
+        const isValid = await UserRoutes.checkResetCodeValidity(log || '', code).catch(catchError(Alert));
         if (!isValid) {
           // Prefill login field
           setValue('login', log || '');
@@ -133,7 +133,7 @@ const LoginView = () => {
         setResetDialogOpen(true);
       }
     };
-    checkCode().catch(catchError(Alert, t));
+    checkCode().catch(catchError(Alert));
   }, [Alert, setValue, t]);
 
   return (

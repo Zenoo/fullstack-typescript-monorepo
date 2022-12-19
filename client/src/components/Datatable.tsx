@@ -1,8 +1,9 @@
 import { Box } from '@mui/material';
-import { DataGrid, DataGridProps, GridColumns, GridFilterItem, GridLinkOperator } from '@mui/x-data-grid';
-import React, { useCallback, useEffect, useState } from 'react';
+import { DataGrid, DataGridProps, enUS, frFR, GridColumns, GridFilterItem, GridLinkOperator } from '@mui/x-data-grid';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAlert } from '../hooks/useAlert';
+import { useLanguage } from '../hooks/useLanguage';
 import { GlobalCsvExport } from './DatatableGlobalExport';
 import DatatableToolbar from './DatatableToolbar';
 
@@ -43,6 +44,7 @@ const Datatable = <DataType extends WithId, Model>({
 }: DatatableProps<DataType, Model>) => {
   const Alert = useAlert();
   const { t } = useTranslation('table');
+  const { language } = useLanguage();
 
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
@@ -52,6 +54,8 @@ const Datatable = <DataType extends WithId, Model>({
   const [filters, setFilters] = useState<GridFilterItem[]>([]);
   const [filtersOperator, setFiltersOperator] = useState<GridLinkOperator>(GridLinkOperator.And);
   const [data, setData] = useState<DataType[]>([]);
+
+  const localeText = useMemo(() => (language === 'fr' ? frFR : enUS).components.MuiDataGrid.defaultProps.localeText, [language]);
 
   const tableOptions: Omit<DataGridProps, 'columns' | 'rows'> = {
     autoHeight: true,
@@ -199,6 +203,7 @@ const Datatable = <DataType extends WithId, Model>({
         }}
       >
         <DataGrid
+          localeText={localeText}
           experimentalFeatures={{ newEditingApi: true }}
           columns={columns}
           components={{

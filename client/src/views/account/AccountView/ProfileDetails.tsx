@@ -52,7 +52,7 @@ const ProfileDetails = ({ ...rest }) => {
     if (data.password) {
       if (data.passwordConfirm) {
         Loader.open();
-        await UserRoutes.changePassword(auth.user.id, data.password).catch(catchError(Alert, t));
+        await UserRoutes.changePassword(auth.user.id, data.password).catch(catchError(Alert));
       }
     }
 
@@ -61,8 +61,8 @@ const ProfileDetails = ({ ...rest }) => {
       person: { update: processedData }
     }, { person: true }).then((newData) => {
       auth.updateData(newData);
-      Alert.open('success', 'Saved');
-    }).catch(catchError(Alert, t));
+      Alert.open('success', t('common:saved'));
+    }).catch(catchError(Alert));
     Loader.close();
   };
 

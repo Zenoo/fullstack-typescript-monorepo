@@ -1,7 +1,9 @@
 {
   "updateSuccess": "Update Success",
   "updateError": "Update Error",
-  "add": "Add new object",
+  "add": "Add",
+  "edit": "Edit",
+  "delete": "Delete",
   "createdSuccessfully": "Created Successfully",
   "globalExport": "Download global CSV",
   "import": "Import",

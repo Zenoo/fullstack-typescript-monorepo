@@ -59,8 +59,8 @@ const TableLayout = <DataType extends WithId, Model extends WithId>({
 }: TableLayoutProps<DataType, Model>) => {
   const Loader = useLoader();
   const Alert = useAlert();
-  const { t } = useTranslation();
   const { authed } = useAuth();
+  const { t } = useTranslation();
 
   const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
   const [deleted, setDeleted] = useState(0);
@@ -78,12 +78,12 @@ const TableLayout = <DataType extends WithId, Model extends WithId>({
         })),
         count: response.count,
       })).catch((response: string) => {
-        catchError(Alert, t)(response);
+        catchError(Alert)(response);
         return ({ data: [], count: 0 });
       });
     }
     return Promise.resolve({ data: [], count: 0 });
-  }, [Alert, authed, deleted, getter, include, mapper, t]);
+  }, [Alert, authed, deleted, getter, include, mapper]);
 
   // Update actions table on setter call
   const handleSetter = useCallback((
@@ -130,11 +130,11 @@ const TableLayout = <DataType extends WithId, Model extends WithId>({
         setNewRecord((prev) => prev + 1);
         Loader.close();
       }).catch((response: string) => {
-        catchError(Alert, t)(response);
+        catchError(Alert)(response);
         Loader.close();
       });
     }
-  }, [Alert, Loader, deleted, remove, selectedRows, t]);
+  }, [Alert, Loader, deleted, remove, selectedRows]);
 
   return (
     <Box sx={sx}>
@@ -148,7 +148,7 @@ const TableLayout = <DataType extends WithId, Model extends WithId>({
               color="primary"
               onClick={handleAdd}
             >
-              Add
+              {t('add')}
             </Button>
           )}
           {edit && (
@@ -157,7 +157,7 @@ const TableLayout = <DataType extends WithId, Model extends WithId>({
               onClick={handleEdit}
               color="warning"
             >
-              Edit
+              {t('edit')}
             </Button>
           )}
           {remove && (
@@ -166,7 +166,7 @@ const TableLayout = <DataType extends WithId, Model extends WithId>({
               onClick={handleDelete}
               color="error"
             >
-              Delete
+              {t('delete')}
             </Button>
           )}
         </ButtonGroup>

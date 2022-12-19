@@ -8,5 +8,6 @@
   "phone": "Phone",
   "password": "Password",
   "passwordConfirm": "Confirm Password",
-  "giveAdminRights": "Give admin rights"
+  "giveAdminRights": "Give admin rights",
+  "newUserAdded": "New user added"
 }

@@ -63,8 +63,8 @@ const UserForm = ({ data }: Props) => {
           update: personData,
         },
       }).then(() => {
-        Alert.open('success', 'Saved');
-      }).catch(catchError(Alert, t));
+        Alert.open('success', t('common:saved'));
+      }).catch(catchError(Alert));
     } else { // Addition
       processedData.password = formData.password;
       await UserRoutes.insert({
@@ -74,10 +74,10 @@ const UserForm = ({ data }: Props) => {
           create: personData,
         },
       }).then(() => {
-        Alert.open('success', 'New user added');
+        Alert.open('success', t('newUserAdded'));
         navigate('/app/admin/user/list');
         reset();
-      }).catch(catchError(Alert, t));
+      }).catch(catchError(Alert));
     }
     Loader.close();
   };

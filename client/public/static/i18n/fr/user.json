@@ -7,5 +7,6 @@
   "phone": "Téléphone",
   "password": "Mot de passe",
   "passwordConfirm": "Confirmer le mot de passe",
-  "giveAdminRights": "Donner les droits d'administrateur"
+  "giveAdminRights": "Donner les droits d'administrateur",
+  "newUserAdded": "Nouvel utilisateur ajouté"
 }
