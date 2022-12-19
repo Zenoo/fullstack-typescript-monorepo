@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.0...fullstack-typescript-monorepo-v1.1.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* Server router not loading correct client routes on load ([3784dcf](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/3784dcff5273853834594e709f3a458404f19c12))
+
 ## [1.1.0](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.0.1...fullstack-typescript-monorepo-v1.1.0) (2022-12-19)
 
 
