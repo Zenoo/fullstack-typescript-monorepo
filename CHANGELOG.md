@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.1...fullstack-typescript-monorepo-v1.1.2) (2022-12-19)
+
+
+### Bug Fixes
+
+* Rework catchError ([f7b542f](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/f7b542f568b118b8fa3578582f72d6fa174e5061))
+
 ## [1.1.1](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.0...fullstack-typescript-monorepo-v1.1.1) (2022-12-19)
 
 
