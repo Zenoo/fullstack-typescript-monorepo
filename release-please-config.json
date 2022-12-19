@@ -1,0 +1,33 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "fullstack-typescript-monorepo",
+      "bump-minor-pre-major": true,
+      "default-branch": "test",
+      "extra-files": [
+        "client/src/utils/Version.ts",
+        {
+          "type": "json",
+          "path": "client/package.json",
+          "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": "core/package.json",
+          "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": "prisma/package.json",
+          "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": "server/package.json",
+          "jsonpath": "$.version"
+        }
+      ]
+    }
+  }
+}
