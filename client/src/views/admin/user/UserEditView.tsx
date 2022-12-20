@@ -1,42 +1,45 @@
 import { Card, CardContent, CardHeader, Divider } from '@mui/material';
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import UserRoutes from '../../../api/UserRoutes';
 import UserForm from '../../../components/forms/UserForm';
 import Loader from '../../../components/Loader';
 import Page from '../../../components/Page';
+import { emptyUser } from '../../../hooks/useAuth';
 import useStateAsync from '../../../hooks/useStateAsync';
 
 const UserEditView = () => {
-  const { id } = useParams();
+  const { t } = useTranslation('user');
+  const { id: _id } = useParams();
+
+  const id = useMemo(() => (_id ? +_id : 0), [_id]);
 
   const callParams = useMemo(() => ({
-    id: id ? +id : 0,
+    id,
     include: { person: true },
   }), [id]);
   const { data: user } = useStateAsync(
-    null,
+    emptyUser,
     UserRoutes.get,
     callParams,
   );
 
   return (
-    <Page
-      title="New user"
-    >
+    <Page title={id ? t('editUser') : t('newUser')}>
       <Card>
         <CardHeader
-          subheader="Edit the user information"
-          title="Edit user"
+          subheader={t('informationCanBeEdited')}
+          title={id ? t('editUser') : t('newUser')}
         />
         <Divider />
         <CardContent>
-          {!user
+          {(!!id && !user.id)
             ? <Loader />
             : (
               <UserForm
                 data={{
-                  id: id ? +id : 0,
+                  id: user.id,
                   admin: user.admin,
                   login: user.login,
                   idperson: user.person.id ? +user.person.id : 0,

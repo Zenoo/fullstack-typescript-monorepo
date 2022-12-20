@@ -65,6 +65,7 @@ const UserForm = ({ data }: Props) => {
       }).then(() => {
         Alert.open('success', t('common:saved'));
       }).catch(catchError(Alert));
+      Loader.close();
     } else { // Addition
       processedData.password = formData.password;
       await UserRoutes.insert({
@@ -78,8 +79,8 @@ const UserForm = ({ data }: Props) => {
         navigate('/app/admin/user/list');
         reset();
       }).catch(catchError(Alert));
+      Loader.close();
     }
-    Loader.close();
   };
 
   return (

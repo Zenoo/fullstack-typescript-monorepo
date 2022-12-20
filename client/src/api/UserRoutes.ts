@@ -9,8 +9,9 @@ export interface User extends Omit<_User, 'password'> {
 export type UserUpdate = Partial<_User> & {
   person?: {
     create?: Prisma.PersonCreateWithoutUserInput;
+    connect?: Prisma.PersonWhereUniqueInput;
     update?: Prisma.PersonUpdateWithoutUserInput;
-  }
+  },
 };
 
 const UserRoutes = {

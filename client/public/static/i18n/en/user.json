@@ -1,4 +1,6 @@
 {
+  "newUser": "New User",
+  "editUser": "Edit User",
   "informationCanBeEdited": "The information can be edited",
   "profile": "Profile",
   "firstName": "First Name",

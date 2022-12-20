@@ -9,7 +9,7 @@ interface AuthContextInterface {
   updateData: (data: User) => void,
 }
 
-const emptyUser: User = {
+export const emptyUser: User = {
   id: 0,
   login: '',
   admin: false,

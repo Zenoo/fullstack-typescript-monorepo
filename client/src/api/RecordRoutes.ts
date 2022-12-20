@@ -10,6 +10,7 @@ export type RecordWithAuthor = Record & {
 export type RecordUpdate = Partial<Record> & {
   author?: {
     create?: Prisma.RecordCreateWithoutAuthorInput;
+    connect?: Prisma.RecordWhereUniqueInput;
     update?: Prisma.RecordUpdateWithoutAuthorInput;
   }
 };

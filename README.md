@@ -12,7 +12,7 @@
 
 ![](https://i.imgur.com/Hc0JsXs.png)
 
-- Copy `.env.sample` to `.env` and adapt the database URL
+- Copy `.env.sample` to `.env` and adapt the variables
 
 - Install dependencies: `npm i` (This should also setup your database from the `schema.prisma` file and the migrations)
 
@@ -32,7 +32,7 @@
 
 *This project should deploy successfully as-is on Heroku*
 
-- Set the DATABASE_URL environment variable
+- Set the environment variables
 
 - Install dependencies: `npm ci` (This should also setup your database from the `schema.prisma` file and the migrations)
 

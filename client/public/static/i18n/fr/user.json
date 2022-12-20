@@ -1,4 +1,6 @@
 {
+  "newUser": "Nouvel utilisateur",
+  "editUser": "Modification d'un utilisateur",
   "informationCanBeEdited": "Ces informations peuvent être modifiées",
   "profile": "Profil",
   "firstName": "Prénom",
@@ -6,7 +8,7 @@
   "email": "Email",
   "phone": "Téléphone",
   "password": "Mot de passe",
-  "passwordConfirm": "Confirmer le mot de passe",
+"passwordConfirm": "Confirmer le mot de passe",
   "giveAdminRights": "Donner les droits d'administrateur",
   "newUserAdded": "Nouvel utilisateur ajouté"
 }

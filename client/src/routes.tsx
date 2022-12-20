@@ -5,7 +5,6 @@ import AdminLayout from './layouts/AdminLayout';
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout';
 import MainLayout from './layouts/MainLayout/MainLayout';
 import AccountView from './views/account/AccountView/AccountView';
-import UserAddView from './views/admin/user/UserAddView';
 import UserEditView from './views/admin/user/UserEditView';
 import UserListView from './views/admin/user/UserListView';
 import LoginView from './views/auth/LoginView';
@@ -26,7 +25,7 @@ const routes = [
             path: 'user',
             children: [
               { path: 'list', element: <UserListView /> },
-              { path: 'add', element: <UserAddView /> },
+              { path: 'add', element: <UserEditView /> },
               { path: 'edit/:id', element: <UserEditView /> },
             ],
           },
