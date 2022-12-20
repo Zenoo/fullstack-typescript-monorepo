@@ -1,3 +1,3 @@
-const Version = '!1.1.2!'.replace(/!/g, ''); // x-release-please-version
+const Version = '!1.1.3!'.replace(/!/g, ''); // x-release-please-version
 
 export default Version;

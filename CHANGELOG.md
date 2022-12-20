@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.2...fullstack-typescript-monorepo-v1.1.3) (2022-12-20)
+
+
+### Bug Fixes
+
+* Sent mail config to env ([a92a7bb](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/a92a7bb635ecb1fee682392859e4f388ed1c3217))
+
 ## [1.1.2](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.1...fullstack-typescript-monorepo-v1.1.2) (2022-12-19)
 
 
