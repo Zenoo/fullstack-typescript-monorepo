@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.3...fullstack-typescript-monorepo-v1.1.4) (2022-12-20)
+
+
+### Bug Fixes
+
+* Password reset feature ([20d4f63](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/20d4f6382df91d1dd767f288720d7082decb22de))
+
 ## [1.1.3](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.2...fullstack-typescript-monorepo-v1.1.3) (2022-12-20)
 
 
