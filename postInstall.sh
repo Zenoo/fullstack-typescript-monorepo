@@ -14,9 +14,6 @@ else
   # Generate schema types + Sync DB
   npm run db:sync:dev
 
-  # Overwrite ./prisma/package.json with ./prisma/package.reference.json
-  cp ./prisma/package.reference.json ./prisma/package.json
-
   # Compile Typescript
   npm run compile
 
