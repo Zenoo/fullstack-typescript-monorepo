@@ -159,7 +159,13 @@ const sendPasswordResetEmail = (prisma: PrismaClient) => async (
     const message = 'If the button doesn\'t work copy and paste the following in your browser';
 
     // Send email
-    await MailUtils.sendPasswordResetMail(user, url, message);
+    const mailInfo = await MailUtils.sendPasswordResetMail(user, url, message);
+
+    if (mailInfo.accepted.length === 0) {
+      throw new Error('Email not sent');
+    }
+
+    res.send('ok');
   } catch (error) {
     sendError(res, error);
   }
