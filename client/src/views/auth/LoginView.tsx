@@ -31,7 +31,7 @@ const LoginView = () => {
   const Loader = useLoader();
   const { t } = useTranslation('login');
 
-  const { register, handleSubmit, formState: { isSubmitting }, control, setValue } = useForm<FormData>('user');
+  const { register, handleSubmit, formState: { isSubmitting }, control, setValue, setFocus } = useForm<FormData>('user');
   const login = useWatch({ name: 'login', control });
 
   /**
@@ -75,9 +75,10 @@ const LoginView = () => {
       return;
     }
     Loader.open();
-    await UserRoutes.sendPasswordResetMail(login).catch(catchError(Alert));
+    await UserRoutes.sendPasswordResetMail(login).then(() => {
+      Alert.open('success', t('passwordResetMailSent'));
+    }).catch(catchError(Alert));
     Loader.close();
-    Alert.open('success', t('passwordResetMailSent'));
   }, [Alert, Loader, login, t]);
 
   // Password reset form
@@ -118,23 +119,26 @@ const LoginView = () => {
       const code = url.searchParams.get('reset');
       const log = url.searchParams.get('login');
       if (code) {
+        // Prefill login field
+        setValue('login', log || '');
+        setFocus('login');
+
         const isValid = await UserRoutes.checkResetCodeValidity(log || '', code).catch(catchError(Alert));
         if (!isValid) {
-          // Prefill login field
-          setValue('login', log || '');
-
           Alert.open('error', t('invalidResetCode'));
           // Remove code and login from URL
           url.searchParams.delete('reset');
           url.searchParams.delete('login');
           window.history.replaceState({}, '', url.href);
+
+          return;
         }
         // Open reset password dialog
         setResetDialogOpen(true);
       }
     };
     checkCode().catch(catchError(Alert));
-  }, [Alert, setValue, t]);
+  }, [Alert, setFocus, setValue, t]);
 
   return (
     <Page

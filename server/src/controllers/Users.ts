@@ -127,7 +127,7 @@ const changePassword = (prisma: PrismaClient) => async (
       },
     });
 
-    res.status(200).send();
+    res.send({ message: 'Password updated' });
   } catch (error) {
     sendError(res, error);
   }
@@ -165,7 +165,7 @@ const sendPasswordResetEmail = (prisma: PrismaClient) => async (
       throw new Error('Email not sent');
     }
 
-    res.send('ok');
+    res.send({ message: 'Email sent' });
   } catch (error) {
     sendError(res, error);
   }
@@ -191,7 +191,7 @@ const checkResetCodeValidity = (prisma: PrismaClient) => async (
     const tokenIsValid = await bcrypt.compare(`${user.id}`, code);
 
     if (tokenIsValid) {
-      res.send();
+      res.send({ message: 'Token valid' });
     } else {
       throw new Error('Invalid token');
     }
@@ -250,7 +250,7 @@ const resetPassword = (prisma: PrismaClient) => async (
       },
     });
 
-    res.send();
+    res.send({ message: 'Password updated' });
   } catch (error) {
     sendError(res, error);
   }
