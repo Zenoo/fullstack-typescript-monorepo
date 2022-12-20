@@ -1,9 +1,10 @@
+import { Prisma } from '@fullstack-typescript-monorepo/prisma';
 import { LoadingButton } from '@mui/lab';
 import { Box, Checkbox, Divider, FormControlLabel, Grid, TextField } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import UserRoutes, { UserUpdate } from '../../api/UserRoutes';
+import UserRoutes from '../../api/UserRoutes';
 import { useAlert } from '../../hooks/useAlert';
 import useForm from '../../hooks/useForm';
 import { useLoader } from '../../hooks/useLoader';
@@ -38,7 +39,7 @@ const UserForm = ({ data }: Props) => {
 
   // Submit user data
   const onSubmit = async (formData: Data) => {
-    const processedData: UserUpdate = {
+    const processedData: Prisma.UserUpdateInput = {
       admin: formData.admin,
       login: formData.login,
       active: true,

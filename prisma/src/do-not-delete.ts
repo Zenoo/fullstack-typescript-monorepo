@@ -1,1 +1,0 @@
-const WHY = 'This file exists to allow for tsc to compile the prisma folder.';

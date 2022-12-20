@@ -93,10 +93,13 @@ module.exports = {
     "max-len": ["error", {
       "code": 100,
       "ignoreComments": true,
-      "ignoreStrings": true,  
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
     }],
     "prefer-promise-reject-errors": 'off',
     'comma-dangle': 'off',
     'eol-last': 'off',
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"]
   },
 };

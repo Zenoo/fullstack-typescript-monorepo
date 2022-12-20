@@ -6,16 +6,8 @@ export interface User extends Omit<_User, 'password'> {
   person: Person;
 }
 
-export type UserUpdate = Partial<_User> & {
-  person?: {
-    create?: Prisma.PersonCreateWithoutUserInput;
-    connect?: Prisma.PersonWhereUniqueInput;
-    update?: Prisma.PersonUpdateWithoutUserInput;
-  },
-};
-
 const UserRoutes = {
-  ...Super<User, UserUpdate>('user'),
+  ...Super<User, Prisma.UserUpdateInput>('user'),
   authenticate: (login: string, password: string): Promise<User> => Fetch<User>('/api/user/authenticate', {
     login,
     password,

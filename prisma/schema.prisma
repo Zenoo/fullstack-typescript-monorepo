@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Address {
+  id           Int     @id @default(autoincrement())
+  streetNumber String  @db.VarChar(255)
+  street       String  @db.VarChar(255)
+  zip          String  @db.VarChar(255)
+  city         String  @db.VarChar(255)
+  country      String  @db.VarChar(255)
+  placeId      String  @db.VarChar(255)
+  person       Person?
+}
+
+model Person {
+  id        Int      @id @default(autoincrement())
+  firstName String   @db.VarChar(255)
+  lastName  String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  phone     String?  @db.VarChar(255)
+  phone2    String?  @db.VarChar(255)
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId Int?     @unique
+  user      User?
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  login          String   @unique @db.VarChar(255)
+  admin          Boolean  @default(false)
+  password       String?  @db.VarChar(255)
+  active         Boolean  @default(true)
+  connexionToken String   @default("") @db.VarChar(255)
+  person         Person   @relation(fields: [personId], references: [id])
+  personId       Int      @unique
+  records        Record[]
+}
+
+enum RequestStatus {
+  PENDING
+  SUCCESS
+  ERROR
+}
+
+model Request {
+  id       Int           @id @default(autoincrement())
+  date     DateTime      @default(now())
+  status   RequestStatus
+  response Json
+}
+
+enum RecordAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+model Record {
+  id       Int          @id @default(autoincrement())
+  date     DateTime     @default(now())
+  action   RecordAction
+  object   String       @db.VarChar(255)
+  newValue String       @db.VarChar(255)
+  author   User         @relation(fields: [authorId], references: [id])
+  authorId Int
+}

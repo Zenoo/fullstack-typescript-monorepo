@@ -7,16 +7,8 @@ export type RecordWithAuthor = Record & {
   author: User;
 };
 
-export type RecordUpdate = Partial<Record> & {
-  author?: {
-    create?: Prisma.RecordCreateWithoutAuthorInput;
-    connect?: Prisma.RecordWhereUniqueInput;
-    update?: Prisma.RecordUpdateWithoutAuthorInput;
-  }
-};
-
 const RecordRoutes = {
-  ...Super<Record, RecordUpdate>('record'),
+  ...Super<Record, Prisma.RecordUpdateInput>('record'),
   list: (object?: string) => Fetch<RecordWithAuthor[]>('/api/record/list', {
     object,
   }),
