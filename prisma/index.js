@@ -206,7 +206,16 @@ const config = {
     "config": {
       "engineType": "library"
     },
-    "binaryTargets": [],
+    "binaryTargets": [
+      {
+        "fromEnvVar": null,
+        "value": "windows"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
+      }
+    ],
     "previewFeatures": [],
     "isCustomOutput": true
   },
@@ -242,5 +251,8 @@ Object.assign(exports, Prisma)
 
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "..\\prisma\\query_engine-windows.dll.node")
+
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "..\\prisma\\libquery_engine-debian-openssl-3.0.x.so.node")
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "..\\prisma\\schema.prisma")
