@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.5...fullstack-typescript-monorepo-v1.1.6) (2022-12-21)
+
+
+### Bug Fixes
+
+* Refactored user type definition to align with server returns ([d2e0cc2](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/d2e0cc2ada24cd9ff0ed89807def81daa28d69cb))
+
 ## [1.1.5](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.4...fullstack-typescript-monorepo-v1.1.5) (2022-12-20)
 
 
