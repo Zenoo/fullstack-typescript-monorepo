@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserRoutes, { User } from '../../../api/UserRoutes';
+import UserRoutes, { UserWithPerson } from '../../../api/UserRoutes';
 import Page from '../../../components/Page';
 import TableLayout from '../../../layouts/TableLayout';
 
@@ -10,7 +10,7 @@ const UserListView = () => {
   /**
    * Data mapper
    */
-  const mapper = useCallback((user: User) => ({
+  const mapper = useCallback((user: UserWithPerson) => ({
     id: user.id,
     login: user.login,
     'person.firstName, person.lastName': `${user.person ? `${user.person.firstName} ${user.person.lastName}` : ''}`,

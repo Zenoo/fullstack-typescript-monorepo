@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, Divider } from '@mui/material';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import UserRoutes from '../../../api/UserRoutes';
+import UserRoutes, { UserWithPerson } from '../../../api/UserRoutes';
 import UserForm from '../../../components/forms/UserForm';
 import Loader from '../../../components/Loader';
 import Page from '../../../components/Page';
@@ -19,11 +19,12 @@ const UserEditView = () => {
     id,
     include: { person: true },
   }), [id]);
-  const { data: user } = useStateAsync(
+  const { data: _user } = useStateAsync(
     emptyUser,
     UserRoutes.get,
     callParams,
   );
+  const user = _user as UserWithPerson;
 
   return (
     <Page title={id ? t('editUser') : t('newUser')}>

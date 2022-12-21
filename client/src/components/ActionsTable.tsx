@@ -1,8 +1,8 @@
 import { Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import RecordRoutes from '../api/RecordRoutes';
+import RecordRoutes, { RecordWithAuthorWithPerson } from '../api/RecordRoutes';
 import useStateAsync from '../hooks/useStateAsync';
 import Text from './Text';
 
@@ -18,11 +18,15 @@ const ActionsTable = ({
 }: ActionsTableProps) => {
   const { t } = useTranslation('actions');
 
-  const { data: records, reload: reloadRecords } = useStateAsync(
+  const recordsListParams = useMemo(() => ({
+    include: { author: { include: { person: true } } },
+  }), []);
+  const { data: _records, reload: reloadRecords } = useStateAsync(
     [],
     RecordRoutes.list,
-    object,
+    recordsListParams,
   );
+  const records = _records as RecordWithAuthorWithPerson[];
 
   // Reload table when new record is added and/or when reloadActions is updated
   useEffect(() => {

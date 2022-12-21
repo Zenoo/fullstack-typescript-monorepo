@@ -3,7 +3,7 @@ import { Box, Card, CardContent, CardHeader, Divider, Grid, TextField } from '@m
 import React from 'react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import UserRoutes from '../../../api/UserRoutes';
+import UserRoutes, { UserWithPerson } from '../../../api/UserRoutes';
 import { useAlert } from '../../../hooks/useAlert';
 import { useAuth } from '../../../hooks/useAuth';
 import useForm from '../../../hooks/useForm';
@@ -60,7 +60,7 @@ const ProfileDetails = ({ ...rest }) => {
     await UserRoutes.update(auth.user.id, {
       person: { update: processedData }
     }, { person: true }).then((newData) => {
-      auth.updateData(newData);
+      auth.updateData(newData as UserWithPerson);
       Alert.open('success', t('common:saved'));
     }).catch(catchError(Alert));
     Loader.close();

@@ -1,17 +1,16 @@
 import { Prisma, Record } from '@fullstack-typescript-monorepo/prisma';
-import Fetch from '../utils/fetcher';
 import Super from './Super';
-import { User } from './UserRoutes';
+import { User, UserWithPerson } from './UserRoutes';
 
 export type RecordWithAuthor = Record & {
   author: User;
 };
+export type RecordWithAuthorWithPerson = Record & {
+  author: UserWithPerson;
+};
 
 const RecordRoutes = {
-  ...Super<Record, Prisma.RecordUpdateInput>('record'),
-  list: (object?: string) => Fetch<RecordWithAuthor[]>('/api/record/list', {
-    object,
-  }),
+  ...Super<Record, Prisma.RecordInclude, Prisma.RecordWhereInput, Prisma.RecordUpdateInput>('record'),
 };
 
 export default RecordRoutes;

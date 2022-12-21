@@ -56,6 +56,10 @@ const get = (model: string) => (prisma: PrismaClient) => async (
     const { id } = req.params;
     const { include } = req.body;
 
+    if (!+id) {
+      throw new Error('No ID provided');
+    }
+
     const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
     const object = await prismaModel.findUniqueOrThrow({
@@ -70,21 +74,22 @@ const get = (model: string) => (prisma: PrismaClient) => async (
 };
 
 /**
- * Get all objects from the database
+ * List objects from the database
  * @param model
  */
-const getAll = (model: string) => (prisma: PrismaClient) => async (
-  req: Request<never, unknown, { include?: PrismaInclude }>,
+const list = (model: string) => (prisma: PrismaClient) => async (
+  req: Request<never, unknown, { include?: PrismaInclude, where?: object }>,
   res: Response,
 ) => {
   try {
     await auth(prisma, req);
 
-    const { include } = req.body;
+    const { include, where } = req.body;
 
     const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
 
     const objects = await prismaModel.findMany({
+      where,
       include,
     });
 
@@ -203,7 +208,7 @@ const deleteObject = (model: string) => (prisma: PrismaClient) => async (
 const REST = (model: string) => ({
   insert: insert(model),
   get: get(model),
-  getAll: getAll(model),
+  list: list(model),
   getAllAsCsv: getAllAsCsv(model),
   table: table(model),
   update: update(model),

@@ -1,15 +1,15 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import UserRoutes, { User } from '../api/UserRoutes';
+import UserRoutes, { UserWithPerson } from '../api/UserRoutes';
 
 interface AuthContextInterface {
-  user: User,
+  user: UserWithPerson,
   authed: boolean,
-  signin: (login: string, password: string) => Promise<User | null>,
+  signin: (login: string, password: string) => Promise<UserWithPerson | null>,
   signout: () => void,
-  updateData: (data: User) => void,
+  updateData: (data: UserWithPerson) => void,
 }
 
-export const emptyUser: User = {
+export const emptyUser: UserWithPerson = {
   id: 0,
   login: '',
   admin: false,
@@ -49,7 +49,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<User>(emptyUser);
+  const [user, setUser] = useState<UserWithPerson>(emptyUser);
   const [authed, setAuthed] = useState(false);
 
   const signin = useCallback((
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(emptyUser);
   }, []);
 
-  const updateData = useCallback((data: User) => {
+  const updateData = useCallback((data: UserWithPerson) => {
     setUser(data);
   }, []);
 

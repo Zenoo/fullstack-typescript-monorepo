@@ -17,7 +17,7 @@ const initRoutes = (app: Express, prisma: PrismaClient) => {
   // User
   app.post('/api/user/authenticate', Users.authenticate(prisma));
   app.post('/api/user/reset-password', Users.resetPassword(prisma));
-  app.post('/api/user/all', Users.getAll(prisma));
+  app.post('/api/user/list', Users.list(prisma));
   app.get('/api/user/all/csv', Users.getAllAsCsv(prisma));
   app.put('/api/user', Users.insert(prisma));
   app.post('/api/user/:id/get', Users.get(prisma));
@@ -29,8 +29,7 @@ const initRoutes = (app: Express, prisma: PrismaClient) => {
   app.get('/api/user/:login/reset-code-check', Users.checkResetCodeValidity(prisma));
 
   // Record
-  app.get('/api/record/list', Records.list(prisma));
-  app.post('/api/record/all', Records.getAll(prisma));
+  app.post('/api/record/list', Records.list(prisma));
   app.get('/api/record/all/csv', Records.getAllAsCsv(prisma));
   app.put('/api/record', Records.insert(prisma));
   app.post('/api/record/:id/get', Records.get(prisma));
@@ -39,7 +38,7 @@ const initRoutes = (app: Express, prisma: PrismaClient) => {
   app.delete('/api/record/:id', Records.delete(prisma));
 
   // Request
-  app.post('/api/request/all', Requests.getAll(prisma));
+  app.post('/api/request/list', Requests.list(prisma));
   app.get('/api/request/all/csv', Requests.getAllAsCsv(prisma));
   app.put('/api/request', Requests.insert(prisma));
   app.post('/api/request/:id/get', Requests.get(prisma));

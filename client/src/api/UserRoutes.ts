@@ -1,14 +1,24 @@
 import { Person, Prisma, User as _User } from '@fullstack-typescript-monorepo/prisma';
+import { TableState } from '../components/Datatable';
 import Fetch from '../utils/fetcher';
 import Super from './Super';
 
-export interface User extends Omit<_User, 'password'> {
+export type User = Omit<_User, 'password'>;
+
+export type UserWithPerson = User & {
   person: Person;
-}
+};
 
 const UserRoutes = {
-  ...Super<User, Prisma.UserUpdateInput>('user'),
-  authenticate: (login: string, password: string): Promise<User> => Fetch<User>('/api/user/authenticate', {
+  ...Super<User, Prisma.UserInclude, Prisma.UserWhereInput, Prisma.UserUpdateInput>('user'),
+  table: (
+    state: TableState,
+    include?: Prisma.UserInclude,
+  ) => Fetch<{ data: UserWithPerson[], count: number }>('/api/user/table', {
+    state,
+    include,
+  }, 'POST'),
+  authenticate: (login: string, password: string) => Fetch<UserWithPerson>('/api/user/authenticate', {
     login,
     password,
   }, 'POST'),

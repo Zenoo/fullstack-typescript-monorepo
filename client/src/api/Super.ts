@@ -1,26 +1,18 @@
-import { PrismaInclude } from '@fullstack-typescript-monorepo/core';
 import { TableState } from '../components/Datatable';
 import Fetch from '../utils/fetcher';
 
-export interface getProps {
-  id: number;
-  include?: PrismaInclude;
-}
-
-const Super = <Model, Setter extends object>(model: string) => ({
+const Super = <Model, Include, Where, Setter extends object>(model: string) => ({
   insert: (data: Setter) => Fetch<Model>(`/api/${model}`, data, 'PUT'),
-  get: ({ id, include }: getProps) => Fetch<Model>(`/api/${model}/${id}/get`, {
+  get: ({ id, include }: { id: number, include?: Include }) => Fetch<Model>(`/api/${model}/${id}/get`, {
     include,
   }, 'POST'),
-  getAll: (include: PrismaInclude) => Fetch<Model[]>(`/api/${model}/all`, {
-    include,
-  }, 'POST'),
+  list: (params: { include?: Include, where?: Where }) => Fetch<Model[]>(`/api/${model}/list`, params, 'POST'),
   getAllAsCsv: (title: string) => Fetch<Blob>(`/api/${model}/all/csv`, {
     title,
   }),
   table: (
     state: TableState,
-    include?: PrismaInclude,
+    include?: Include,
   ) => Fetch<{ data: Model[], count: number }>(`/api/${model}/table`, {
     state,
     include,
@@ -28,7 +20,7 @@ const Super = <Model, Setter extends object>(model: string) => ({
   update: (
     id: number,
     data: Setter,
-    include?: PrismaInclude
+    include?: Include
   ) => Fetch<Model>(`/api/${model}/${id}/update`, {
     data,
     include,

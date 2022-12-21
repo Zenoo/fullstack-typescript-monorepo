@@ -1,7 +1,7 @@
 import {
   PrismaClientInitializationError,
   PrismaClientKnownRequestError, PrismaClientUnknownRequestError, PrismaClientValidationError,
-} from '@fullstack-typescript-monorepo/prisma/lib/runtime';
+} from '@fullstack-typescript-monorepo/prisma/runtime';
 import { Response } from 'express';
 
 const sendError = (res: Response, error: unknown) => {
