@@ -103,7 +103,7 @@ const changePassword = (prisma: PrismaClient) => async (
     const user = await auth(prisma, req);
 
     const userToUpdate = await prisma.user.findUniqueOrThrow({
-      where: { id: user.id },
+      where: { id },
     });
 
     // Check if user is self or admin
