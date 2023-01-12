@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.7...fullstack-typescript-monorepo-v1.2.0) (2023-01-12)
+
+
+### Features
+
+* i18n backend translations ([861cf00](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/861cf00a83dd51b089bf90f942ffe5cc804e4af7))
+
+
+### Bug Fixes
+
+* i18n init props ([4fc29c4](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/4fc29c4349d12d3b1c5596948e5896bc5d5f17e4))
+
 ## [1.1.7](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.1.6...fullstack-typescript-monorepo-v1.1.7) (2022-12-28)
 
 
