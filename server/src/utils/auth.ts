@@ -1,5 +1,6 @@
 import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
 import { Request } from 'express';
+import i18next from 'i18next';
 
 const auth = async (prisma: PrismaClient, request: Request) => {
   const { headers: { authorization } } = request;
@@ -24,6 +25,9 @@ const auth = async (prisma: PrismaClient, request: Request) => {
       person: true,
     },
   });
+
+  // Change i18n language
+  await i18next.changeLanguage(user.lang);
 
   // Never return the password
   return {

@@ -1,9 +1,10 @@
 import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
+import i18next, { t } from 'i18next';
 import moment from 'moment';
 import auth from '../utils/auth';
-import MailUtils from '../utils/MailUtils';
+import MailUtils, { MAIL_SENDER } from '../utils/MailUtils';
 import sendError from '../utils/sendError';
 import TableUtils, { TableRequestBody } from '../utils/TableUtils';
 import UserUtils from '../utils/UserUtils';
@@ -52,7 +53,7 @@ const authenticate = (prisma: PrismaClient) => async (
       }
 
       // Token is expired, throw error
-      throw new Error('Token expired');
+      throw new Error(t('tokenExpired'));
     }
 
     // Check password against DB
@@ -83,7 +84,7 @@ const authenticate = (prisma: PrismaClient) => async (
       return;
     }
 
-    throw new Error('Invalid password');
+    throw new Error(t('invalidPassword'));
   } catch (error) {
     sendError(res, error);
   }
@@ -108,12 +109,12 @@ const changePassword = (prisma: PrismaClient) => async (
 
     // Check if user is self or admin
     if (user.id !== id && !user.admin) {
-      throw new Error('Unauthorized');
+      throw new Error(t('unauthorized'));
     }
 
     // Check if password is provided
     if (!password) {
-      throw new Error('Missing password');
+      throw new Error(t('missingPassword'));
     }
 
     // Hash password
@@ -127,7 +128,7 @@ const changePassword = (prisma: PrismaClient) => async (
       },
     });
 
-    res.send({ message: 'Password updated' });
+    res.send({ message: t('passwordUpdated') });
   } catch (error) {
     sendError(res, error);
   }
@@ -149,6 +150,9 @@ const sendPasswordResetEmail = (prisma: PrismaClient) => async (
       include: { person: true },
     });
 
+    // Change language
+    await i18next.changeLanguage(user.lang);
+
     // Generate token
     const token = await bcrypt.hash(`${user.id}`, 10);
 
@@ -156,16 +160,22 @@ const sendPasswordResetEmail = (prisma: PrismaClient) => async (
     const url = `${req.protocol}://${req.hostname}/login?login=${encodeURIComponent(user.login)}&reset=${encodeURIComponent(token)}`;
 
     // Mail message
-    const message = 'If the button doesn\'t work copy and paste the following in your browser';
+    const message = t('passwordResetMessage');
 
     // Send email
-    const mailInfo = await MailUtils.sendPasswordResetMail(user, url, message);
+    const mailInfo = await MailUtils.sendMail({
+      from: MAIL_SENDER,
+      to: user.person.email,
+      subject: t('resetYourPassword'),
+      text: `${t('clickLinkToResetPassword')}: ${url}`,
+      html: MailUtils.passwordResetTemplate(url, message),
+    });
 
     if (mailInfo.accepted.length === 0) {
-      throw new Error('Email not sent');
+      throw new Error(t('emailNotSent'));
     }
 
-    res.send({ message: 'Email sent' });
+    res.send({ message: t('emailSent') });
   } catch (error) {
     sendError(res, error);
   }
@@ -187,13 +197,16 @@ const checkResetCodeValidity = (prisma: PrismaClient) => async (
       include: { person: true },
     });
 
+    // Change language
+    await i18next.changeLanguage(user.lang);
+
     // Check if token is valid
     const tokenIsValid = await bcrypt.compare(`${user.id}`, code);
 
     if (tokenIsValid) {
-      res.send({ message: 'Token valid' });
+      res.send({ message: t('tokenValid') });
     } else {
-      throw new Error('Invalid token');
+      throw new Error(t('invalidToken'));
     }
   } catch (error) {
     sendError(res, error);
@@ -232,11 +245,14 @@ const resetPassword = (prisma: PrismaClient) => async (
       include: { person: true },
     });
 
+    // Change language
+    await i18next.changeLanguage(user.lang);
+
     // Check if token is valid
     const tokenIsValid = await bcrypt.compare(`${user.id}`, code);
 
     if (!tokenIsValid) {
-      throw new Error('Invalid token');
+      throw new Error(t('invalidToken'));
     }
 
     // Hash password
@@ -250,7 +266,7 @@ const resetPassword = (prisma: PrismaClient) => async (
       },
     });
 
-    res.send({ message: 'Password updated' });
+    res.send({ message: t('passwordUpdated') });
   } catch (error) {
     sendError(res, error);
   }

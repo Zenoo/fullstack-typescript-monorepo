@@ -1,0 +1,16 @@
+{
+  "noIDProvided": "No ID provided",
+  "nothingToExport": "Nothing to export",
+  "unauthorized": "Unauthorized",
+  "missingPassword": "Missing password",
+  "passwordUpdated": "Password updated",
+  "tokenExpired": "Token expired",
+  "invalidPassword": "Invalid password",
+  "passwordResetMessage": "If the button doesnt work copy and paste the following in your browser",
+  "resetYourPassword": "Reset your password",
+  "clickLinkToResetPassword": "Click the following link to reset your password",
+  "emailNotSent": "Email not sent",
+  "emailSent": "Email sent",
+  "tokenValid": "Token valid",
+  "invalidToken": "Invalid token"
+}

@@ -7,8 +7,17 @@ import { Response } from 'express';
 const sendError = (res: Response, error: unknown) => {
   res.status(500);
   if (error instanceof PrismaClientKnownRequestError) {
-    console.error(error.message);
-    res.send(`Wrong data format: ${error.code}`);
+    switch (error.code) {
+      case 'P2025': {
+        res.send(error.message);
+        break;
+      }
+      default: {
+        console.error(error.message);
+        res.send(`Wrong data format: ${error.code}`);
+        break;
+      }
+    }
   } else if (error instanceof PrismaClientUnknownRequestError) {
     res.send(error.message);
   } else if (error instanceof PrismaClientInitializationError) {

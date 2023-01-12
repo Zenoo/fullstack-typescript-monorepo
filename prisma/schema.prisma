@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../../prisma"
+  provider      = "prisma-client-js"
+  output        = "../../prisma"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
@@ -35,8 +35,14 @@ model Person {
   user      User?
 }
 
+enum Lang {
+  en
+  fr
+}
+
 model User {
   id             Int      @id @default(autoincrement())
+  lang           Lang     @default(en)
   login          String   @unique @db.VarChar(255)
   admin          Boolean  @default(false)
   password       String?  @db.VarChar(255)

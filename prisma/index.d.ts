@@ -46,6 +46,7 @@ export type Person = {
  */
 export type User = {
   id: number
+  lang: Lang
   login: string
   admin: boolean
   password: string | null
@@ -85,6 +86,14 @@ export type Record = {
 
 // Based on
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
+
+export const Lang: {
+  en: 'en',
+  fr: 'fr'
+};
+
+export type Lang = (typeof Lang)[keyof typeof Lang]
+
 
 export const RecordAction: {
   CREATE: 'CREATE',
@@ -3081,6 +3090,7 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: number | null
+    lang: Lang | null
     login: string | null
     admin: boolean | null
     password: string | null
@@ -3091,6 +3101,7 @@ export namespace Prisma {
 
   export type UserMaxAggregateOutputType = {
     id: number | null
+    lang: Lang | null
     login: string | null
     admin: boolean | null
     password: string | null
@@ -3101,6 +3112,7 @@ export namespace Prisma {
 
   export type UserCountAggregateOutputType = {
     id: number
+    lang: number
     login: number
     admin: number
     password: number
@@ -3123,6 +3135,7 @@ export namespace Prisma {
 
   export type UserMinAggregateInputType = {
     id?: true
+    lang?: true
     login?: true
     admin?: true
     password?: true
@@ -3133,6 +3146,7 @@ export namespace Prisma {
 
   export type UserMaxAggregateInputType = {
     id?: true
+    lang?: true
     login?: true
     admin?: true
     password?: true
@@ -3143,6 +3157,7 @@ export namespace Prisma {
 
   export type UserCountAggregateInputType = {
     id?: true
+    lang?: true
     login?: true
     admin?: true
     password?: true
@@ -3246,6 +3261,7 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: number
+    lang: Lang
     login: string
     admin: boolean
     password: string | null
@@ -3275,6 +3291,7 @@ export namespace Prisma {
 
   export type UserSelect = {
     id?: boolean
+    lang?: boolean
     login?: boolean
     admin?: boolean
     password?: boolean
@@ -6192,6 +6209,7 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
+    lang: 'lang',
     login: 'login',
     admin: 'admin',
     password: 'password',
@@ -6330,6 +6348,7 @@ export namespace Prisma {
     OR?: Enumerable<UserWhereInput>
     NOT?: Enumerable<UserWhereInput>
     id?: IntFilter | number
+    lang?: EnumLangFilter | Lang
     login?: StringFilter | string
     admin?: BoolFilter | boolean
     password?: StringNullableFilter | string | null
@@ -6342,6 +6361,7 @@ export namespace Prisma {
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
+    lang?: SortOrder
     login?: SortOrder
     admin?: SortOrder
     password?: SortOrder
@@ -6360,6 +6380,7 @@ export namespace Prisma {
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
+    lang?: SortOrder
     login?: SortOrder
     admin?: SortOrder
     password?: SortOrder
@@ -6378,6 +6399,7 @@ export namespace Prisma {
     OR?: Enumerable<UserScalarWhereWithAggregatesInput>
     NOT?: Enumerable<UserScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    lang?: EnumLangWithAggregatesFilter | Lang
     login?: StringWithAggregatesFilter | string
     admin?: BoolWithAggregatesFilter | boolean
     password?: StringNullableWithAggregatesFilter | string | null
@@ -6624,6 +6646,7 @@ export namespace Prisma {
   }
 
   export type UserCreateInput = {
+    lang?: Lang
     login: string
     admin?: boolean
     password?: string | null
@@ -6635,6 +6658,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: number
+    lang?: Lang
     login: string
     admin?: boolean
     password?: string | null
@@ -6645,6 +6669,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateInput = {
+    lang?: EnumLangFieldUpdateOperationsInput | Lang
     login?: StringFieldUpdateOperationsInput | string
     admin?: BoolFieldUpdateOperationsInput | boolean
     password?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6656,6 +6681,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    lang?: EnumLangFieldUpdateOperationsInput | Lang
     login?: StringFieldUpdateOperationsInput | string
     admin?: BoolFieldUpdateOperationsInput | boolean
     password?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6667,6 +6693,7 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: number
+    lang?: Lang
     login: string
     admin?: boolean
     password?: string | null
@@ -6676,6 +6703,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateManyMutationInput = {
+    lang?: EnumLangFieldUpdateOperationsInput | Lang
     login?: StringFieldUpdateOperationsInput | string
     admin?: BoolFieldUpdateOperationsInput | boolean
     password?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6685,6 +6713,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    lang?: EnumLangFieldUpdateOperationsInput | Lang
     login?: StringFieldUpdateOperationsInput | string
     admin?: BoolFieldUpdateOperationsInput | boolean
     password?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7011,6 +7040,13 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter
   }
 
+  export type EnumLangFilter = {
+    equals?: Lang
+    in?: Enumerable<Lang>
+    notIn?: Enumerable<Lang>
+    not?: NestedEnumLangFilter | Lang
+  }
+
   export type BoolFilter = {
     equals?: boolean
     not?: NestedBoolFilter | boolean
@@ -7028,6 +7064,7 @@ export namespace Prisma {
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
+    lang?: SortOrder
     login?: SortOrder
     admin?: SortOrder
     password?: SortOrder
@@ -7043,6 +7080,7 @@ export namespace Prisma {
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
+    lang?: SortOrder
     login?: SortOrder
     admin?: SortOrder
     password?: SortOrder
@@ -7053,6 +7091,7 @@ export namespace Prisma {
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
+    lang?: SortOrder
     login?: SortOrder
     admin?: SortOrder
     password?: SortOrder
@@ -7064,6 +7103,16 @@ export namespace Prisma {
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
     personId?: SortOrder
+  }
+
+  export type EnumLangWithAggregatesFilter = {
+    equals?: Lang
+    in?: Enumerable<Lang>
+    notIn?: Enumerable<Lang>
+    not?: NestedEnumLangWithAggregatesFilter | Lang
+    _count?: NestedIntFilter
+    _min?: NestedEnumLangFilter
+    _max?: NestedEnumLangFilter
   }
 
   export type BoolWithAggregatesFilter = {
@@ -7368,6 +7417,10 @@ export namespace Prisma {
     connect?: Enumerable<RecordWhereUniqueInput>
   }
 
+  export type EnumLangFieldUpdateOperationsInput = {
+    set?: Lang
+  }
+
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
@@ -7572,9 +7625,26 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter | number | null
   }
 
+  export type NestedEnumLangFilter = {
+    equals?: Lang
+    in?: Enumerable<Lang>
+    notIn?: Enumerable<Lang>
+    not?: NestedEnumLangFilter | Lang
+  }
+
   export type NestedBoolFilter = {
     equals?: boolean
     not?: NestedBoolFilter | boolean
+  }
+
+  export type NestedEnumLangWithAggregatesFilter = {
+    equals?: Lang
+    in?: Enumerable<Lang>
+    notIn?: Enumerable<Lang>
+    not?: NestedEnumLangWithAggregatesFilter | Lang
+    _count?: NestedIntFilter
+    _min?: NestedEnumLangFilter
+    _max?: NestedEnumLangFilter
   }
 
   export type NestedBoolWithAggregatesFilter = {
@@ -7739,6 +7809,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutPersonInput = {
+    lang?: Lang
     login: string
     admin?: boolean
     password?: string | null
@@ -7749,6 +7820,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutPersonInput = {
     id?: number
+    lang?: Lang
     login: string
     admin?: boolean
     password?: string | null
@@ -7792,6 +7864,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutPersonInput = {
+    lang?: EnumLangFieldUpdateOperationsInput | Lang
     login?: StringFieldUpdateOperationsInput | string
     admin?: BoolFieldUpdateOperationsInput | boolean
     password?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7802,6 +7875,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutPersonInput = {
     id?: IntFieldUpdateOperationsInput | number
+    lang?: EnumLangFieldUpdateOperationsInput | Lang
     login?: StringFieldUpdateOperationsInput | string
     admin?: BoolFieldUpdateOperationsInput | boolean
     password?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7912,6 +7986,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutRecordsInput = {
+    lang?: Lang
     login: string
     admin?: boolean
     password?: string | null
@@ -7922,6 +7997,7 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutRecordsInput = {
     id?: number
+    lang?: Lang
     login: string
     admin?: boolean
     password?: string | null
@@ -7941,6 +8017,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutRecordsInput = {
+    lang?: EnumLangFieldUpdateOperationsInput | Lang
     login?: StringFieldUpdateOperationsInput | string
     admin?: BoolFieldUpdateOperationsInput | boolean
     password?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7951,6 +8028,7 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutRecordsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    lang?: EnumLangFieldUpdateOperationsInput | Lang
     login?: StringFieldUpdateOperationsInput | string
     admin?: BoolFieldUpdateOperationsInput | boolean
     password?: NullableStringFieldUpdateOperationsInput | string | null

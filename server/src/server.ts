@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
 import path from 'path';
 import initRoutes from './routes';
+import './i18n';
 
 const prisma = new PrismaClient();
 const app = express();

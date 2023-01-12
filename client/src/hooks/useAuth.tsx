@@ -1,3 +1,4 @@
+import { DEFAULT_LANGUAGE } from '@fullstack-typescript-monorepo/core';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import UserRoutes, { UserWithPerson } from '../api/UserRoutes';
 
@@ -12,6 +13,7 @@ interface AuthContextInterface {
 export const emptyUser: UserWithPerson = {
   id: 0,
   login: '',
+  lang: DEFAULT_LANGUAGE,
   admin: false,
   active: true,
   connexionToken: '',

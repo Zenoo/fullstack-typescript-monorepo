@@ -154,6 +154,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = makeEnum({
   id: 'id',
+  lang: 'lang',
   login: 'login',
   admin: 'admin',
   password: 'password',
@@ -161,6 +162,11 @@ exports.Prisma.UserScalarFieldEnum = makeEnum({
   connexionToken: 'connexionToken',
   personId: 'personId'
 });
+exports.Lang = makeEnum({
+  en: 'en',
+  fr: 'fr'
+});
+
 exports.RecordAction = makeEnum({
   CREATE: 'CREATE',
   UPDATE: 'UPDATE',

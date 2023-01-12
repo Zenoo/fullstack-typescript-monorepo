@@ -1,0 +1,16 @@
+{
+  "noIDProvided": "ID manquant",
+  "nothingToExport": "Rien à exporter",
+  "unauthorized": "Non autorisé",
+  "missingPassword": "Mot de passe manquant",
+  "passwordUpdated": "Mot de passe mis à jour avec succès",
+  "tokenExpired": "Token expiré",
+  "invalidPassword": "Mot de passe invalide",
+  "passwordResetMessage": "Si le bouton ne fonctionne pas, copiez et collez ce qui suit dans votre navigateur",
+  "resetYourPassword": "Réinitialiser votre mot de passe",
+  "clickLinkToResetPassword": "Cliquez sur le lien suivant pour réinitialiser votre mot de passe",
+  "emailNotSent": "Email non envoyé",
+  "emailSent": "Email envoyé",
+  "tokenValid": "Token valide",
+  "invalidToken": "Token invalide"
+}
