@@ -51,22 +51,22 @@ const NavBar = ({ onMobileClose, openMobile }: Props) => {
         {
           href: '/app/todo',
           icon: Quiz,
-          title: t('TODO'),
+          title: t('TODO 1'),
         },
         {
           href: '/app/todo',
           icon: Quiz,
-          title: t('TODO'),
+          title: t('TODO 2'),
         },
         {
           href: '/app/todo',
           icon: Quiz,
-          title: t('TODO'),
+          title: t('TODO 3'),
         },
         {
           href: '/app/todo',
           icon: Quiz,
-          title: t('TODO'),
+          title: t('TODO 4'),
         },
       ],
     },

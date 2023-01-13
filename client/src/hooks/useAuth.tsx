@@ -1,13 +1,14 @@
 import { DEFAULT_LANGUAGE } from '@fullstack-typescript-monorepo/core';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import UserRoutes, { UserWithPerson } from '../api/UserRoutes';
+import { useLanguage } from './useLanguage';
 
 interface AuthContextInterface {
   user: UserWithPerson,
   authed: boolean,
   signin: (login: string, password: string) => Promise<UserWithPerson | null>,
   signout: () => void,
-  updateData: (data: UserWithPerson) => void,
+  updateData: (data: React.SetStateAction<UserWithPerson>) => void,
 }
 
 export const emptyUser: UserWithPerson = {
@@ -51,8 +52,14 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const { setLanguage } = useLanguage();
   const [user, setUser] = useState<UserWithPerson>(emptyUser);
   const [authed, setAuthed] = useState(false);
+
+  // Update language when necessary
+  useEffect(() => {
+    setLanguage(user.lang);
+  }, [user.lang, setLanguage]);
 
   const signin = useCallback((
     login: string,
@@ -60,6 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   ) => UserRoutes.authenticate(login, password).then((response) => {
     localStorage.setItem('user', response.login);
     localStorage.setItem('token', response.connexionToken);
+
     setUser(response);
     if (response) setAuthed(true);
     return response;
@@ -72,7 +80,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(emptyUser);
   }, []);
 
-  const updateData = useCallback((data: UserWithPerson) => {
+  const updateData = useCallback((data: React.SetStateAction<UserWithPerson>) => {
     setUser(data);
   }, []);
 

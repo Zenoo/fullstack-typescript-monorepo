@@ -1,5 +1,7 @@
+import { DEFAULT_LANGUAGE } from '@fullstack-typescript-monorepo/core';
+import { Lang } from '@fullstack-typescript-monorepo/prisma';
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, CardContent, CardHeader, Divider, Grid, TextField } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React from 'react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +19,7 @@ type FormData = {
   phone: string;
   password: string;
   passwordConfirm: string;
+  lang: Lang;
 };
 
 const ProfileDetails = ({ ...rest }) => {
@@ -31,6 +34,7 @@ const ProfileDetails = ({ ...rest }) => {
       lastName: auth.user.person.lastName,
       email: auth.user.person.email,
       phone: auth.user.person.phone || '',
+      lang: auth.user.lang,
     },
   });
 
@@ -58,6 +62,7 @@ const ProfileDetails = ({ ...rest }) => {
 
     Loader.open();
     await UserRoutes.update(auth.user.id, {
+      lang: data.lang,
       person: { update: processedData }
     }, { person: true }).then((newData) => {
       auth.updateData(newData as UserWithPerson);
@@ -96,6 +101,16 @@ const ProfileDetails = ({ ...rest }) => {
                 {...register('passwordConfirm', 'password', { validate: { mustMatch: (value) => value === password } })}
                 fullWidth
               />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>{t('lang')}</InputLabel>
+                <Select {...register('lang', 'select', { required: true })} defaultValue={auth.user.lang || DEFAULT_LANGUAGE}>
+                  {Object.keys(Lang).map((lang) => (
+                    <MenuItem key={lang} value={lang}>{t(lang)}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
         </CardContent>

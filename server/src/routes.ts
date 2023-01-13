@@ -2,6 +2,7 @@
 import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
 import { Express, Request, Response } from 'express';
 import path from 'path';
+import Home from './controllers/Home';
 import Records from './controllers/Records';
 import Requests from './controllers/Requests';
 import Users from './controllers/Users';
@@ -13,6 +14,9 @@ const initRoutes = (app: Express, prisma: PrismaClient) => {
   app.get('/api', (req: Request, res: Response) => res.status(200).send({
     message: 'server is running!',
   }));
+
+  // Home
+  app.get('/api/home/stats', Home.stats(prisma));
 
   // User
   app.post('/api/user/authenticate', Users.authenticate(prisma));

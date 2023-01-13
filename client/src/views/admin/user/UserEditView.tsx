@@ -42,6 +42,7 @@ const UserEditView = () => {
                 data={{
                   id: user.id,
                   admin: user.admin,
+                  lang: user.lang,
                   login: user.login,
                   idperson: user.person.id ? +user.person.id : 0,
                   firstName: user.person.firstName,

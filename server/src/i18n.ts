@@ -8,7 +8,7 @@ i18next.use(Backend).init({
     loadPath: 'i18n/{{lng}}.json',
   },
   fallbackLng: 'en',
-  debug: true,
+  debug: false,
   returnNull: false,
 }).catch((err) => {
   console.error('Error loading language', err);

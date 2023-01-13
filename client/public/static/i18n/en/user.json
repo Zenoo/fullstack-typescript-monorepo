@@ -11,5 +11,8 @@
   "password": "Password",
   "passwordConfirm": "Confirm Password",
   "giveAdminRights": "Give admin rights",
-  "newUserAdded": "New user added"
+  "newUserAdded": "New user added",
+  "lang": "Language",
+  "fr": "French",
+  "en": "English"
 }
