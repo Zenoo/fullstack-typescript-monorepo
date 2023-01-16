@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.3.0...fullstack-typescript-monorepo-v1.3.1) (2023-01-16)
+
+
+### Bug Fixes
+
+* Use LoadingButtons instead of whole loader when possible ([93de729](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/93de72929d6a0280bce6d6c96941808475988a1b))
+
 ## [1.3.0](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.2.0...fullstack-typescript-monorepo-v1.3.0) (2023-01-13)
 
 
