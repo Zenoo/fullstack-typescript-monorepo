@@ -9,7 +9,6 @@ import UserRoutes, { UserWithPerson } from '../../../api/UserRoutes';
 import { useAlert } from '../../../hooks/useAlert';
 import { useAuth } from '../../../hooks/useAuth';
 import useForm from '../../../hooks/useForm';
-import { useLoader } from '../../../hooks/useLoader';
 import catchError from '../../../utils/catchError';
 
 type FormData = {
@@ -25,10 +24,10 @@ type FormData = {
 const ProfileDetails = ({ ...rest }) => {
   const auth = useAuth();
   const Alert = useAlert();
-  const Loader = useLoader();
   const { t } = useTranslation('user');
 
-  const { register, handleSubmit, formState: { isSubmitting }, control } = useForm<FormData>('user', {
+  const [loading, setLoading] = React.useState(false);
+  const { register, handleSubmit, control } = useForm<FormData>('user', {
     defaultValues: {
       firstName: auth.user.person.firstName,
       lastName: auth.user.person.lastName,
@@ -55,12 +54,12 @@ const ProfileDetails = ({ ...rest }) => {
 
     if (data.password) {
       if (data.passwordConfirm) {
-        Loader.open();
+        setLoading(true);
         await UserRoutes.changePassword(auth.user.id, data.password).catch(catchError(Alert));
       }
     }
 
-    Loader.open();
+    setLoading(true);
     await UserRoutes.update(auth.user.id, {
       lang: data.lang,
       person: { update: processedData }
@@ -68,7 +67,7 @@ const ProfileDetails = ({ ...rest }) => {
       auth.updateData(newData as UserWithPerson);
       Alert.open('success', t('common:saved'));
     }).catch(catchError(Alert));
-    Loader.close();
+    setLoading(false);
   };
 
   return (
@@ -122,7 +121,7 @@ const ProfileDetails = ({ ...rest }) => {
         >
           <LoadingButton
             color="primary"
-            loading={isSubmitting}
+            loading={loading}
             type="submit"
             variant="contained"
           >

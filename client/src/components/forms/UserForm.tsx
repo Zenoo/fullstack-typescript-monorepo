@@ -9,7 +9,6 @@ import UserRoutes from '../../api/UserRoutes';
 import { useAlert } from '../../hooks/useAlert';
 import { useAuth } from '../../hooks/useAuth';
 import useForm from '../../hooks/useForm';
-import { useLoader } from '../../hooks/useLoader';
 import catchError from '../../utils/catchError';
 
 interface Data {
@@ -32,12 +31,12 @@ interface Props {
  */
 const UserForm = ({ data }: Props) => {
   const Alert = useAlert();
-  const Loader = useLoader();
   const { t } = useTranslation('user');
   const navigate = useNavigate();
   const { user, updateData } = useAuth();
 
-  const { register, handleSubmit, formState: { isSubmitting }, reset } = useForm<Data>('user', {
+  const [loading, setLoading] = React.useState(false);
+  const { register, handleSubmit, reset } = useForm<Data>('user', {
     defaultValues: data,
   });
 
@@ -57,7 +56,7 @@ const UserForm = ({ data }: Props) => {
       phone: formData.phone,
     };
 
-    Loader.open();
+    setLoading(true);
     if (formData.id) { // Edition
       if (formData.password.length) {
         await UserRoutes.changePassword(formData.id, formData.password);
@@ -83,7 +82,7 @@ const UserForm = ({ data }: Props) => {
 
         Alert.open('success', t('common:saved'));
       }).catch(catchError(Alert));
-      Loader.close();
+      setLoading(false);
     } else { // Addition
       await UserRoutes.insert({
         ...processedData,
@@ -97,7 +96,7 @@ const UserForm = ({ data }: Props) => {
         navigate('/app/admin/user/list');
         reset();
       }).catch(catchError(Alert));
-      Loader.close();
+      setLoading(false);
     }
   };
 
@@ -147,7 +146,7 @@ const UserForm = ({ data }: Props) => {
       >
         <LoadingButton
           color="primary"
-          loading={isSubmitting}
+          loading={loading}
           type="submit"
           variant="contained"
         >

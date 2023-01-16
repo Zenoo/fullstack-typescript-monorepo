@@ -11,7 +11,6 @@ import Text from '../../components/Text';
 import { useAlert } from '../../hooks/useAlert';
 import { useAuth } from '../../hooks/useAuth';
 import useForm from '../../hooks/useForm';
-import { useLoader } from '../../hooks/useLoader';
 import catchError from '../../utils/catchError';
 import { ErrorType } from '../../utils/fetcher';
 
@@ -28,23 +27,24 @@ const LoginView = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const Alert = useAlert();
-  const Loader = useLoader();
   const { t } = useTranslation('login');
 
-  const { register, handleSubmit, formState: { isSubmitting }, control, setValue, setFocus } = useForm<FormData>('user');
+  const [loading, setLoading] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
+  const { register, handleSubmit, control, setValue, setFocus } = useForm<FormData>('user');
   const login = useWatch({ name: 'login', control });
 
   /**
    * Login handler
    */
   const onSubmit = (formData: FormData) => {
-    Loader.open();
+    setLoading(true);
     auth.signin(formData.login, formData.password).then(() => {
-      Loader.close();
+      setLoading(false);
       navigate('/app/home', { replace: true });
     }).catch((response: string) => {
       catchError(Alert)(response);
-      Loader.close();
+      setLoading(false);
     });
   };
 
@@ -53,20 +53,20 @@ const LoginView = () => {
     const user = localStorage.getItem('user');
     const token = localStorage.getItem('token') || '';
     if (!auth.authed && user) {
-      Loader.open();
+      setLoading(true);
       auth.signin(user, token).catch((error: ErrorType) => {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
         navigate('/login', { replace: true });
         catchError(Alert)(error);
       }).finally(() => {
-        Loader.close();
+        setLoading(false);
       });
     }
     if (auth.authed) {
       navigate('/app/home', { replace: true });
     }
-  }, [Alert, Loader, auth, navigate, t]);
+  }, [Alert, auth, navigate, t]);
 
   // Password reset
   const resetPassword = useCallback(async () => {
@@ -74,19 +74,18 @@ const LoginView = () => {
       Alert.open('error', t('pleaseEnterLogin'));
       return;
     }
-    Loader.open();
+    setLoading(true);
     await UserRoutes.sendPasswordResetMail(login).then(() => {
       Alert.open('success', t('passwordResetMailSent'));
     }).catch(catchError(Alert));
-    Loader.close();
-  }, [Alert, Loader, login, t]);
+    setLoading(false);
+  }, [Alert, login, t]);
 
   // Password reset form
   const [resetDialogOpen, setResetDialogOpen] = useState(false);
   const {
     register: resetRegister,
     handleSubmit: resetHandleSubmit,
-    formState: { isSubmitting: resetIsSubmitting },
     control: resetControl,
     reset: resetForm,
   } = useForm<ResetFormData>('user');
@@ -104,9 +103,11 @@ const LoginView = () => {
     const url = new URL(window.location.href);
     const code = url.searchParams.get('reset');
 
+    setResetLoading(true);
     UserRoutes.resetPassword(login, code || '', formData.password).then(() => {
       Alert.open('success', t('passwordResetSuccess'));
     }).catch(catchError(Alert)).finally(() => {
+      setResetLoading(false);
       setResetDialogOpen(false);
       resetForm();
     });
@@ -175,7 +176,7 @@ const LoginView = () => {
             <Box my={2}>
               <LoadingButton
                 color="primary"
-                loading={isSubmitting}
+                loading={loading}
                 fullWidth
                 size="large"
                 type="submit"
@@ -210,7 +211,7 @@ const LoginView = () => {
             <Button onClick={closeResetDialog}>{t('common:cancel')}</Button>
             <LoadingButton
               color="primary"
-              loading={resetIsSubmitting}
+              loading={resetLoading}
               type="submit"
               variant="contained"
             >
