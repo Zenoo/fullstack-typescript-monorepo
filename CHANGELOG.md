@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.3.1...fullstack-typescript-monorepo-v1.3.2) (2023-01-17)
+
+
+### Bug Fixes
+
+* Improved translations ([f95addd](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/f95addd9437900921e944cb536668511b96a367e))
+
 ## [1.3.1](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.3.0...fullstack-typescript-monorepo-v1.3.1) (2023-01-16)
 
 
