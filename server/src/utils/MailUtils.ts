@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import { createTransport } from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 
@@ -83,12 +84,12 @@ ${action}
  * @param url
  * @param message
  */
-const passwordResetTemplate = (url: string, message: string) => /* html */`<!DOCTYPE html>
+const passwordResetTemplate = (url: string) => /* html */`<!DOCTYPE html>
 <html lang="en-US">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>Reset Password Email</title>
-<meta name="description" content="Reset Password Email Template." />
+<title>${t('resetPasswordEmail')}</title>
+<meta name="description" content="${t('resetPasswordEmail')}" />
 <style type="text/css">
 a:hover {
 text-decoration: underline !important;
@@ -125,16 +126,16 @@ text-align: center; -webkit-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.06); -moz-b
 <h1 style="color: #1e1e2d; font-weight: 500; margin: 0; font-size: 32px; font-family: 'Rubik', sans-serif;">You have requested to reset your password</h1>
 <span style="display: inline-block; vertical-align: middle; margin: 29px 0 26px; border-bottom: 1px solid #cecece; width: 100px;"></span>
 <p style="color: #455056; font-size: 15px; line-height: 24px; margin: 0;">
-We cannot simply send you your old password. A unique link to reset your password has been generated for you. To reset your password, click the following button and follow the instructions.
+${t('cannotSendOldPassword')}
 </p>
 <a href="${url}" style=" background: #3f51b5; text-decoration: none !important; font-weight: 500; margin-top: 35px; color: #fff;
 text-transform: uppercase; font-size: 14px; padding: 10px 24px; display: inline-block; border-radius: 50px; ">
-Reset Password
+${t('resetPassword')}
 </a>
 <br/>
 <span style="height: 40px;">&nbsp;</span>
 <p style="color: #455056; font-size: 15px; line-height: 24px; margin: 0;">
-${message} :
+${t('passwordResetMessage')} :
 <a href="${url}">${url}</a>
 </p>
 </td>
@@ -175,7 +176,7 @@ const sendMail = async (mailOptions: Mail.Options) => {
   const connected = await transporter.verify();
 
   if (!connected) {
-    throw new Error('Unable to connect to mail server');
+    throw new Error(t('unableToConnectToMailServer'));
   }
 
   // Send mail

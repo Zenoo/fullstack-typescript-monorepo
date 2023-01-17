@@ -25,11 +25,11 @@ const authenticate = (prisma: PrismaClient) => async (
     const { login, password } = req.body;
 
     if (!login) {
-      throw new Error('Missing Login');
+      throw new Error(t('missingLogin'));
     }
 
     if (!password) {
-      throw new Error('Missing Password');
+      throw new Error(t('missingPassword'));
     }
 
     const user = await prisma.user.findFirstOrThrow({
@@ -53,7 +53,7 @@ const authenticate = (prisma: PrismaClient) => async (
       }
 
       // Token is expired, throw error
-      throw new Error(t('tokenExpired'));
+      throw new Error(t('sessionExpiredPleaseReconnect'));
     }
 
     // Check password against DB
@@ -159,16 +159,13 @@ const sendPasswordResetEmail = (prisma: PrismaClient) => async (
     // Reset URL
     const url = `${req.protocol}://${req.hostname}/login?login=${encodeURIComponent(user.login)}&reset=${encodeURIComponent(token)}`;
 
-    // Mail message
-    const message = t('passwordResetMessage');
-
     // Send email
     const mailInfo = await MailUtils.sendMail({
       from: MAIL_SENDER,
       to: user.person.email,
       subject: t('resetYourPassword'),
       text: `${t('clickLinkToResetPassword')}: ${url}`,
-      html: MailUtils.passwordResetTemplate(url, message),
+      html: MailUtils.passwordResetTemplate(url),
     });
 
     if (mailInfo.accepted.length === 0) {
@@ -229,15 +226,15 @@ const resetPassword = (prisma: PrismaClient) => async (
     const { code, login, password } = req.body;
 
     if (!code) {
-      throw new Error('Missing token');
+      throw new Error(t('missingToken'));
     }
 
     if (!login) {
-      throw new Error('Missing login');
+      throw new Error(t('missingLogin'));
     }
 
     if (!password) {
-      throw new Error('Missing password');
+      throw new Error(t('missingPassword'));
     }
 
     const user = await prisma.user.findFirstOrThrow({
