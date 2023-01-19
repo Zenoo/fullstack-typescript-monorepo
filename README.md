@@ -42,7 +42,7 @@
 
 - Fork the project
 
-- Make sure your NodeJS and yarn versions are up to date
+- Make sure your NodeJS and npm versions are up to date
 
 - Install dependencies: `npm run install`
 
