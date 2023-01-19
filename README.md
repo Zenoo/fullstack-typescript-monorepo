@@ -44,8 +44,6 @@
 
 - Make sure your NodeJS and npm versions are up to date
 
-- Install dependencies: `npm run install`
-
 - Copy `.env.sample` to `.env` and adapt the database URL
 
 - Install dependencies: `npm i` (This should also setup your database from the `schema.prisma` file and the migrations)
