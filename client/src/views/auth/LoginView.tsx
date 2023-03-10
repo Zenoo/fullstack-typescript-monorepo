@@ -143,7 +143,7 @@ const LoginView = () => {
 
   return (
     <Page
-      title={`Eurodecision - ${t('login')}`}
+      title={`Fullstack Typescript Monorepo - ${t('login')}`}
     >
       <Box
         display="flex"
