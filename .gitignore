@@ -67,3 +67,6 @@ typings/
 lib/
 
 *.tsbuildinfo
+
+# Ignore root /exe folder
+/exe

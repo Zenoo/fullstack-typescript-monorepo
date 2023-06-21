@@ -2,9 +2,19 @@
   "name": "fullstack-typescript-monorepo",
   "version": "1.3.3",
   "private": true,
+  "bin": "./server/lib/server.js",
   "engines": {
     "npm": "8.1.2",
     "node": "16.13.1"
+  },
+  "pkg": {
+    "targets": [
+      "node16-win-x64"
+    ],
+    "assets": [
+      "client/build/**/*",
+      "server/.env"
+    ]
   },
   "scripts": {
     "clean": "rimraf \"client/build\" \"core/lib\" \"server/lib\" \"**/node_modules\" \"**/tsconfig.tsbuildinfo\"",
@@ -16,7 +26,8 @@
     "db:sync:dev": "npm run db:sync:dev --workspace=server",
     "db:sync:prod": "npm run db:sync:prod --workspace=server",
     "db:seed": "npm run db:seed --workspace=server",
-    "postinstall": "bash ./postInstall.sh"
+    "postinstall": "bash ./postInstall.sh",
+    "generate-exe": "bash ./generateExecutable.sh"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
