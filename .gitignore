@@ -68,5 +68,8 @@ lib/
 
 *.tsbuildinfo
 
-# Ignore root /exe folder
-/exe
+# Ignore /exe generables
+/exe/bin/server.exe
+/exe/bin/client
+/exe/database/data
+/exe/database/logfile

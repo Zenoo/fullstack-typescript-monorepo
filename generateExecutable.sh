@@ -7,8 +7,9 @@ npm run build --workspace=client
 # Build server executable
 pkg .
 
-# Empty /exe directory
-rm -rf exe
+# Clean /exe directory
+rm exe/bin/server.exe
+rm -rf exe/bin/client
 
 # Create /exe directory
 mkdir -p exe/bin
@@ -21,6 +22,3 @@ nativefier --name "Fullstack Typescript Monorepo" --icon "client/public/favicon.
 
 # Move native electron app to /exe
 mv Fullstack\ Typescript\ Monorepo-win32-x64/ exe/bin/client
-
-# Copy launcher to /exe
-cp launcher.bat exe/launcher.bat

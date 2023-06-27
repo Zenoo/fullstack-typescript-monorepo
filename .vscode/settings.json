@@ -1,5 +1,13 @@
 {
   "search.exclude": {
+    "exe/database/bin/**/*": true,
+    "exe/database/doc/**/*": true,
+    "exe/database/include/**/*": true,
+    "exe/database/lib/**/*": true,
+    "exe/database/pgAdmin 4/**/*": true,
+    "exe/database/share/**/*": true,
+    "exe/database/StackBuilder/**/*": true,
+    "exe/database/symbols/**/*": true,
     "prisma/**/*": true
   }
 }

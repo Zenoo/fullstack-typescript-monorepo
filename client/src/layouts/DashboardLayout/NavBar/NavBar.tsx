@@ -295,7 +295,7 @@ const NavBar = ({ onMobileClose, openMobile }: Props) => {
             align="center"
             body2
           >
-            PREVIEW - v
+            {process.env.NODE_ENV.toUpperCase()} - v
             {Version}
           </Text>
         )}

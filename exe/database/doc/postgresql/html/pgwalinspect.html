@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>F.37. pg_walinspect</title><link rel="stylesheet" type="text/css" href="stylesheet.css" /><link rev="made" href="pgsql-docs@lists.postgresql.org" /><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" /><link rel="prev" href="pgvisibility.html" title="F.36. pg_visibility" /><link rel="next" href="postgres-fdw.html" title="F.38. postgres_fdw" /></head><body id="docContent" class="container-fluid col-10"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="5" align="center">F.37. pg_walinspect</th></tr><tr><td width="10%" align="left"><a accesskey="p" href="pgvisibility.html" title="F.36. pg_visibility">Prev</a> </td><td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix F. Additional Supplied Modules">Up</a></td><th width="60%" align="center">Appendix F. Additional Supplied Modules</th><td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 15.3 Documentation">Home</a></td><td width="10%" align="right"> <a accesskey="n" href="postgres-fdw.html" title="F.38. postgres_fdw">Next</a></td></tr></table><hr /></div><div class="sect1" id="PGWALINSPECT"><div class="titlepage"><div><div><h2 class="title" style="clear: both">F.37. pg_walinspect</h2></div></div></div><div class="toc"><dl class="toc"><dt><span class="sect2"><a href="pgwalinspect.html#id-1.11.7.46.8">F.37.1. General Functions</a></span></dt><dt><span class="sect2"><a href="pgwalinspect.html#id-1.11.7.46.9">F.37.2. Author</a></span></dt></dl></div><a id="id-1.11.7.46.2" class="indexterm"></a><p>
+  The <code class="filename">pg_walinspect</code> module provides SQL functions that
+  allow you to inspect the contents of write-ahead log of
+  a running <span class="productname">PostgreSQL</span> database cluster at a low
+  level, which is useful for debugging, analytical, reporting or
+  educational purposes. It is similar to <a class="xref" href="pgwaldump.html" title="pg_waldump"><span class="refentrytitle"><span class="application">pg_waldump</span></span></a>, but
+  accessible through SQL rather than a separate utility.
+ </p><p>
+  All the functions of this module will provide the WAL information using the
+  current server's timeline ID.
+ </p><p>
+  All the functions of this module will try to find the first valid WAL record
+  that is at or after the given <em class="replaceable"><code>in_lsn</code></em> or
+  <em class="replaceable"><code>start_lsn</code></em> and will emit error if no such record
+  is available. Similarly, the <em class="replaceable"><code>end_lsn</code></em> must be
+  available, and if it falls in the middle of a record, the entire record must
+  be available.
+ </p><div class="note"><h3 class="title">Note</h3><p>
+   Some functions, such as <code class="function"><a class="link" href="functions-admin.html#PG-LOGICAL-EMIT-MESSAGE">pg_logical_emit_message</a></code>,
+   return the LSN <span class="emphasis"><em>after</em></span> the record just
+   inserted. Therefore, if you pass that LSN as
+   <em class="replaceable"><code>in_lsn</code></em> or <em class="replaceable"><code>start_lsn</code></em>
+   to one of these functions, it will return the <span class="emphasis"><em>next</em></span>
+   record.
+  </p></div><p>
+  By default, use of these functions is restricted to superusers and members of
+  the <code class="literal">pg_read_server_files</code> role. Access may be granted by
+  superusers to others using <code class="command">GRANT</code>.
+ </p><div class="sect2" id="id-1.11.7.46.8"><div class="titlepage"><div><div><h3 class="title">F.37.1. General Functions</h3></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+     <code class="function">pg_get_wal_record_info(in_lsn pg_lsn) returns record</code>
+    </span></dt><dd><p>
+      Gets WAL record information of a given LSN. If the given LSN isn't
+      at the start of a WAL record, it gives the information of the next
+      available valid WAL record; or an error if no such record is found.
+      For example, usage of the function is as
+      follows:
+</p><pre class="screen">
+postgres=# SELECT * FROM pg_get_wal_record_info('0/1E826E98');
+-[ RECORD 1 ]----+----------------------------------------------------
+start_lsn        | 0/1E826F20
+end_lsn          | 0/1E826F60
+prev_lsn         | 0/1E826C80
+xid              | 0
+resource_manager | Heap2
+record_type      | PRUNE
+record_length    | 58
+main_data_length | 8
+fpi_length       | 0
+description      | snapshotConflictHorizon 33748 nredirected 0 ndead 2
+block_ref        | blkref #0: rel 1663/5/60221 fork main blk 2
+</pre><p>
+     </p></dd><dt><span class="term">
+     <code class="function">
+      pg_get_wal_records_info(start_lsn pg_lsn, end_lsn pg_lsn)
+      returns setof record
+     </code>
+    </span></dt><dd><p>
+      Gets information of all the valid WAL records between
+      <em class="replaceable"><code>start_lsn</code></em> and <em class="replaceable"><code>end_lsn</code></em>.
+      Returns one row per WAL record. If <em class="replaceable"><code>start_lsn</code></em>
+      or <em class="replaceable"><code>end_lsn</code></em> are not yet available, the
+      function will raise an error. For example:
+</p><pre class="screen">
+postgres=# SELECT * FROM pg_get_wal_records_info('0/1E913618', '0/1E913740') LIMIT 1;
+-[ RECORD 1 ]----+--------------------------------------------------------------
+start_lsn        | 0/1E913618
+end_lsn          | 0/1E913650
+prev_lsn         | 0/1E9135A0
+xid              | 0
+resource_manager | Standby
+record_type      | RUNNING_XACTS
+record_length    | 50
+main_data_length | 24
+fpi_length       | 0
+description      | nextXid 33775 latestCompletedXid 33774 oldestRunningXid 33775
+block_ref        |
+</pre><p>
+     </p></dd><dt><span class="term">
+     <code class="function">
+      pg_get_wal_records_info_till_end_of_wal(start_lsn pg_lsn)
+      returns setof record
+     </code>
+    </span></dt><dd><p>
+      This function is the same as <code class="function">pg_get_wal_records_info()</code>,
+      except that it gets information of all the valid WAL records from
+      <em class="replaceable"><code>start_lsn</code></em> till the end of WAL.
+     </p></dd><dt><span class="term">
+     <code class="function">
+      pg_get_wal_stats(start_lsn pg_lsn, end_lsn pg_lsn, per_record boolean DEFAULT false)
+      returns setof record
+     </code>
+    </span></dt><dd><p>
+      Gets statistics of all the valid WAL records between
+      <em class="replaceable"><code>start_lsn</code></em> and
+      <em class="replaceable"><code>end_lsn</code></em>. By default, it returns one row per
+      <em class="replaceable"><code>resource_manager</code></em> type. When
+      <em class="replaceable"><code>per_record</code></em> is set to <code class="literal">true</code>,
+      it returns one row per <em class="replaceable"><code>record_type</code></em>.
+      If <em class="replaceable"><code>start_lsn</code></em>
+      or <em class="replaceable"><code>end_lsn</code></em> are not yet available, the
+      function will raise an error. For example:
+</p><pre class="screen">
+postgres=# SELECT * FROM pg_get_wal_stats('0/1E847D00', '0/1E84F500')
+             WHERE count &gt; 0 LIMIT 1 AND
+                   "resource_manager/record_type" = 'Transaction';
+-[ RECORD 1 ]----------------+-------------------
+resource_manager/record_type | Transaction
+count                        | 2
+count_percentage             | 8
+record_size                  | 875
+record_size_percentage       | 41.23468426013195
+fpi_size                     | 0
+fpi_size_percentage          | 0
+combined_size                | 875
+combined_size_percentage     | 2.8634072910530795
+</pre><p>
+     </p></dd><dt><span class="term">
+     <code class="function">
+      pg_get_wal_stats_till_end_of_wal(start_lsn pg_lsn, per_record boolean DEFAULT false)
+      returns setof record
+     </code>
+    </span></dt><dd><p>
+      This function is the same as <code class="function">pg_get_wal_stats()</code>,
+      except that it gets statistics of all the valid WAL records from
+      <em class="replaceable"><code>start_lsn</code></em> till end of WAL.
+     </p></dd></dl></div></div><div class="sect2" id="id-1.11.7.46.9"><div class="titlepage"><div><div><h3 class="title">F.37.2. Author</h3></div></div></div><p>
+   Bharath Rupireddy <code class="email">&lt;<a class="email" href="mailto:bharath.rupireddyforpostgres@gmail.com">bharath.rupireddyforpostgres@gmail.com</a>&gt;</code>
+  </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="pgvisibility.html" title="F.36. pg_visibility">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix F. Additional Supplied Modules">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="postgres-fdw.html" title="F.38. postgres_fdw">Next</a></td></tr><tr><td width="40%" align="left" valign="top">F.36. pg_visibility </td><td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 15.3 Documentation">Home</a></td><td width="40%" align="right" valign="top"> F.38. postgres_fdw</td></tr></table></div></body></html>
