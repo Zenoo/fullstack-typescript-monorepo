@@ -1,24 +1,7 @@
 @echo off
 
-:: SET ENVIRONMENT VARIABLES
-:: PostgreSQL executable path: current folder/database/bin
-set PATH=%PATH%;%cd%\database\bin
-:: PostgreSQL root directory: current folder/database
-set PGDIR=%cd%\database
-:: PostgreSQL data directory: current folder/database/data
-set PGDATA=%cd%\database\data
-:: PostgreSQL locale directory: current folder/database/share/locale
-set PGLOCALEDIR=%cd%\database\share\locale
-:: PostgreSQL port: 5888
-set PGPORT=5888
-:: PostgreSQL database name: ftm
-set PGDATABASE=ftm
-:: PostgreSQL username: ftmuser
-set PGUSER=ftmuser
-:: PostgreSQL password: ftmpassword
-set PGPASSWORD=ftmpassword
-:: PostgreSQL logs: current folder/database/logfile
-set PGLOGS=%cd%\database\logfile
+:: Initialize environment variables
+call variables.bat
 
 :: Initialize database if not exists
 if not exist database\data (
@@ -58,4 +41,4 @@ start /B server.exe
 cd client
 
 :: Run Fullstack\ Typescript\ Monorepo.exe normally
-start "" "Fullstack Typescript Monorepo.exe"
+start "" "%APPNAME%.exe"
