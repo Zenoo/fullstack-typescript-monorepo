@@ -74,3 +74,7 @@ server/lib/
 /exe/bin/client
 /exe/database/data
 /exe/database/logfile
+/exe/resources.tar.gz
+/exe/Fullstack Typescript Monorepo.EXE
+/exe/Installer.EXE
+/exe/favicon.ico

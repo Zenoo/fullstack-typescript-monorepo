@@ -38,6 +38,15 @@
 
 - Start the server with `npm run start`
 
+## Generating a local standalone executable
+
+In cases where you want to distribute your app as local standalone (with the server on a local machine), you can follow these steps:
+
+- Replace the paths in [exe/installer.SED](exe/installer.SED) and [exe/launcher.SED](launcher.SED) with the path to your project.
+<!-- - Install [Resource Hacker](http://www.angusj.com/resourcehacker/) and add it to your PATH. -->
+- Run `npm run generate-exe` to generate the executable.
+- The installer will be generated at `exe/Installer.exe`.
+
 ## Contributing
 
 - Fork the project

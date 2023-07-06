@@ -13,7 +13,7 @@ cp server/.env.standalone server/.env
 # Read variables from variables.bat
 # Example: set APPNAME=MyApp
 # Should return: MyApp
-APPNAME=$(grep APPNAME exe/variables.bat | cut -d'=' -f2)
+APPNAME=$(grep APPNAME= exe/variables.bat | cut -d'=' -f2)
 SERVERPORT=$(grep SERVERPORT exe/variables.bat | cut -d'=' -f2)
 PGPORT=$(grep PGPORT exe/variables.bat | cut -d'=' -f2)
 PGDATABASE=$(grep PGDATABASE exe/variables.bat | cut -d'=' -f2)
@@ -53,3 +53,31 @@ nativefier --name "${APPNAME}" --icon "client/public/favicon.ico" "http://localh
 
 # Move native electron app to /exe
 mv "${APPNAME}-win32-x64/" exe/bin/client
+
+# Copy favicon.ico to /exe
+cp client/public/favicon.ico exe/favicon.ico
+
+# Generate launcher executable with iexpress with exe/launcher.sed
+iexpress /N /Q /M ./exe/launcher.SED
+
+# Replace exe icon with Resource Hacker
+# Makes Windows Defender cry, so skip for now
+# ResourceHacker.exe -open "exe/${APPNAME}.exe" -save "exe/${APPNAME}.exe" -action addskip -res "exe/favicon.ico" -mask ICONGROUP,MAINICON,
+
+# Create zip file (Windows)
+# With
+# exe/variables.bat
+# exe/favicon.ico
+# exe/bin
+# exe/database/bin
+# exe/database/include
+# exe/database/lib
+# exe/database/share
+# exe/database/StackBuilder
+# exe/database/symbols
+# exe/database/backup.sql
+# exe/${APPNAME}.exe
+tar -czvf "exe/resources.tar.gz" exe/variables.bat exe/favicon.ico exe/bin exe/database/bin exe/database/include exe/database/lib exe/database/share exe/database/StackBuilder exe/database/symbols exe/database/backup.sql "exe/${APPNAME}.EXE"
+
+# Generate installer executable with iexpress with exe/installer.sed
+iexpress /N /Q /M ./exe/installer.SED
