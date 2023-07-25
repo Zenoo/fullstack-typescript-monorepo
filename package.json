@@ -12,11 +12,15 @@
     "front": "npm run start --workspace=client",
     "back": "npm run start:watch --workspace=server",
     "start": "npm run start --workspace=server",
-    "dev": "concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run back\" \"npm run front\"",
+    "dev": "concurrently --prefix \"[{name}]\" --names \"DB,SERVER,CLIENT\" -c \"bgMagenta.bold,bgBlue.bold,bgGreen.bold\" \"npm run studio\" \"npm run back\" \"npm run front\"",
     "db:sync:dev": "npm run db:sync:dev --workspace=server",
     "db:sync:prod": "npm run db:sync:prod --workspace=server",
     "db:seed": "npm run db:seed --workspace=server",
-    "postinstall": "bash ./postInstall.sh"
+    "db:reset": "npm run db:reset --workspace=server",
+    "build": "npm run compile && npm run build:client",
+    "build:client": "npm run build --workspace=client",
+    "postinstall": "bash ./postInstall.sh",
+    "studio": "npm run studio --workspace=server"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",

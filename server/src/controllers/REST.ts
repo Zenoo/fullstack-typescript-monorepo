@@ -1,4 +1,4 @@
-import { PrismaInclude } from '@fullstack-typescript-monorepo/core';
+import { ExpectedError, PrismaInclude } from '@fullstack-typescript-monorepo/core';
 import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
 import { Request, Response } from 'express';
 import { t } from 'i18next';
@@ -58,7 +58,7 @@ const get = (model: string) => (prisma: PrismaClient) => async (
     const { include } = req.body;
 
     if (!+id) {
-      throw new Error(t('noIDProvided'));
+      throw new ExpectedError(t('noIDProvided'));
     }
 
     const prismaModel = (prisma as GenericPrisma)[model] as MOCK_PrismaModel;
@@ -116,7 +116,7 @@ const getAllAsCsv = (model: string) => (prisma: PrismaClient) => async (
     const objects = await prismaModel.findMany() as Record<string, unknown>[];
 
     if (!objects.length) {
-      throw new Error(t('nothingToExport'));
+      throw new ExpectedError(t('nothingToExport'));
     }
 
     // Create CSV file

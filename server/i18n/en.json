@@ -18,5 +18,6 @@
   "emailSent": "Email sent",
   "tokenValid": "Token valid",
   "invalidToken": "Invalid token",
-  "unableToConnectToMailServer": "Unable to connect to mail server"
+  "unableToConnectToMailServer": "Unable to connect to mail server",
+  "unknownUser": "Unknown user"
 }

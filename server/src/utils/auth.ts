@@ -1,3 +1,4 @@
+import { ExpectedError } from '@fullstack-typescript-monorepo/core';
 import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
 import { Request } from 'express';
 import i18next from 'i18next';
@@ -6,10 +7,10 @@ const auth = async (prisma: PrismaClient, request: Request) => {
   const { headers: { authorization } } = request;
 
   if (!authorization) {
-    throw new Error('No authorization header');
+    throw new ExpectedError('No authorization header');
   }
   if (typeof authorization !== 'string') {
-    throw new Error('Invalid authorization header');
+    throw new ExpectedError('Invalid authorization header');
   }
 
   const [login, token] = Buffer.from(authorization.split(' ')[1], 'base64')

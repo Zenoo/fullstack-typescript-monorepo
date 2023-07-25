@@ -4,7 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const {
   Decimal,
   objectEnumValues,
-  makeStrictEnum
+  makeStrictEnum,
+  Public,
 } = require('./runtime/index-browser')
 
 
@@ -13,12 +14,12 @@ const Prisma = {}
 exports.Prisma = Prisma
 
 /**
- * Prisma Client JS version: 4.7.1
- * Query Engine version: 272861e07ab64f234d3ffc4094e32bd61775599c
+ * Prisma Client JS version: 5.0.0
+ * Query Engine version: 6b0aef69b7cdfc787f822ecd7cdc76d5f1991584
  */
 Prisma.prismaVersion = {
-  client: "4.7.1",
-  engine: "272861e07ab64f234d3ffc4094e32bd61775599c"
+  client: "5.0.0",
+  engine: "6b0aef69b7cdfc787f822ecd7cdc76d5f1991584"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -66,8 +67,19 @@ Prisma.raw = () => {
   throw new Error(`raw is unable to be run in the browser.
 In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
 )}
-Prisma.validator = () => (val) => val
+Prisma.validator = Public.validator
 
+/**
+* Extensions
+*/
+Prisma.getExtensionContext = () => {
+  throw new Error(`Extensions.getExtensionContext is unable to be run in the browser.
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
+)}
+Prisma.defineExtension = () => {
+  throw new Error(`Extensions.defineExtension is unable to be run in the browser.
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues`,
+)}
 
 /**
  * Shorthand utilities for JSON filtering
@@ -85,65 +97,6 @@ Prisma.NullTypes = {
 /**
  * Enums
  */
-// Based on
-// https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
-function makeEnum(x) { return x; }
-
-exports.Prisma.AddressScalarFieldEnum = makeEnum({
-  id: 'id',
-  streetNumber: 'streetNumber',
-  street: 'street',
-  zip: 'zip',
-  city: 'city',
-  country: 'country',
-  placeId: 'placeId'
-});
-
-exports.Prisma.JsonNullValueFilter = makeEnum({
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull,
-  AnyNull: Prisma.AnyNull
-});
-
-exports.Prisma.JsonNullValueInput = makeEnum({
-  JsonNull: Prisma.JsonNull
-});
-
-exports.Prisma.PersonScalarFieldEnum = makeEnum({
-  id: 'id',
-  firstName: 'firstName',
-  lastName: 'lastName',
-  email: 'email',
-  phone: 'phone',
-  phone2: 'phone2',
-  addressId: 'addressId'
-});
-
-exports.Prisma.QueryMode = makeEnum({
-  default: 'default',
-  insensitive: 'insensitive'
-});
-
-exports.Prisma.RecordScalarFieldEnum = makeEnum({
-  id: 'id',
-  date: 'date',
-  action: 'action',
-  object: 'object',
-  newValue: 'newValue',
-  authorId: 'authorId'
-});
-
-exports.Prisma.RequestScalarFieldEnum = makeEnum({
-  id: 'id',
-  date: 'date',
-  status: 'status',
-  response: 'response'
-});
-
-exports.Prisma.SortOrder = makeEnum({
-  asc: 'asc',
-  desc: 'desc'
-});
 
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
@@ -152,7 +105,27 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = makeEnum({
+exports.Prisma.AddressScalarFieldEnum = {
+  id: 'id',
+  streetNumber: 'streetNumber',
+  street: 'street',
+  zip: 'zip',
+  city: 'city',
+  country: 'country',
+  placeId: 'placeId'
+};
+
+exports.Prisma.PersonScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  phone2: 'phone2',
+  addressId: 'addressId'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   lang: 'lang',
   login: 'login',
@@ -161,31 +134,72 @@ exports.Prisma.UserScalarFieldEnum = makeEnum({
   active: 'active',
   connexionToken: 'connexionToken',
   personId: 'personId'
-});
-exports.Lang = makeEnum({
+};
+
+exports.Prisma.RequestScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  status: 'status',
+  response: 'response'
+};
+
+exports.Prisma.RecordScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  action: 'action',
+  object: 'object',
+  newValue: 'newValue',
+  authorId: 'authorId'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+exports.Lang = {
   en: 'en',
   fr: 'fr'
-});
+};
 
-exports.RecordAction = makeEnum({
-  CREATE: 'CREATE',
-  UPDATE: 'UPDATE',
-  DELETE: 'DELETE'
-});
-
-exports.RequestStatus = makeEnum({
+exports.RequestStatus = {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
   ERROR: 'ERROR'
-});
+};
 
-exports.Prisma.ModelName = makeEnum({
+exports.RecordAction = {
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE'
+};
+
+exports.Prisma.ModelName = {
   Address: 'Address',
   Person: 'Person',
   User: 'User',
   Request: 'Request',
   Record: 'Record'
-});
+};
 
 /**
  * Create the Client

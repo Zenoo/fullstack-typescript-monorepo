@@ -12,7 +12,8 @@
     "start:watch": "tsc-watch --build ./tsconfig.json --onSuccess \"node ./lib/server.js\"",
     "db:sync:dev": "prisma migrate dev && cp ../prisma/package.reference.json ../prisma/package.json",
     "db:sync:prod": "prisma migrate deploy",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "studio": "prisma studio"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -20,9 +21,11 @@
   "dependencies": {
     "@fullstack-typescript-monorepo/core": "*",
     "@fullstack-typescript-monorepo/prisma": "*",
-    "@prisma/client": "^4.7.1",
+    "@prisma/client": "^5.0.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.0",
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.3.1",
     "express": "^4.18.1",
     "i18next": "^22.4.9",
     "i18next-fs-backend": "^2.1.1",
@@ -40,7 +43,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-tsdoc": "^0.2.16",
-    "prisma": "^4.7.1",
+    "prisma": "^5.0.0",
     "ts-node": "^10.9.1",
     "tsc-watch": "^5.0.3",
     "typescript": "^4.9.4"

@@ -50,7 +50,7 @@ export interface TableRequestBody {
 }
 
 export type PrismaModel = MOCK_PrismaModel
-  | Prisma.UserDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>;
+  | Prisma.UserDelegate;
 
 /**
  * Get data for the table request

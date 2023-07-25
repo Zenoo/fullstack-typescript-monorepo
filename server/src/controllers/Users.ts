@@ -1,13 +1,14 @@
+import { ExpectedError } from '@fullstack-typescript-monorepo/core';
 import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import i18next, { t } from 'i18next';
 import moment from 'moment';
-import auth from '../utils/auth';
 import MailUtils, { MAIL_SENDER } from '../utils/MailUtils';
-import sendError from '../utils/sendError';
 import TableUtils, { TableRequestBody } from '../utils/TableUtils';
 import UserUtils from '../utils/UserUtils';
+import auth from '../utils/auth';
+import sendError from '../utils/sendError';
 import REST from './REST';
 
 /**
@@ -25,20 +26,24 @@ const authenticate = (prisma: PrismaClient) => async (
     const { login, password } = req.body;
 
     if (!login) {
-      throw new Error(t('missingLogin'));
+      throw new ExpectedError(t('missingLogin'));
     }
 
     if (!password) {
-      throw new Error(t('missingPassword'));
+      throw new ExpectedError(t('missingPassword'));
     }
 
-    const user = await prisma.user.findFirstOrThrow({
+    const user = await prisma.user.findFirst({
       where: {
         login,
         active: true,
       },
       include: { person: true },
     });
+
+    if (!user) {
+      throw new ExpectedError(t('unknownUser'));
+    }
 
     // Check password against connexion token
     const passwordIsToken = password === user.connexionToken;
@@ -53,7 +58,7 @@ const authenticate = (prisma: PrismaClient) => async (
       }
 
       // Token is expired, throw error
-      throw new Error(t('sessionExpiredPleaseReconnect'));
+      throw new ExpectedError(t('sessionExpiredPleaseReconnect'));
     }
 
     // Check password against DB
@@ -84,7 +89,7 @@ const authenticate = (prisma: PrismaClient) => async (
       return;
     }
 
-    throw new Error(t('invalidPassword'));
+    throw new ExpectedError(t('invalidPassword'));
   } catch (error) {
     sendError(res, error);
   }
@@ -109,12 +114,12 @@ const changePassword = (prisma: PrismaClient) => async (
 
     // Check if user is self or admin
     if (user.id !== id && !user.admin) {
-      throw new Error(t('unauthorized'));
+      throw new ExpectedError(t('unauthorized'));
     }
 
     // Check if password is provided
     if (!password) {
-      throw new Error(t('missingPassword'));
+      throw new ExpectedError(t('missingPassword'));
     }
 
     // Hash password
@@ -203,7 +208,7 @@ const checkResetCodeValidity = (prisma: PrismaClient) => async (
     if (tokenIsValid) {
       res.send({ message: t('tokenValid') });
     } else {
-      throw new Error(t('invalidToken'));
+      throw new ExpectedError(t('invalidToken'));
     }
   } catch (error) {
     sendError(res, error);
@@ -226,15 +231,15 @@ const resetPassword = (prisma: PrismaClient) => async (
     const { code, login, password } = req.body;
 
     if (!code) {
-      throw new Error(t('missingToken'));
+      throw new ExpectedError(t('missingToken'));
     }
 
     if (!login) {
-      throw new Error(t('missingLogin'));
+      throw new ExpectedError(t('missingLogin'));
     }
 
     if (!password) {
-      throw new Error(t('missingPassword'));
+      throw new ExpectedError(t('missingPassword'));
     }
 
     const user = await prisma.user.findFirstOrThrow({
@@ -249,7 +254,7 @@ const resetPassword = (prisma: PrismaClient) => async (
     const tokenIsValid = await bcrypt.compare(`${user.id}`, code);
 
     if (!tokenIsValid) {
-      throw new Error(t('invalidToken'));
+      throw new ExpectedError(t('invalidToken'));
     }
 
     // Hash password
