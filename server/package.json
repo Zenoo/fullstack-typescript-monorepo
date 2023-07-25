@@ -1,6 +1,6 @@
 {
   "name": "@fullstack-typescript-monorepo/server",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "private": true,
   "entry": "src/server.js",
   "engines": {
