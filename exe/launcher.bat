@@ -6,7 +6,7 @@ call variables.bat
 :: Start PostgreSQL server if not running
 call "%PGDIR%\bin\pg_ctl" -D %PGDATA% status
 if %errorlevel%==3 (
-  call "%PGDIR%\bin\pg_ctl" -D %PGDATA% -l %PGLOGS% start
+  call "%PGDIR%\bin\pg_ctl" -D %PGDATA% -l %PGLOGS% -o "-p %PGPORT%" start
 )
 
 :: Move to the bin directory

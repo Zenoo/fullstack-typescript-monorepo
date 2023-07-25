@@ -3,7 +3,7 @@ Class=IEXPRESS
 SEDVersion=3
 [Options]
 PackagePurpose=InstallApp
-ShowInstallProgramWindow=0
+ShowInstallProgramWindow=1
 HideExtractAnimation=0
 UseLongFileName=1
 InsideCompressed=0

@@ -43,7 +43,7 @@ call "%PGDIR%\bin\initdb" -D "%PGDATA%" -U %PGUSER% -A trust -E UTF8 --pwfile=pa
 del password.txt
 
 :: Start PostgreSQL server
-call "%PGDIR%\bin\pg_ctl" -D "%PGDATA%" -l "%PGLOGS%" start
+call "%PGDIR%\bin\pg_ctl" -D "%PGDATA%" -l "%PGLOGS%" -o "-p %PGPORT%" start
 
 :: Create database PGDATABASE
 call "%PGDIR%\bin\createdb" -U %PGUSER% -O %PGUSER% -E UTF8 -T template0 %PGDATABASE%
