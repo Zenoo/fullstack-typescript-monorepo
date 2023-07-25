@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.3.3...fullstack-typescript-monorepo-v1.4.0) (2023-07-25)
+
+
+### Features
+
+* Update to Prisma v5 ([996b395](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/996b3956a2490eee79580eb96a34e8a0d302c8af))
+
+
+### Bug Fixes
+
+* react-hook-form version fix ([cd98f18](https://github.com/Zenoo/fullstack-typescript-monorepo/commit/cd98f1873a23737542c3a8f3a7ee56bba70fa4de))
+
 ## [1.3.3](https://github.com/Zenoo/fullstack-typescript-monorepo/compare/fullstack-typescript-monorepo-v1.3.2...fullstack-typescript-monorepo-v1.3.3) (2023-01-19)
 
 
