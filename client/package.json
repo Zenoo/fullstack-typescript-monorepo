@@ -1,0 +1,38 @@
+{
+  "name": "@fullstack-typescript-monorepo/client",
+  "private": true,
+  "version": "1.4.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix"
+  },
+  "dependencies": {
+    "@emotion/react": "latest",
+    "@emotion/styled": "latest",
+    "@mui/icons-material": "next",
+    "@mui/material": "next",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.5",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "gts": "^5.3.0",
+    "typescript": "~5.4.3",
+    "vite": "latest",
+    "vite-plugin-checker": "^0.6.4"
+  },
+  "workspaces": {
+    "nohoist": [
+      "gts"
+    ]
+  }
+}

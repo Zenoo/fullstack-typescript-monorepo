@@ -1,0 +1,31 @@
+{
+  "name": "fullstack-typescript-monorepo",
+  "version": "1.4.0",
+  "main": "index.js",
+  "private": true,
+  "repository": "https://github.com/Zenoo/fullstack-typescript-monorepo.git",
+  "author": "Franck <perso@franckdemoute.fr>",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf --glob \"client/build\" \"core/lib\" \"server/lib\" \"**/node_modules\" \"**/tsconfig.tsbuildinfo\"",
+    "compile": "tsc -b tsconfig.build.json",
+    "front": "yarn workspace @fullstack-typescript-monorepo/client dev",
+    "add:client": "yarn workspace @fullstack-typescript-monorepo/client add",
+    "add:server": "yarn workspace @fullstack-typescript-monorepo/server add",
+    "remove:client": "yarn workspace @fullstack-typescript-monorepo/client remove",
+    "remove:server": "yarn workspace @fullstack-typescript-monorepo/server remove"
+  },
+  "workspaces": {
+    "packages": [
+      "./client",
+      "./core",
+      "./prisma",
+      "./server"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "rimraf": "^5.0.7",
+    "typescript": "^5.4.5"
+  }
+}
