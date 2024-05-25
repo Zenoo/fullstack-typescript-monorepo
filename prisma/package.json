@@ -1,0 +1,7 @@
+{
+  "name": "@fullstack-typescript-monorepo/prisma",
+  "version": "1.4.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "browser": "index-browser.js"
+}

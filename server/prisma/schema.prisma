@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../../prisma"
+  previewFeatures = ["nativeDistinct", "relationJoins", "omitApi"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Address {
+  id           String  @id @unique @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  streetNumber String  @db.VarChar(255)
+  street       String  @db.VarChar(255)
+  zip          String  @db.VarChar(255)
+  city         String  @db.VarChar(255)
+  country      String  @db.VarChar(255)
+  placeId      String  @db.VarChar(255)
+  person       Person?
+}
+
+model Person {
+  id        String   @id @unique @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  firstName String   @db.VarChar(255)
+  lastName  String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  phone     String?  @db.VarChar(255)
+  phone2    String?  @db.VarChar(255)
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId String?  @unique @db.Uuid
+  user      User?
+}
+
+enum Lang {
+  en
+  fr
+}
+
+model User {
+  id             String   @id @unique @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  lang           Lang     @default(en)
+  login          String   @unique @db.VarChar(255)
+  admin          Boolean  @default(false)
+  password       String?  @db.VarChar(255)
+  active         Boolean  @default(true)
+  connexionToken String   @default("") @db.VarChar(255)
+  person         Person   @relation(fields: [personId], references: [id])
+  personId       String   @unique @db.Uuid
+  records        Record[]
+}
+
+enum RequestStatus {
+  PENDING
+  SUCCESS
+  ERROR
+}
+
+model Request {
+  id       String        @id @unique @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  date     DateTime      @default(now())
+  status   RequestStatus
+  response Json
+}
+
+enum RecordAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+model Record {
+  id       String       @id @unique @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  date     DateTime     @default(now())
+  action   RecordAction
+  object   String       @db.VarChar(255)
+  newValue String       @db.VarChar(255)
+  author   User         @relation(fields: [authorId], references: [id])
+  authorId String       @db.Uuid
+}

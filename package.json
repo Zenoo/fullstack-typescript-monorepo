@@ -10,10 +10,23 @@
     "clean": "rimraf --glob \"client/build\" \"core/lib\" \"server/lib\" \"**/node_modules\" \"**/tsconfig.tsbuildinfo\"",
     "compile": "tsc -b tsconfig.build.json",
     "front": "yarn workspace @fullstack-typescript-monorepo/client dev",
+    "back": "yarn workspace @fullstack-typescript-monorepo/server start:watch",
+    "start": "yarn workspace @fullstack-typescript-monorepo/server start",
+    "dev": "concurrently --prefix \"[{name}]\" --names \"DB,SERVER,CLIENT\" -c \"bgMagenta.bold,bgBlue.bold,bgGreen.bold\" \"yarn run studio\" \"yarn run back\" \"yarn run front\"",
+    "build": "yarn compile && yarn build:client",
+    "build:client": "yarn workspace @fullstack-typescript-monorepo/client build",
     "add:client": "yarn workspace @fullstack-typescript-monorepo/client add",
     "add:server": "yarn workspace @fullstack-typescript-monorepo/server add",
     "remove:client": "yarn workspace @fullstack-typescript-monorepo/client remove",
-    "remove:server": "yarn workspace @fullstack-typescript-monorepo/server remove"
+    "remove:server": "yarn workspace @fullstack-typescript-monorepo/server remove",
+    "db:migrate:manual": "yarn workspace @fullstack-typescript-monorepo/server db:migrate:manual",
+    "db:sync:dev": "yarn workspace @fullstack-typescript-monorepo/server db:sync:dev",
+    "db:sync:prod": "yarn workspace @fullstack-typescript-monorepo/server db:sync:prod",
+    "db:seed": "yarn workspace @fullstack-typescript-monorepo/server db:seed",
+    "db:reset": "yarn workspace @fullstack-typescript-monorepo/server db:reset",
+    "postinstall": "bash ./postInstall.sh",
+    "studio": "yarn workspace @fullstack-typescript-monorepo/server studio",
+    "audit": "yarn npm audit --recursive --all --environment production"
   },
   "workspaces": {
     "packages": [
