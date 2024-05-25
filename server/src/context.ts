@@ -1,12 +1,16 @@
-import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
-import { isMainThread } from 'node:worker_threads';
-import { Config, loadConfig } from './config.js';
-import { CONSOLE } from './logger/console.js';
-import { DiscordLogHandler } from './logger/discord.js';
-import { Logger } from './logger/index.js';
-import { PARENT_PORT } from './logger/parent-port.js';
-import { DiscordClient, NetworkDiscordClient, NOOP_DISCORD_CLIENT } from './utils/DiscordUtils.js';
-import { ASYNC_DISPOSE } from './utils/dispose.js';
+import {PrismaClient} from '@fullstack-typescript-monorepo/prisma';
+import {isMainThread} from 'node:worker_threads';
+import {Config, loadConfig} from './config.js';
+import {CONSOLE} from './logger/console.js';
+import {DiscordLogHandler} from './logger/discord.js';
+import {Logger} from './logger/index.js';
+import {PARENT_PORT} from './logger/parent-port.js';
+import {
+  DiscordClient,
+  NetworkDiscordClient,
+  NOOP_DISCORD_CLIENT,
+} from './utils/DiscordUtils.js';
+import {ASYNC_DISPOSE} from './utils/dispose.js';
 
 const DEBUG_QUERIES = false;
 
@@ -20,7 +24,9 @@ export class ServerContext {
   public readonly prisma: PrismaClient;
 
   public constructor(config: Config) {
-    const fallbackLogger: Logger = new Logger([isMainThread ? CONSOLE : PARENT_PORT]);
+    const fallbackLogger: Logger = new Logger([
+      isMainThread ? CONSOLE : PARENT_PORT,
+    ]);
 
     let discord: DiscordClient;
     if (config.discord !== null) {
@@ -44,29 +50,33 @@ export class ServerContext {
       logger = fallbackLogger;
     }
 
-    const prisma = new PrismaClient(DEBUG_QUERIES ? {
-      log: [
-        {
-          emit: 'event',
-          level: 'query',
-        },
-        {
-          emit: 'stdout',
-          level: 'error',
-        },
-        {
-          emit: 'stdout',
-          level: 'info',
-        },
-        {
-          emit: 'stdout',
-          level: 'warn',
-        },
-      ],
-    } : undefined);
+    const prisma = new PrismaClient(
+      DEBUG_QUERIES
+        ? {
+            log: [
+              {
+                emit: 'event',
+                level: 'query',
+              },
+              {
+                emit: 'stdout',
+                level: 'error',
+              },
+              {
+                emit: 'stdout',
+                level: 'info',
+              },
+              {
+                emit: 'stdout',
+                level: 'warn',
+              },
+            ],
+          }
+        : undefined
+    );
 
     if (DEBUG_QUERIES) {
-      prisma.$on('query', (e) => {
+      prisma.$on('query', e => {
         logger.warn(`Query: ${e.query}`);
         logger.warn(`Params: ${e.params}`);
         logger.warn(`Duration: ${e.duration}ms`);

@@ -1,29 +1,28 @@
-import { Version } from '@fullstack-typescript-monorepo/core';
+import {Version} from '@fullstack-typescript-monorepo/core';
 import bodyParser from 'body-parser';
 import schedule from 'node-schedule';
 import dailyJob from './dailyJob.js';
 import './i18n.js';
 import initRoutes from './routes.js';
-import { GLOBAL, ServerContext } from './context.js';
+import {GLOBAL, ServerContext} from './context.js';
 import lockMiddleware from './middlewares/locks.js';
 import path from 'path';
 import express from 'express';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 export function main(cx: ServerContext) {
   cx.logger.info(`Server started (v${Version})`);
 
   const app = express();
-  const { port } = cx.config;
+  const {port} = cx.config;
 
   app.use(bodyParser.json());
   app.use(
     bodyParser.urlencoded({
       extended: true,
-    }),
+    })
   );
   app.use(lockMiddleware);
 

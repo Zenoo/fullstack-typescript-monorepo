@@ -1,22 +1,31 @@
-import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
-import type { Express, Request, Response } from 'express';
+import {PrismaClient} from '@fullstack-typescript-monorepo/prisma';
+import type {Express, Request, Response} from 'express';
 import path from 'path';
 import Users from './controllers/Users.js';
 import Records from './controllers/Records.js';
 import Requests from './controllers/Requests.js';
 import Home from './controllers/Home.js';
-import { fileURLToPath } from 'url';
+// import {fileURLToPath} from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 // Get client index.html
-const CLIENT_INDEX = path.join(__dirname, '..', '..', 'client', 'build', 'index.html');
+const CLIENT_INDEX = path.join(
+  __dirname,
+  '..',
+  '..',
+  'client',
+  'build',
+  'index.html'
+);
 
 export default function initRoutes(app: Express, prisma: PrismaClient) {
-  app.get('/api', (req: Request, res: Response) => res.status(200).send({
-    message: 'server is running!',
-  }));
+  app.get('/api', (req: Request, res: Response) =>
+    res.status(200).send({
+      message: 'server is running!',
+    })
+  );
 
   // Home
   app.get('/api/home/stats', Home.stats(prisma));
@@ -32,8 +41,14 @@ export default function initRoutes(app: Express, prisma: PrismaClient) {
   app.post('/api/user/:id/update', Users.update(prisma));
   app.delete('/api/user/:id', Users.delete(prisma));
   app.post('/api/user/:id/change-password', Users.changePassword(prisma));
-  app.get('/api/user/:login/send-password-reset-mail', Users.sendPasswordResetEmail(prisma));
-  app.get('/api/user/:login/reset-code-check', Users.checkResetCodeValidity(prisma));
+  app.get(
+    '/api/user/:login/send-password-reset-mail',
+    Users.sendPasswordResetEmail(prisma)
+  );
+  app.get(
+    '/api/user/:login/reset-code-check',
+    Users.checkResetCodeValidity(prisma)
+  );
 
   // Record
   app.post('/api/record/list', Records.list(prisma));

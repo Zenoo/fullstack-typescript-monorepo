@@ -1,14 +1,17 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib",
+    "esModuleInterop": true,
+    "target": "ESNext",
     "lib": ["esnext.disposable"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext"
   },
-  "exclude": [
-    "lib/**/*"
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
   ],
   "references": [
     {
