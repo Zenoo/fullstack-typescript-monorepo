@@ -1,5 +1,5 @@
-import { t } from 'i18next';
-import { createTransport } from 'nodemailer';
+import {t} from 'i18next';
+import {createTransport} from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 
 export const MAIL_SENDER = 'noreply@yourdomain.com';
@@ -7,7 +7,12 @@ export const MAIL_SENDER = 'noreply@yourdomain.com';
 /**
  * General mail template
  */
-const template = (title: string, content: string, action?: string | null, actionUrl?: string) => /* html */`<!DOCTYPE html>
+const template = (
+  title: string,
+  content: string,
+  action?: string | null,
+  actionUrl?: string
+) => /* html */ `<!DOCTYPE html>
 <html lang="en-US">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
@@ -51,12 +56,18 @@ text-align: center; -webkit-box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.06); -moz-b
 <p style="color: #455056; font-size: 15px; line-height: 24px; margin: 0;">
 ${content}
 </p>
-${action ? /* html */`
-<a href="${actionUrl || ''}" style=" background: #3f51b5; text-decoration: none !important; font-weight: 500; margin-top: 35px; color: #fff;
+${
+  action
+    ? /* html */ `
+<a href="${
+        actionUrl || ''
+      }" style=" background: #3f51b5; text-decoration: none !important; font-weight: 500; margin-top: 35px; color: #fff;
 text-transform: uppercase; font-size: 14px; padding: 10px 24px; display: inline-block; border-radius: 50px; ">
 ${action}
 </a>
-` : ''}
+`
+    : ''
+}
 </td>
 </tr>
 <tr>
@@ -84,7 +95,7 @@ ${action}
  * @param url
  * @param message
  */
-const passwordResetTemplate = (url: string) => /* html */`<!DOCTYPE html>
+const passwordResetTemplate = (url: string) => /* html */ `<!DOCTYPE html>
 <html lang="en-US">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />

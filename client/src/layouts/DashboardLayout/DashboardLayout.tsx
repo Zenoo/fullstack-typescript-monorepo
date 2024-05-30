@@ -1,15 +1,15 @@
-import { Box } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import {Box} from '@mui/material';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Outlet, useNavigate} from 'react-router-dom';
 import Loader from '../../components/Loader';
-import { useAlert } from '../../hooks/useAlert';
-import { useAuth } from '../../hooks/useAuth';
+import {useAlert} from '../../hooks/useAlert';
+import {useAuth} from '../../hooks/useAuth';
 import catchError from '../../utils/catchError';
-import { ErrorType } from '../../utils/fetcher';
+import {ErrorType} from '../../utils/fetcher';
 import NavBar from './NavBar/NavBar';
 import TopBar from './TopBar';
 
-const DashboardLayout = () => {
+function DashboardLayout() {
   const navigate = useNavigate();
   const auth = useAuth();
   const Alert = useAlert();
@@ -27,52 +27,51 @@ const DashboardLayout = () => {
         auth.signin(user, token).catch((error: ErrorType) => {
           localStorage.removeItem('user');
           localStorage.removeItem('token');
-          navigate('/login', { replace: true });
+          navigate('/login', {replace: true});
           catchError(Alert)(error);
         });
       } else {
-        navigate('/login', { replace: true });
+        navigate('/login', {replace: true});
       }
     }
   }, [Alert, auth, navigate]);
 
   return auth.authed ? (
-    <Box sx={{
-      bgcolor: 'background.dark',
-      display: 'flex',
-      height: 1,
-      overflow: 'hidden',
-      width: 1,
-    }}
-    >
-      <TopBar
-        onMobileNavOpen={onMobileNavOpen}
-      />
-      <NavBar
-        onMobileClose={onMobileClose}
-        openMobile={isMobileNavOpen}
-      />
-      <Box sx={{
+    <Box
+      sx={{
+        bgcolor: 'background.dark',
         display: 'flex',
-        flex: '1 1 auto',
+        height: 1,
         overflow: 'hidden',
-        pt: {
-          xs: 7,
-          sm: 8,
-        },
+        width: 1,
       }}
-      >
-        <Box sx={{
+    >
+      <TopBar onMobileNavOpen={onMobileNavOpen} />
+      <NavBar onMobileClose={onMobileClose} openMobile={isMobileNavOpen} />
+      <Box
+        sx={{
           display: 'flex',
           flex: '1 1 auto',
           overflow: 'hidden',
+          pt: {
+            xs: 7,
+            sm: 8,
+          },
         }}
-        >
-          <Box sx={{
+      >
+        <Box
+          sx={{
+            display: 'flex',
             flex: '1 1 auto',
-            height: 1,
-            overflow: 'auto',
+            overflow: 'hidden',
           }}
+        >
+          <Box
+            sx={{
+              flex: '1 1 auto',
+              height: 1,
+              overflow: 'auto',
+            }}
           >
             <Outlet />
           </Box>
@@ -82,6 +81,6 @@ const DashboardLayout = () => {
   ) : (
     <Loader />
   );
-};
+}
 
 export default DashboardLayout;

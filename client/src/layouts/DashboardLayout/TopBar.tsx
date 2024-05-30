@@ -1,19 +1,24 @@
-import { Input, Person } from '@mui/icons-material';
+import {Input, Person} from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { AppBar, AppBarProps, Box, Hidden, IconButton, Toolbar, Tooltip } from '@mui/material';
-import React, { useCallback } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import {
+  AppBar,
+  AppBarProps,
+  Box,
+  Hidden,
+  IconButton,
+  Toolbar,
+  Tooltip,
+} from '@mui/material';
+import React, {useCallback} from 'react';
+import {Link as RouterLink} from 'react-router-dom';
 import Logo from '../../components/Logo';
-import { useAuth } from '../../hooks/useAuth';
+import {useAuth} from '../../hooks/useAuth';
 
 interface Props extends AppBarProps {
   onMobileNavOpen: () => void;
 }
 
-const TopBar = ({
-  onMobileNavOpen,
-  ...rest
-}: Props) => {
+function TopBar({onMobileNavOpen, ...rest}: Props) {
   const auth = useAuth();
 
   /**
@@ -24,13 +29,10 @@ const TopBar = ({
   }, [auth]);
 
   return (
-    <AppBar
-      elevation={0}
-      {...rest}
-    >
+    <AppBar elevation={0} {...rest}>
       <Toolbar>
         <RouterLink to="/app/home">
-          <Logo sx={{ height: 50 }} />
+          <Logo sx={{height: 50}} />
         </RouterLink>
         <Box flexGrow={1} />
         <Hidden lgDown>
@@ -55,6 +57,6 @@ const TopBar = ({
       </Toolbar>
     </AppBar>
   );
-};
+}
 
 export default TopBar;

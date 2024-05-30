@@ -1,9 +1,9 @@
-import { createTheme } from '@mui/material';
-import { enUS } from '@mui/x-data-grid';
-import { enUS as pickersEnUS } from '@mui/x-date-pickers';
-import { enUS as coreEnUS } from '@mui/material/locale';
+import {createTheme} from '@mui/material';
+import {enUS} from '@mui/x-data-grid';
+import {enUS as pickersEnUS} from '@mui/x-date-pickers';
+import {enUS as coreEnUS} from '@mui/material/locale';
+import {FontStyle} from '@mui/material/styles/createTypography';
 import ThemeOptions from './ThemeOptions';
-import { FontStyle } from '@mui/material/styles/createTypography';
 
 interface TypeTransition {
   time: string;
@@ -21,16 +21,16 @@ declare module '@mui/material/styles' {
   }
 
   interface Palette {
-    transition: TypeTransition,
-    scrollbar: TypeScrollbar
+    transition: TypeTransition;
+    scrollbar: TypeScrollbar;
   }
   interface PaletteOptions {
-    transition: TypeTransition,
-    scrollbar: TypeScrollbar
+    transition: TypeTransition;
+    scrollbar: TypeScrollbar;
   }
   interface Typography {
-    largeTextBackground: FontStyle
-    tinyTextBackground: FontStyle
+    largeTextBackground: FontStyle;
+    tinyTextBackground: FontStyle;
   }
 }
 
@@ -44,7 +44,7 @@ const theme = createTheme(
   },
   enUS,
   pickersEnUS,
-  coreEnUS,
+  coreEnUS
 );
 
 export default theme;

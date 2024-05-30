@@ -1,41 +1,33 @@
-import { Avatar, Box, Card, CardActions, CardContent, Divider } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Divider,
+} from '@mui/material';
 import moment from 'moment';
 import React from 'react';
 import Text from '../../../components/Text';
-import { useAuth } from '../../../hooks/useAuth';
+import {useAuth} from '../../../hooks/useAuth';
 
-const Profile = ({ ...rest }) => {
+function Profile({...rest}) {
   const auth = useAuth();
 
   return (
-    <Card
-      {...rest}
-    >
+    <Card {...rest}>
       <CardContent>
-        <Box
-          alignItems="center"
-          display="flex"
-          flexDirection="column"
-        >
+        <Box alignItems="center" display="flex" flexDirection="column">
           <Avatar
             sx={{
               height: 100,
               width: 100,
             }}
           />
-          <Text
-            color="textPrimary"
-            gutterBottom
-            h3
-          >
-            {auth.user.person.firstName}
-            {' '}
-            {auth.user.person.lastName}
+          <Text color="textPrimary" gutterBottom h3>
+            {auth.user.person.firstName} {auth.user.person.lastName}
           </Text>
-          <Text
-            body1
-            color="textSecondary"
-          >
+          <Text body1 color="textSecondary">
             {`${moment().format('HH:mm')}`}
           </Text>
         </Box>
@@ -44,12 +36,10 @@ const Profile = ({ ...rest }) => {
       <CardActions />
     </Card>
   );
-};
+}
 
-Profile.propTypes = {
-};
+Profile.propTypes = {};
 
-Profile.defaultProps = {
-};
+Profile.defaultProps = {};
 
 export default Profile;

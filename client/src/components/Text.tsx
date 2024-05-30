@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, TypographyProps } from '@mui/material';
+import {Typography, TypographyProps} from '@mui/material';
 
 interface Props extends TypographyProps {
   children: React.ReactNode;
@@ -21,7 +21,7 @@ interface Props extends TypographyProps {
   component?: React.ElementType;
 }
 
-const Text = ({
+function Text({
   children,
   h1 = false,
   h2 = false,
@@ -39,30 +39,46 @@ const Text = ({
   inherit = false,
   bold = false,
   ...rest
-}: Props) => (
-  <Typography
-    variant={
-      h1 ? 'h1'
-        : h2 ? 'h2'
-          : h3 ? 'h3'
-            : h4 ? 'h4'
-              : h5 ? 'h5'
-                : h6 ? 'h6'
-                  : subtitle1 ? 'subtitle1'
-                    : subtitle2 ? 'subtitle2'
-                      : body1 ? 'body1'
-                        : body2 ? 'body2'
-                          : caption ? 'caption'
-                            : button ? 'button'
-                              : overline ? 'overline'
-                                : inherit ? 'inherit'
-                                  : 'body1'
+}: Props) {
+  return (
+    <Typography
+      variant={
+        h1
+          ? 'h1'
+          : h2
+            ? 'h2'
+            : h3
+              ? 'h3'
+              : h4
+                ? 'h4'
+                : h5
+                  ? 'h5'
+                  : h6
+                    ? 'h6'
+                    : subtitle1
+                      ? 'subtitle1'
+                      : subtitle2
+                        ? 'subtitle2'
+                        : body1
+                          ? 'body1'
+                          : body2
+                            ? 'body2'
+                            : caption
+                              ? 'caption'
+                              : button
+                                ? 'button'
+                                : overline
+                                  ? 'overline'
+                                  : inherit
+                                    ? 'inherit'
+                                    : 'body1'
       }
-    fontWeight={bold ? '600' : undefined}
-    {...rest}
-  >
-    {children}
-  </Typography>
-);
+      fontWeight={bold ? '600' : undefined}
+      {...rest}
+    >
+      {children}
+    </Typography>
+  );
+}
 
 export default Text;

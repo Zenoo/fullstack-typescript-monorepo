@@ -1,12 +1,12 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import {Navigate, Outlet} from 'react-router-dom';
 
 import React from 'react';
-import { useAuth } from '../hooks/useAuth';
+import {useAuth} from '../hooks/useAuth';
 
-const AdminLayout = () => {
+function AdminLayout() {
   const auth = useAuth();
 
   return auth.user.admin ? <Outlet /> : <Navigate to="/app/home" />;
-};
+}
 
 export default AdminLayout;

@@ -1,7 +1,7 @@
-import { PrismaInclude } from '@fullstack-typescript-monorepo/core';
-import { Prisma } from '@fullstack-typescript-monorepo/prisma';
-import { Request } from 'express';
-import { MOCK_PrismaModel } from '../controllers/REST';
+import {PrismaInclude} from '@fullstack-typescript-monorepo/core';
+import {Prisma} from '@fullstack-typescript-monorepo/prisma';
+import {Request} from 'express';
+import {MOCK_PrismaModel} from '../controllers/REST';
 
 const filterOperatorMapper = {
   or: 'OR',
@@ -45,12 +45,11 @@ export interface TableRequestBody {
       operatorValue: keyof typeof operatorMapper;
     }[];
     filtersOperator: 'or' | 'and';
-  },
+  };
   include?: PrismaInclude;
 }
 
-export type PrismaModel = MOCK_PrismaModel
-  | Prisma.UserDelegate;
+export type PrismaModel = MOCK_PrismaModel | Prisma.UserDelegate;
 
 /**
  * Get data for the table request
@@ -62,16 +61,14 @@ const getData = async (
   req: Request<never, unknown, TableRequestBody>,
   prismaModel: PrismaModel,
   where?: object,
-  include?: object,
+  include?: object
 ) => {
   const {
-    state: {
-      page, rowsPerPage, sortOrder, filters, filtersOperator,
-    },
+    state: {page, rowsPerPage, sortOrder, filters, filtersOperator},
   } = req.body;
 
   // Generate prisma filters
-  const prismaFilters = filters.map((filter) => {
+  const prismaFilters = filters.map(filter => {
     const operator = operatorMapper[filter.operatorValue];
 
     return {
@@ -82,16 +79,16 @@ const getData = async (
   });
 
   // Get objects
-  const objects = await prismaModel.findMany({
+  const objects = (await prismaModel.findMany({
     where: {
       [filterOperatorMapper[filtersOperator]]: prismaFilters,
       ...where,
     },
-    orderBy: { [sortOrder?.name || 'id']: sortOrder?.direction || 'asc' },
+    orderBy: {[sortOrder?.name || 'id']: sortOrder?.direction || 'asc'},
     skip: page * rowsPerPage,
     take: rowsPerPage,
     include,
-  }) as Record<string, unknown>[];
+  })) as Record<string, unknown>[];
 
   // Get total count
   const count = await prismaModel.count({

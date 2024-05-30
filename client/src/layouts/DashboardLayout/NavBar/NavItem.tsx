@@ -1,8 +1,16 @@
-import { ExpandMoreOutlined } from '@mui/icons-material';
-import { Badge, Box, Button, ListItem, ListItemProps, ListItemText, SvgIconTypeMap } from '@mui/material';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
+import {ExpandMoreOutlined} from '@mui/icons-material';
+import {
+  Badge,
+  Box,
+  Button,
+  ListItem,
+  ListItemProps,
+  ListItemText,
+  SvgIconTypeMap,
+} from '@mui/material';
+import {OverridableComponent} from '@mui/material/OverridableComponent';
 import React from 'react';
-import { NavLink as RouterLink } from 'react-router-dom';
+import {NavLink as RouterLink} from 'react-router-dom';
 
 interface Props extends ListItemProps {
   href?: string;
@@ -18,7 +26,7 @@ interface Props extends ListItemProps {
   sx?: object;
 }
 
-const NavItem = ({
+function NavItem({
   href,
   icon,
   title,
@@ -29,14 +37,16 @@ const NavItem = ({
   hasChildren = false,
   sx,
   ...rest
-}: Props) => {
+}: Props) {
   const Icon = icon;
 
   const buttonProps = {
-    ...(href ? {
-      component: !hasChildren ? RouterLink : 'button',
-      to: href,
-    } : {}),
+    ...(href
+      ? {
+          component: !hasChildren ? RouterLink : 'button',
+          to: href,
+        }
+      : {}),
     sx: {
       color: 'text.secondary',
       fontWeight: 'fontWeightMedium',
@@ -55,9 +65,11 @@ const NavItem = ({
           color: 'primary.main',
         },
       },
-      ...(minimized && nestedItem ? {
-        minWidth: 0,
-      } : {}),
+      ...(minimized && nestedItem
+        ? {
+            minWidth: 0,
+          }
+        : {}),
     },
   };
 
@@ -74,32 +86,31 @@ const NavItem = ({
       {...rest}
     >
       <Button {...buttonProps}>
-        {notifications
-          ? (
-            <Badge
-              badgeContent={notifications}
-              color={notifications ? 'secondary' : 'default'}
-              sx={{
-                mr: 1,
-                width: minimized ? 1 : 0.15,
-                display: 'flex',
-                justifyContent: minimized ? 'flex-start' : 'center',
-              }}
-            >
-              <Icon />
-            </Badge>
-          )
-          : (
-            <Box sx={{
+        {notifications ? (
+          <Badge
+            badgeContent={notifications}
+            color={notifications ? 'secondary' : 'default'}
+            sx={{
+              mr: 1,
+              width: minimized ? 1 : 0.15,
+              display: 'flex',
+              justifyContent: minimized ? 'flex-start' : 'center',
+            }}
+          >
+            <Icon />
+          </Badge>
+        ) : (
+          <Box
+            sx={{
               mr: minimized ? 0 : 1,
               width: minimized ? null : 0.15,
               display: 'flex',
               justifyContent: minimized ? 'flex-start' : 'center',
             }}
-            >
-              <Icon />
-            </Box>
-          )}
+          >
+            <Icon />
+          </Box>
+        )}
         <Box
           component="span"
           sx={{
@@ -111,23 +122,25 @@ const NavItem = ({
         >
           {title}
         </Box>
-        <ListItemText sx={{
-          display: minimized ? 'none' : null,
-          flex: 'unset',
-          m: 0,
-          height: 24,
-        }}
+        <ListItemText
+          sx={{
+            display: minimized ? 'none' : null,
+            flex: 'unset',
+            m: 0,
+            height: 24,
+          }}
         >
           {hasChildren ? (
-            <ExpandMoreOutlined sx={{
-              height: 24,
-            }}
+            <ExpandMoreOutlined
+              sx={{
+                height: 24,
+              }}
             />
           ) : null}
         </ListItemText>
       </Button>
     </ListItem>
   );
-};
+}
 
 export default NavItem;

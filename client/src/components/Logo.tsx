@@ -1,10 +1,7 @@
-import { Box, BoxProps } from '@mui/material';
+import {Box, BoxProps} from '@mui/material';
 import React from 'react';
 
-const Logo = ({
-  sx,
-  ...rest
-}: BoxProps) => {
+function Logo({sx, ...rest}: BoxProps) {
   const link = '/static/logo.svg';
 
   return (
@@ -12,10 +9,10 @@ const Logo = ({
       alt="Logo"
       component="img"
       src={link}
-      sx={{ maxWidth: '100%', ...sx }}
+      sx={{maxWidth: '100%', ...sx}}
       {...rest}
     />
   );
-};
+}
 
 export default Logo;

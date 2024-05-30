@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import HomeView from './views/HomeView';
 import AdminLayout from './layouts/AdminLayout';
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout';
@@ -15,8 +15,8 @@ const routes = [
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      { path: 'home', element: <HomeView /> },
-      { path: 'account', element: <AccountView /> },
+      {path: 'home', element: <HomeView />},
+      {path: 'account', element: <AccountView />},
       {
         path: 'admin',
         element: <AdminLayout />,
@@ -24,24 +24,24 @@ const routes = [
           {
             path: 'user',
             children: [
-              { path: 'list', element: <UserListView /> },
-              { path: 'add', element: <UserEditView /> },
-              { path: 'edit/:id', element: <UserEditView /> },
+              {path: 'list', element: <UserListView />},
+              {path: 'add', element: <UserEditView />},
+              {path: 'edit/:id', element: <UserEditView />},
             ],
           },
         ],
       },
-      { path: '*', element: <Navigate to="/404" /> },
+      {path: '*', element: <Navigate to="/404" />},
     ],
   },
   {
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: 'login', element: <LoginView /> },
-      { path: '404', element: <NotFoundView /> },
-      { path: '/', element: <Navigate to="/login" /> },
-      { path: '*', element: <Navigate to="/404" /> },
+      {path: 'login', element: <LoginView />},
+      {path: '404', element: <NotFoundView />},
+      {path: '/', element: <Navigate to="/login" />},
+      {path: '*', element: <Navigate to="/404" />},
     ],
   },
 ];

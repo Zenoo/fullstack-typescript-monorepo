@@ -3,7 +3,7 @@
   "version": "1.4.0",
   "main": "lib/index.js",
   "scripts": {
-    "compile": "tsc"
+    "compile": "tsc --build ./tsconfig.json"
   },
   "types": "lib/index.d.ts",
   "devDependencies": {

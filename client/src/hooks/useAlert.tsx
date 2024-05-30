@@ -1,5 +1,5 @@
-import { Alert, AlertColor, Snackbar } from '@mui/material';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import {Alert, AlertColor, Snackbar} from '@mui/material';
+import React, {useCallback, useContext, useMemo, useState} from 'react';
 
 export interface AlertContextInterface {
   open: (severity: AlertColor, message: string) => void;
@@ -20,7 +20,7 @@ interface AlertProviderProps {
   children: React.ReactNode;
 }
 
-export const AlertProvider = ({ children }: AlertProviderProps) => {
+export function AlertProvider({children}: AlertProviderProps) {
   const [alert, setAlert] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState<AlertColor>('info');
   const [alertMessage, setAlertMessage] = useState('');
@@ -34,18 +34,26 @@ export const AlertProvider = ({ children }: AlertProviderProps) => {
   }, []);
   const closeAlert = useCallback(() => setAlert(false), []);
 
-  const methods = useMemo(() => ({
-    open,
-  }), [open]);
+  const methods = useMemo(
+    () => ({
+      open,
+    }),
+    [open]
+  );
 
   return (
     <AlertContext.Provider value={methods}>
       {children}
-      <Snackbar onClose={closeAlert} open={alert} sx={{ zIndex: 2100 }}>
-        <Alert onClose={closeAlert} severity={alertSeverity} sx={{ boxShadow: 8 }} variant="filled">
+      <Snackbar onClose={closeAlert} open={alert} sx={{zIndex: 2100}}>
+        <Alert
+          onClose={closeAlert}
+          severity={alertSeverity}
+          sx={{boxShadow: 8}}
+          variant="filled"
+        >
           {alertMessage}
         </Alert>
       </Snackbar>
     </AlertContext.Provider>
   );
-};
+}

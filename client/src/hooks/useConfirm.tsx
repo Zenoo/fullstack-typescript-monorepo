@@ -1,9 +1,21 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
+import React, {useCallback, useContext, useMemo, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 interface ConfirmContextInterface {
-  open: (title: string, content: string, onAccept?: () => void, onCancel?: () => void) => void;
+  open: (
+    title: string,
+    content: string,
+    onAccept?: () => void,
+    onCancel?: () => void
+  ) => void;
 }
 
 const ConfirmContext = React.createContext<ConfirmContextInterface>({
@@ -28,13 +40,13 @@ interface ConfirmParams {
   onCancel?: () => void;
 }
 
-export const ConfirmProvider = ({ children }: ConfirmProviderProps) => {
-  const { t } = useTranslation();
+export function ConfirmProvider({children}: ConfirmProviderProps) {
+  const {t} = useTranslation();
 
   const [open, setOpen] = useState(false);
   const [params, setParams] = useState<ConfirmParams>({
     title: '',
-    content: ''
+    content: '',
   });
 
   // Accept action
@@ -50,37 +62,40 @@ export const ConfirmProvider = ({ children }: ConfirmProviderProps) => {
   }, [params]);
 
   // Open dialog
-  const handleOpen = useCallback((
-    title: string,
-    content: string,
-    onAccept?: () => void,
-    onCancel?: () => void
-  ) => {
-    setParams({
-      title,
-      content,
-      onAccept,
-      onCancel,
-    });
-    setOpen(true);
-  }, []);
+  const handleOpen = useCallback(
+    (
+      title: string,
+      content: string,
+      onAccept?: () => void,
+      onCancel?: () => void
+    ) => {
+      setParams({
+        title,
+        content,
+        onAccept,
+        onCancel,
+      });
+      setOpen(true);
+    },
+    []
+  );
 
   // Close dialog
   const handleClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const methods = useMemo(() => ({
-    open: handleOpen,
-  }), [handleOpen]);
+  const methods = useMemo(
+    () => ({
+      open: handleOpen,
+    }),
+    [handleOpen]
+  );
 
   return (
     <ConfirmContext.Provider value={methods}>
       {children}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{params.title}</DialogTitle>
         <DialogContent>
           <DialogContentText>{params.content}</DialogContentText>
@@ -89,7 +104,7 @@ export const ConfirmProvider = ({ children }: ConfirmProviderProps) => {
           <Button
             onClick={cancel}
             variant="contained"
-            sx={{ color: 'error.main' }}
+            sx={{color: 'error.main'}}
           >
             {t('cancel')}
           </Button>
@@ -97,7 +112,7 @@ export const ConfirmProvider = ({ children }: ConfirmProviderProps) => {
             onClick={accept}
             autoFocus
             variant="contained"
-            sx={{ color: 'success.main' }}
+            sx={{color: 'success.main'}}
           >
             {t('continue')}
           </Button>
@@ -105,4 +120,4 @@ export const ConfirmProvider = ({ children }: ConfirmProviderProps) => {
       </Dialog>
     </ConfirmContext.Provider>
   );
-};
+}

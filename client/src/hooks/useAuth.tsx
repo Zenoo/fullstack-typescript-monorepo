@@ -1,14 +1,20 @@
-import { DEFAULT_LANGUAGE } from '@fullstack-typescript-monorepo/core';
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import UserRoutes, { UserWithPerson } from '../api/UserRoutes';
-import { useLanguage } from './useLanguage';
+import {DEFAULT_LANGUAGE} from '@fullstack-typescript-monorepo/core';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import UserRoutes, {UserWithPerson} from '../api/UserRoutes';
+import {useLanguage} from './useLanguage';
 
 interface AuthContextInterface {
-  user: UserWithPerson,
-  authed: boolean,
-  signin: (login: string, password: string) => Promise<UserWithPerson | null>,
-  signout: () => void,
-  updateData: (data: React.SetStateAction<UserWithPerson>) => void,
+  user: UserWithPerson;
+  authed: boolean;
+  signin: (login: string, password: string) => Promise<UserWithPerson | null>;
+  signout: () => void;
+  updateData: (data: React.SetStateAction<UserWithPerson>) => void;
 }
 
 export const emptyUser: UserWithPerson = {
@@ -51,8 +57,8 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const { setLanguage } = useLanguage();
+export function AuthProvider({children}: AuthProviderProps) {
+  const {setLanguage} = useLanguage();
   const [user, setUser] = useState<UserWithPerson>(emptyUser);
   const [authed, setAuthed] = useState(false);
 
@@ -61,17 +67,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setLanguage(user.lang);
   }, [user.lang, setLanguage]);
 
-  const signin = useCallback((
-    login: string,
-    password: string,
-  ) => UserRoutes.authenticate(login, password).then((response) => {
-    localStorage.setItem('user', response.login);
-    localStorage.setItem('token', response.connexionToken);
+  const signin = useCallback(
+    (login: string, password: string) =>
+      UserRoutes.authenticate(login, password).then(response => {
+        localStorage.setItem('user', response.login);
+        localStorage.setItem('token', response.connexionToken);
 
-    setUser(response);
-    if (response) setAuthed(true);
-    return response;
-  }), []);
+        setUser(response);
+        if (response) setAuthed(true);
+        return response;
+      }),
+    []
+  );
 
   const signout = useCallback(() => {
     localStorage.removeItem('user');
@@ -80,21 +87,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(emptyUser);
   }, []);
 
-  const updateData = useCallback((data: React.SetStateAction<UserWithPerson>) => {
-    setUser(data);
-  }, []);
+  const updateData = useCallback(
+    (data: React.SetStateAction<UserWithPerson>) => {
+      setUser(data);
+    },
+    []
+  );
 
-  const methods = useMemo(() => ({
-    user,
-    authed,
-    signin,
-    signout,
-    updateData,
-  }), [authed, signin, signout, updateData, user]);
+  const methods = useMemo(
+    () => ({
+      user,
+      authed,
+      signin,
+      signout,
+      updateData,
+    }),
+    [authed, signin, signout, updateData, user]
+  );
 
   return (
-    <AuthContext.Provider value={methods}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={methods}>{children}</AuthContext.Provider>
   );
-};
+}

@@ -1,5 +1,5 @@
-import { Backdrop, Box } from '@mui/material';
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import {Backdrop, Box} from '@mui/material';
+import React, {useCallback, useContext, useMemo, useState} from 'react';
 import Loader from '../components/Loader';
 import Text from '../components/Text';
 
@@ -26,7 +26,7 @@ interface LoaderProviderProps {
   children: React.ReactNode;
 }
 
-export const LoaderProvider = ({ children }: LoaderProviderProps) => {
+export function LoaderProvider({children}: LoaderProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [loaderMessage, setLoaderMessage] = useState('');
 
@@ -39,18 +39,28 @@ export const LoaderProvider = ({ children }: LoaderProviderProps) => {
     setLoaderMessage('');
   }, []);
 
-  const methods = useMemo(() => ({
-    open,
-    close,
-  }), [open, close]);
+  const methods = useMemo(
+    () => ({
+      open,
+      close,
+    }),
+    [open, close]
+  );
 
   return (
     <LoaderContext.Provider value={methods}>
       {children}
-      <Backdrop open={isLoading} sx={{ zIndex: 9998, color: '#fff', flexDirection: 'column' }}>
-        <Box><Loader /></Box>
-        {!!loaderMessage.length && <Text sx={{ m: 2, textAlign: 'center' }}>{loaderMessage}</Text>}
+      <Backdrop
+        open={isLoading}
+        sx={{zIndex: 9998, color: '#fff', flexDirection: 'column'}}
+      >
+        <Box>
+          <Loader />
+        </Box>
+        {!!loaderMessage.length && (
+          <Text sx={{m: 2, textAlign: 'center'}}>{loaderMessage}</Text>
+        )}
       </Backdrop>
     </LoaderContext.Provider>
   );
-};
+}

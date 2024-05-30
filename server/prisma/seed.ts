@@ -1,4 +1,4 @@
-import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
+import {PrismaClient} from '@fullstack-typescript-monorepo/prisma';
 import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -46,7 +46,7 @@ main()
   .then(async () => {
     await prisma.$disconnect();
   })
-  .catch(async (e) => {
+  .catch(async e => {
     console.error(e);
     await prisma.$disconnect();
     // eslint-disable-next-line no-process-exit

@@ -1,4 +1,4 @@
-import { User } from '@fullstack-typescript-monorepo/prisma';
+import {User} from '@fullstack-typescript-monorepo/prisma';
 import moment from 'moment';
 
 /**

@@ -1,6 +1,6 @@
-import { ExpectedError } from '@fullstack-typescript-monorepo/core';
-import { Prisma } from '@fullstack-typescript-monorepo/prisma';
-import { Response } from 'express';
+import {ExpectedError} from '@fullstack-typescript-monorepo/core';
+import {Prisma} from '@fullstack-typescript-monorepo/prisma';
+import {Response} from 'express';
 import DiscordUtils from './DiscordUtils';
 
 const sendError = (res: Response, error: unknown) => {

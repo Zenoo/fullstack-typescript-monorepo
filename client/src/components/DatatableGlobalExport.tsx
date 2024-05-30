@@ -1,9 +1,9 @@
-import { MenuItem } from '@mui/material';
-import { GridExportMenuItemProps } from '@mui/x-data-grid';
-import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useAlert } from '../hooks/useAlert';
-import { useLoader } from '../hooks/useLoader';
+import {MenuItem} from '@mui/material';
+import {GridExportMenuItemProps} from '@mui/x-data-grid';
+import React, {useCallback} from 'react';
+import {useTranslation} from 'react-i18next';
+import {useAlert} from '../hooks/useAlert';
+import {useLoader} from '../hooks/useLoader';
 import catchError from '../utils/catchError';
 
 export type GlobalCsvExport = {
@@ -11,23 +11,22 @@ export type GlobalCsvExport = {
   title: string;
 };
 
-export interface DatatableGlobalExportProps extends GridExportMenuItemProps<
-  Record<string, unknown>
-> {
+export interface DatatableGlobalExportProps
+  extends GridExportMenuItemProps<Record<string, unknown>> {
   globalCsvExport: GlobalCsvExport;
 }
 
-const DatatableGlobalExport = (props: DatatableGlobalExportProps) => {
-  const { hideMenu, globalCsvExport } = props;
-  const { t } = useTranslation('table');
+function DatatableGlobalExport(props: DatatableGlobalExportProps) {
+  const {hideMenu, globalCsvExport} = props;
+  const {t} = useTranslation('table');
   const Alert = useAlert();
   const Loader = useLoader();
 
   const globalExport = useCallback(async () => {
     Loader.open();
-    const blob = await globalCsvExport.fetcher(
-      globalCsvExport.title,
-    ).catch(catchError(Alert));
+    const blob = await globalCsvExport
+      .fetcher(globalCsvExport.title)
+      .catch(catchError(Alert));
 
     Loader.close();
 
@@ -49,13 +48,7 @@ const DatatableGlobalExport = (props: DatatableGlobalExportProps) => {
     hideMenu?.();
   }, [Alert, globalCsvExport, hideMenu, Loader]);
 
-  return (
-    <MenuItem
-      onClick={globalExport}
-    >
-      {t('globalExport')}
-    </MenuItem>
-  );
-};
+  return <MenuItem onClick={globalExport}>{t('globalExport')}</MenuItem>;
+}
 
 export default DatatableGlobalExport;

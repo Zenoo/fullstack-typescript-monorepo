@@ -1,8 +1,17 @@
-import { Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 import moment from 'moment';
-import React, { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import RecordRoutes, { RecordWithAuthorWithPerson } from '../api/RecordRoutes';
+import React, {useEffect, useMemo} from 'react';
+import {useTranslation} from 'react-i18next';
+import RecordRoutes, {RecordWithAuthorWithPerson} from '../api/RecordRoutes';
 import useStateAsync from '../hooks/useStateAsync';
 import Text from './Text';
 
@@ -11,20 +20,19 @@ interface ActionsTableProps {
   newRecord: number;
   reloadActions?: number;
 }
-const ActionsTable = ({
-  object,
-  newRecord,
-  reloadActions,
-}: ActionsTableProps) => {
-  const { t } = useTranslation('actions');
+function ActionsTable({object, newRecord, reloadActions}: ActionsTableProps) {
+  const {t} = useTranslation('actions');
 
-  const recordsListParams = useMemo(() => ({
-    include: { author: { include: { person: true } } },
-  }), []);
-  const { data: _records, reload: reloadRecords } = useStateAsync(
+  const recordsListParams = useMemo(
+    () => ({
+      include: {author: {include: {person: true}}},
+    }),
+    []
+  );
+  const {data: _records, reload: reloadRecords} = useStateAsync(
     [],
     RecordRoutes.list,
-    recordsListParams,
+    recordsListParams
   );
   const records = _records as RecordWithAuthorWithPerson[];
 
@@ -36,10 +44,8 @@ const ActionsTable = ({
   }, [newRecord, reloadActions, reloadRecords]);
 
   return (
-    <Stack spacing={2} sx={{ mt: 2 }}>
-      <Text h4>
-        {t('actionsHistory')}
-      </Text>
+    <Stack spacing={2} sx={{mt: 2}}>
+      <Text h4>{t('actionsHistory')}</Text>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -52,24 +58,28 @@ const ActionsTable = ({
           </TableHead>
           <TableBody>
             {records.length ? (
-              records.map((action) => (
+              records.map(action => (
                 <TableRow
                   key={action.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  sx={{'&:last-child td, &:last-child th': {border: 0}}}
                 >
-
                   {action.author ? (
                     <TableCell component="th" scope="row">
-                      {action.author.person.firstName} {action.author.person.lastName}
+                      {action.author.person.firstName}{' '}
+                      {action.author.person.lastName}
                     </TableCell>
                   ) : (
-                    <TableCell component="th" scope="row">{t('anonymousAuthor')}</TableCell>
+                    <TableCell component="th" scope="row">
+                      {t('anonymousAuthor')}
+                    </TableCell>
                   )}
                   {!object && (
                     <TableCell align="right">{action.object}</TableCell>
                   )}
                   <TableCell align="right">{action.action}</TableCell>
-                  <TableCell align="right">{moment(action.date).format('DD/MM/YYYY HH:mm')}</TableCell>
+                  <TableCell align="right">
+                    {moment(action.date).format('DD/MM/YYYY HH:mm')}
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
@@ -79,12 +89,12 @@ const ActionsTable = ({
                 </TableCell>
               </TableRow>
             )}
-            { }
+            {}
           </TableBody>
         </Table>
       </TableContainer>
     </Stack>
   );
-};
+}
 
 export default ActionsTable;

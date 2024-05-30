@@ -7,7 +7,7 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "compile": "tsc",
+    "compile": "tsc --build ./tsconfig.json",
     "start": "node ./lib/server.js",
     "start:watch": "tsc-watch --build ./tsconfig.json --onSuccess \"node ./lib/server.js\"",
     "db:sync:dev": "prisma migrate dev && cp ../prisma/package.reference.json ../prisma/package.json",

@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { EmbedBuilder, WebhookClient, WebhookMessageCreateOptions } from 'discord.js';
-import { Response } from 'express';
+import {
+  EmbedBuilder,
+  WebhookClient,
+  WebhookMessageCreateOptions,
+} from 'discord.js';
+import {Response} from 'express';
 import Env from './Env';
 
 // const server = Env.SELF_URL; // Local debug
@@ -37,24 +41,32 @@ const sendError = async (error: unknown, res?: Response) => {
 
     const embed = new EmbedBuilder()
       .setColor(0xff0000)
-      .setTitle(res ? res.req.url : error instanceof Error ? error.message : 'Unknown error')
+      .setTitle(
+        res
+          ? res.req.url
+          : error instanceof Error
+            ? error.message
+            : 'Unknown error'
+      )
       .setAuthor({
         name: 'Fullstack Typescript Monorepo',
         iconURL: `${server}/favicon.png`,
       })
-      .setDescription(`\`\`\`
+      .setDescription(
+        `\`\`\`
 ${error instanceof Error ? error.stack : error}
-\`\`\``)
+\`\`\``
+      )
       .setTimestamp();
 
     if (res) {
       embed.addFields(
         // Request method
-        { name: 'Method', value: res.req.method, inline: true },
+        {name: 'Method', value: res.req.method, inline: true},
         // Response status code
-        { name: 'Status code', value: res.statusCode.toString(), inline: true },
+        {name: 'Status code', value: res.statusCode.toString(), inline: true},
         // Response status message
-        { name: 'Status', value: res.statusMessage, inline: true },
+        {name: 'Status', value: res.statusMessage, inline: true}
       );
 
       // Request params
@@ -78,7 +90,7 @@ ${error instanceof Error ? error.stack : error}
       }
     }
 
-    await webhookClient.send({ embeds: [embed] });
+    await webhookClient.send({embeds: [embed]});
   } catch (err) {
     console.error('Error trying to send a message: ', err);
   }

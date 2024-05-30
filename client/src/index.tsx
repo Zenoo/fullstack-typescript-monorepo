@@ -1,11 +1,11 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, {Suspense} from 'react';
+import {BrowserRouter} from 'react-router-dom';
 import App from './App';
 import Loader from './components/Loader';
-import { LanguageProvider } from './hooks/useLanguage';
+import {LanguageProvider} from './hooks/useLanguage';
 import './i18n';
 import * as serviceWorker from './serviceWorker';
-import { createRoot } from 'react-dom/client';
+import {createRoot} from 'react-dom/client';
 
 const container = document.getElementById('root');
 

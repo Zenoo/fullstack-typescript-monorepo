@@ -1,4 +1,7 @@
-import { GridPreProcessEditCellProps, GridRenderEditCellParams } from '@mui/x-data-grid';
+import {
+  GridPreProcessEditCellProps,
+  GridRenderEditCellParams,
+} from '@mui/x-data-grid';
 import React from 'react';
 import ValidatedCell from '../components/ValidatedCell';
 
@@ -10,11 +13,13 @@ type ValidatorReturn = {
 };
 
 type Validator = (
-  params: GridPreProcessEditCellProps,
+  params: GridPreProcessEditCellProps
 ) => ValidatorReturn | Promise<ValidatorReturn>;
 
 const validateFieldWith = (validator: Validator) => ({
-  renderEditCell: (params: GridRenderEditCellParams) => <ValidatedCell {...params} />,
+  renderEditCell: (params: GridRenderEditCellParams) => (
+    <ValidatedCell {...params} />
+  ),
   preProcessEditCellProps: validator,
 });
 

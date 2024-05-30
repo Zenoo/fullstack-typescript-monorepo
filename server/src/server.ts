@@ -1,7 +1,7 @@
 import express from 'express';
 
 import bodyParser from 'body-parser';
-import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
+import {PrismaClient} from '@fullstack-typescript-monorepo/prisma';
 import path from 'path';
 import initRoutes from './routes';
 import './i18n';
@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
-  }),
+  })
 );
 
 // Get client build

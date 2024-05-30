@@ -1,7 +1,7 @@
 import Backend from 'i18next-xhr-backend';
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import { DEFAULT_LANGUAGE } from '@fullstack-typescript-monorepo/core';
+import {initReactI18next} from 'react-i18next';
+import {DEFAULT_LANGUAGE} from '@fullstack-typescript-monorepo/core';
 
 i18n
   .use(Backend)
@@ -27,7 +27,8 @@ i18n
       useSuspense: true,
     },
     returnObjects: true,
-  }).catch((err) => {
+  })
+  .catch(err => {
     console.error('Error loading language', err);
   });
 

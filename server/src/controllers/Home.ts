@@ -1,20 +1,17 @@
-import { PrismaClient } from '@fullstack-typescript-monorepo/prisma';
-import { Request, Response } from 'express';
+import {PrismaClient} from '@fullstack-typescript-monorepo/prisma';
+import {Request, Response} from 'express';
 import auth from '../utils/auth';
 import sendError from '../utils/sendError';
 
 /**
  * Get home stats
  */
-const stats = (prisma: PrismaClient) => async (
-  req: Request,
-  res: Response,
-) => {
+const stats = (prisma: PrismaClient) => async (req: Request, res: Response) => {
   try {
     await auth(prisma, req);
 
     const userCount = await prisma.user.count({
-      where: { active: true },
+      where: {active: true},
     });
 
     res.json({
