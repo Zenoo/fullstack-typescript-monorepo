@@ -6,7 +6,6 @@
   },
   "exclude": ["prisma/seed.ts", "lib/**/*"],
   "references": [
-    { "path": "../core" },
-    { "path": "../prisma" }
+    { "path": "../core" }
   ]
 }

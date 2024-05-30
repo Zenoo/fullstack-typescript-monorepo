@@ -5,4 +5,7 @@
     "outDir": "lib",
     "tsBuildInfoFile": "./lib/tsconfig.tsbuildinfo"
   },
+  "include": [
+    "./src/**/*.ts"
+  ]
 }

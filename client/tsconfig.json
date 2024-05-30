@@ -29,7 +29,6 @@
     "src"
   ],
   "references": [
-    { "path": "../core" },
-    { "path": "../prisma" }
+    { "path": "../core" }
   ]
 }
