@@ -29,10 +29,5 @@
     "typescript": "~5.4.3",
     "vite": "latest",
     "vite-plugin-checker": "^0.6.4"
-  },
-  "workspaces": {
-    "nohoist": [
-      "gts"
-    ]
   }
 }

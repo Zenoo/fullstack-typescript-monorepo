@@ -27,7 +27,7 @@
     "db:sync:prod": "yarn workspace @fullstack-typescript-monorepo/server db:sync:prod",
     "db:seed": "yarn workspace @fullstack-typescript-monorepo/server db:seed",
     "db:reset": "yarn workspace @fullstack-typescript-monorepo/server db:reset",
-    "postinstall": "bash ./postInstall.sh",
+    "seed": "bash ./postInstall.sh",
     "studio": "yarn workspace @fullstack-typescript-monorepo/server studio",
     "audit": "yarn npm audit --recursive --all --environment production"
   },
@@ -43,5 +43,6 @@
     "concurrently": "^8.2.2",
     "rimraf": "^5.0.7",
     "typescript": "^5.4.5"
-  }
+  },
+  "packageManager": "yarn@4.2.2"
 }
