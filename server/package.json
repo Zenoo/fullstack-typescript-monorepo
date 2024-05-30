@@ -28,8 +28,8 @@
     "seed": "node --loader ts-node/esm src/seed.ts"
   },
   "dependencies": {
-    "@fullstack-typescript-monorepo/prisma": "*",
-    "@fullstack-typescript-monorepo/core": "*",
+    "@fullstack-typescript-monorepo/core": "workspace:*",
+    "@fullstack-typescript-monorepo/prisma": "workspace:*",
     "@prisma/client": "^5.14.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
@@ -54,10 +54,5 @@
     "prisma": "^5.14.0",
     "tsc-watch": "^6.2.0",
     "typescript": "~5.4.3"
-  },
-  "workspaces": {
-    "nohoist": [
-      "gts"
-    ]
   }
 }

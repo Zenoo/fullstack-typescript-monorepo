@@ -10,6 +10,6 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@fullstack-typescript-monorepo/prisma": "*"
+    "@fullstack-typescript-monorepo/prisma": "workspace:*"
   }
 }
