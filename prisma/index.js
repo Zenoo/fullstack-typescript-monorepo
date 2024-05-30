@@ -193,7 +193,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\fzeno\\Documents\\Github\\fullstack-typescript-monorepo\\prisma",
+      "value": "C:\\Users\\perso\\Documents\\GitHub\\fullstack-typescript-monorepo\\prisma",
       "fromEnvVar": null
     },
     "config": {
