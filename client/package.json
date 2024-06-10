@@ -2,7 +2,7 @@
   "name": "@fullstack-typescript-monorepo/client",
   "version": "1.4.0",
   "private": true,
-  "proxy": "http://localhost:9000",
+  "proxy": "http://localhost:50380",
   "scripts": {
     "start": "react-scripts start",
     "compile": "tsc",
