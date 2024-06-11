@@ -12,6 +12,8 @@
 
 ![](https://i.imgur.com/Hc0JsXs.png)
 
+- Install a local postgres database
+
 - Copy `.env.sample` to `.env` and adapt the variables
 
 - Install dependencies: `npm i` (This should also setup your database from the `schema.prisma` file and the migrations)
