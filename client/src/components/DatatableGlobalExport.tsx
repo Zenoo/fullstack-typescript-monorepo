@@ -22,30 +22,34 @@ function DatatableGlobalExport(props: DatatableGlobalExportProps) {
   const Alert = useAlert();
   const Loader = useLoader();
 
-  const globalExport = useCallback(async () => {
+  const globalExport = useCallback(() => {
     Loader.open();
-    const blob = await globalCsvExport
+    const blobPromise = globalCsvExport
       .fetcher(globalCsvExport.title)
       .catch(catchError(Alert));
 
     Loader.close();
 
-    if (!blob) {
-      Alert.open('error', 'Internal Server Error');
-      return;
-    }
+    blobPromise
+      .then(blob => {
+        if (!blob) {
+          Alert.open('error', 'Internal Server Error');
+          return;
+        }
 
-    // Download file
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `${globalCsvExport.title}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+        // Download file
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${globalCsvExport.title}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
 
-    // Hide the export menu after the export
-    hideMenu?.();
+        // Hide the export menu after the export
+        hideMenu?.();
+      })
+      .catch(catchError(Alert));
   }, [Alert, globalCsvExport, hideMenu, Loader]);
 
   return <MenuItem onClick={globalExport}>{t('globalExport')}</MenuItem>;

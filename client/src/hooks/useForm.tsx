@@ -1,10 +1,10 @@
 import {
+  useForm as __useForm,
   FieldValues,
   LiteralUnion,
   Path,
   RegisterOptions,
   UnPackAsyncDefaultValues,
-  useForm as __useForm,
   UseFormProps,
 } from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
@@ -81,7 +81,9 @@ const useForm = <FormData extends FieldValues>(
       return {
         ...form.register(name, options),
         label: t(name),
-        error: !!form.formState.errors[name],
+        error: !!(form.formState.errors as unknown as Record<string, string>)[
+          name
+        ],
       };
     }
 
@@ -97,7 +99,9 @@ const useForm = <FormData extends FieldValues>(
               }
             : options?.pattern,
       }),
-      error: !!form.formState.errors[name],
+      error: !!(form.formState.errors as unknown as Record<string, string>)[
+        name
+      ],
       helperText:
         errors[name]?.message ||
         getErrorMessage(

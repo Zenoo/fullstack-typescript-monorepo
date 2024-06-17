@@ -115,7 +115,9 @@ function DropzoneDialog({accept, children, onSave, title, options}: Props) {
         <DialogContent>
           <div {...getRootProps({style})}>
             <input {...getInputProps()} />
-            <Text>Drag 'n' drop some files here, or click to select files</Text>
+            <Text>
+              Drag &apos;n&apos; drop some files here, or click to select files
+            </Text>
           </div>
 
           <List dense>

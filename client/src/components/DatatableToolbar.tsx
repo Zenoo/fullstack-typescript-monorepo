@@ -37,7 +37,7 @@ function DatatableToolbar({
   const Confirm = useConfirm();
 
   const uploadFile = useCallback(
-    async ([file]: File[]) => {
+    ([file]: File[]) => {
       if (!importMethod) {
         return;
       }
@@ -46,14 +46,15 @@ function DatatableToolbar({
       const data = new FormData();
       data.set('file', file, file.name);
 
-      await importMethod(data)
+      importMethod(data)
         .then(() => {
           Alert.open('success', t('importSuccess'));
         })
-        .catch(catchError(Alert));
-
-      reload();
-      Loader.close();
+        .catch(catchError(Alert))
+        .finally(() => {
+          reload();
+          Loader.close();
+        });
     },
     [Alert, Loader, importMethod, reload, t]
   );

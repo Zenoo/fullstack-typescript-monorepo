@@ -1,7 +1,15 @@
 import {PrismaInclude} from '@fullstack-typescript-monorepo/core';
 import {Prisma} from '@fullstack-typescript-monorepo/prisma';
 import {Request} from 'express';
-import {MOCK_PrismaModel} from '../controllers/REST';
+
+export interface MOCK_PrismaModel {
+  create: (prop: {data: unknown}) => Promise<unknown>;
+  findUniqueOrThrow: (prop?: object) => Promise<unknown>;
+  findMany: (prop?: object) => Promise<unknown[]>;
+  count: (prop: object) => Promise<number>;
+  update: (prop: object) => Promise<unknown>;
+  delete: (prop: object) => Promise<unknown>;
+}
 
 const filterOperatorMapper = {
   or: 'OR',

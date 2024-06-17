@@ -16,16 +16,27 @@ function DatatableBoolean(params: DatatableBooleanProps) {
 
   const toggleBoolean = useCallback(
     ({id, field}: GridRenderCellParams<boolean>) =>
-      async (event: React.ChangeEvent<HTMLInputElement>) => {
+      (event: React.ChangeEvent<HTMLInputElement>) => {
         if (isEditable) {
           if (api.current.getCellMode(id, field) !== 'edit') {
             api.current.startCellEditMode({id, field});
           }
-          await api.current.setEditCellValue(
+          const editPromise = api.current.setEditCellValue(
             {id, field, value: event.target.checked},
             event
           );
-          api.current.stopCellEditMode({id, field});
+
+          if (editPromise) {
+            editPromise
+              .then(() => {
+                api.current.stopCellEditMode({id, field});
+              })
+              .catch(() => {
+                api.current.stopCellEditMode({id, field});
+              });
+          } else {
+            api.current.stopCellEditMode({id, field});
+          }
         }
       },
     [api, isEditable]

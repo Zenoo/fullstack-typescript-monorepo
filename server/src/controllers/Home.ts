@@ -1,7 +1,7 @@
 import {PrismaClient} from '@fullstack-typescript-monorepo/prisma';
 import {Request, Response} from 'express';
-import auth from '../utils/auth';
 import sendError from '../utils/sendError';
+import auth from '../utils/auth';
 
 /**
  * Get home stats

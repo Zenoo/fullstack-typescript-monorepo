@@ -14,6 +14,7 @@ import {useAlert} from '../hooks/useAlert';
 import {useLanguage} from '../hooks/useLanguage';
 import {GlobalCsvExport} from './DatatableGlobalExport';
 import DatatableToolbar from './DatatableToolbar';
+import catchError from '../utils/catchError';
 
 export interface WithId {
   id: number;
@@ -86,7 +87,7 @@ function Datatable<DataType extends WithId, Model>({
     rowsPerPageOptions: [5, 10, 20, 50, 100, 500, 1000, 2000, 5000],
     sortingMode: 'server',
     sortingOrder: ['asc', 'desc'],
-    onSortModelChange: async param => {
+    onSortModelChange: param => {
       setLoading(true);
       let sort = {};
       if (param.length) {
@@ -97,44 +98,59 @@ function Datatable<DataType extends WithId, Model>({
       }
 
       setSortOrder(sort);
-      const response = await getter({
+      getter({
         page,
         sortOrder: sort,
         rowsPerPage,
         filters,
         filtersOperator,
-      });
-      setData(response.data);
-      setCount(response.count);
-      setLoading(false);
+      })
+        .then(response => {
+          setData(response.data);
+          setCount(response.count);
+        })
+        .catch(catchError(Alert))
+        .finally(() => {
+          setLoading(false);
+        });
     },
-    onPageChange: async newPage => {
+    onPageChange: newPage => {
       setLoading(true);
       setPage(newPage);
-      const response = await getter({
+      getter({
         page: newPage,
         sortOrder,
         rowsPerPage,
         filters,
         filtersOperator,
-      });
-      setData(response.data);
-      setLoading(false);
+      })
+        .then(response => {
+          setData(response.data);
+        })
+        .catch(catchError(Alert))
+        .finally(() => {
+          setLoading(false);
+        });
     },
-    onPageSizeChange: async numberOfRows => {
+    onPageSizeChange: numberOfRows => {
       setLoading(true);
       setRowsPerPage(numberOfRows);
-      const response = await getter({
+      getter({
         page,
         sortOrder,
         rowsPerPage: numberOfRows,
         filters,
         filtersOperator,
-      });
-      setData(response.data);
-      setLoading(false);
+      })
+        .then(response => {
+          setData(response.data);
+        })
+        .catch(catchError(Alert))
+        .finally(() => {
+          setLoading(false);
+        });
     },
-    onFilterModelChange: async params => {
+    onFilterModelChange: params => {
       // Set value to 'x' for empty and notEmpty filters to bypass non null check server side
       const newFilters = params.items.map(item => ({
         ...item,
@@ -149,16 +165,20 @@ function Datatable<DataType extends WithId, Model>({
       setLoading(true);
       setFilters(newFilters);
       setFiltersOperator(params.linkOperator || GridLinkOperator.And);
-      const response = await getter({
+      getter({
         page,
         sortOrder,
         rowsPerPage,
         filters: newFilters,
         filtersOperator: params.linkOperator || GridLinkOperator.And,
-      });
-
-      setData(response.data);
-      setLoading(false);
+      })
+        .then(response => {
+          setData(response.data);
+        })
+        .catch(catchError(Alert))
+        .finally(() => {
+          setLoading(false);
+        });
     },
     processRowUpdate: (row: DataType) => {
       if (setter) {
@@ -178,26 +198,29 @@ function Datatable<DataType extends WithId, Model>({
   useEffect(() => {
     let isSubscribed = true;
 
-    (async () => {
-      setLoading(true);
-      const response = await getter({
-        page,
-        sortOrder,
-        rowsPerPage,
-        filters,
-        filtersOperator,
-      });
-      if (isSubscribed) {
-        setData(response.data);
-        setCount(response.count);
+    setLoading(true);
+    getter({
+      page,
+      sortOrder,
+      rowsPerPage,
+      filters,
+      filtersOperator,
+    })
+      .then(response => {
+        if (isSubscribed) {
+          setData(response.data);
+          setCount(response.count);
+        }
+      })
+      .catch(catchError(Alert))
+      .finally(() => {
         setLoading(false);
-      }
-    })();
+      });
 
     return () => {
       isSubscribed = false;
     };
-  }, [filters, filtersOperator, getter, page, rowsPerPage, sortOrder]);
+  }, [Alert, filters, filtersOperator, getter, page, rowsPerPage, sortOrder]);
 
   const reload = useCallback(async () => {
     setLoading(true);

@@ -8,9 +8,9 @@ import {
   ListItemText,
   SvgIconTypeMap,
 } from '@mui/material';
-import {OverridableComponent} from '@mui/material/OverridableComponent';
 import React from 'react';
 import {NavLink as RouterLink} from 'react-router-dom';
+import {OverridableComponent} from '../../../utils/OverridableComponent';
 
 interface Props extends ListItemProps {
   href?: string;

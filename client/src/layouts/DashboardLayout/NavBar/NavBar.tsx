@@ -11,7 +11,6 @@ import {
   Toolbar,
   Tooltip,
 } from '@mui/material';
-import {OverridableComponent} from '@mui/material/OverridableComponent';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link as RouterLink, useLocation} from 'react-router-dom';
@@ -19,6 +18,7 @@ import Text from '../../../components/Text';
 import {useAuth} from '../../../hooks/useAuth';
 import Version from '../../../utils/Version';
 import NavItem from './NavItem';
+import {OverridableComponent} from '../../../utils/OverridableComponent';
 
 interface Props {
   onMobileClose: () => void;

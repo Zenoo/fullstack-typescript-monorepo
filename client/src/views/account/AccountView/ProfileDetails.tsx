@@ -91,7 +91,13 @@ function ProfileDetails({...rest}) {
   };
 
   return (
-    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} {...rest}>
+    <form
+      autoComplete="off"
+      onSubmit={() => {
+        handleSubmit(onSubmit);
+      }}
+      {...rest}
+    >
       <Card>
         <CardHeader
           subheader={t('informationCanBeEdited')}

@@ -7,19 +7,13 @@ import {Request, Response} from 'express';
 import {t} from 'i18next';
 import auth from '../utils/auth';
 import sendError from '../utils/sendError';
-import TableUtils, {TableRequestBody} from '../utils/TableUtils';
+import TableUtils, {
+  MOCK_PrismaModel,
+  TableRequestBody,
+} from '../utils/TableUtils';
 
 export interface GenericPrisma extends PrismaClient {
   [key: string]: unknown;
-}
-
-export interface MOCK_PrismaModel {
-  create: (prop: {data: unknown}) => Promise<unknown>;
-  findUniqueOrThrow: (prop?: object) => Promise<unknown>;
-  findMany: (prop?: object) => Promise<unknown[]>;
-  count: (prop: object) => Promise<number>;
-  update: (prop: object) => Promise<unknown>;
-  delete: (prop: object) => Promise<unknown>;
 }
 
 /**

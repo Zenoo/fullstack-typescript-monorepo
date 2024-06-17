@@ -87,18 +87,20 @@ function LoginView() {
   }, [Alert, auth, navigate, t]);
 
   // Password reset
-  const resetPassword = useCallback(async () => {
+  const resetPassword = useCallback(() => {
     if (!login) {
       Alert.open('error', t('pleaseEnterLogin'));
       return;
     }
     setLoading(true);
-    await UserRoutes.sendPasswordResetMail(login)
+    UserRoutes.sendPasswordResetMail(login)
       .then(() => {
         Alert.open('success', t('passwordResetMailSent'));
       })
-      .catch(catchError(Alert));
-    setLoading(false);
+      .catch(catchError(Alert))
+      .finally(() => {
+        setLoading(false);
+      });
   }, [Alert, login, t]);
 
   // Password reset form
@@ -175,7 +177,11 @@ function LoginView() {
       <Box display="flex" flexDirection="column" height="100%">
         <Container maxWidth="sm" sx={{textAlign: 'center'}}>
           <Logo sx={{maxWidth: 200}} />
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            onSubmit={() => {
+              handleSubmit(onSubmit);
+            }}
+          >
             <Box mb={3}>
               <Text color="textPrimary" h2>
                 {t('signIn')}
@@ -216,7 +222,11 @@ function LoginView() {
         onClose={closeResetDialog}
         disableEscapeKeyDown
       >
-        <form onSubmit={resetHandleSubmit(resetOnSubmit)}>
+        <form
+          onSubmit={() => {
+            resetHandleSubmit(resetOnSubmit);
+          }}
+        >
           <DialogTitle>{t('changePassword')}</DialogTitle>
           <DialogContent>
             <Stack spacing={2}>
