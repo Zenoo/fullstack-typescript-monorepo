@@ -118,12 +118,7 @@ function UserForm({data}: Props) {
   };
 
   return (
-    <form
-      autoComplete="off"
-      onSubmit={() => {
-        handleSubmit(onSubmit);
-      }}
-    >
+    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3} sx={{pb: 2}}>
         <Grid item xs={12} sm={6}>
           <FormControlLabel

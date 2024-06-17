@@ -31,6 +31,8 @@ const authenticate =
     try {
       const {login, password} = req.body;
 
+      console.log('Logging in');
+
       if (!login) {
         throw new ExpectedError(t('missingLogin'));
       }

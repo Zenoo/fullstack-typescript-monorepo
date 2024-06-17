@@ -87,7 +87,7 @@ function Datatable<DataType extends WithId, Model>({
     rowsPerPageOptions: [5, 10, 20, 50, 100, 500, 1000, 2000, 5000],
     sortingMode: 'server',
     sortingOrder: ['asc', 'desc'],
-    onSortModelChange: param => {
+    onSortModelChange: async param => {
       setLoading(true);
       let sort = {};
       if (param.length) {
@@ -98,59 +98,44 @@ function Datatable<DataType extends WithId, Model>({
       }
 
       setSortOrder(sort);
-      getter({
+      const response = await getter({
         page,
         sortOrder: sort,
         rowsPerPage,
         filters,
         filtersOperator,
-      })
-        .then(response => {
-          setData(response.data);
-          setCount(response.count);
-        })
-        .catch(catchError(Alert))
-        .finally(() => {
-          setLoading(false);
-        });
+      });
+      setData(response.data);
+      setCount(response.count);
+      setLoading(false);
     },
-    onPageChange: newPage => {
+    onPageChange: async newPage => {
       setLoading(true);
       setPage(newPage);
-      getter({
+      const response = await getter({
         page: newPage,
         sortOrder,
         rowsPerPage,
         filters,
         filtersOperator,
-      })
-        .then(response => {
-          setData(response.data);
-        })
-        .catch(catchError(Alert))
-        .finally(() => {
-          setLoading(false);
-        });
+      });
+      setData(response.data);
+      setLoading(false);
     },
-    onPageSizeChange: numberOfRows => {
+    onPageSizeChange: async numberOfRows => {
       setLoading(true);
       setRowsPerPage(numberOfRows);
-      getter({
+      const response = await getter({
         page,
         sortOrder,
         rowsPerPage: numberOfRows,
         filters,
         filtersOperator,
-      })
-        .then(response => {
-          setData(response.data);
-        })
-        .catch(catchError(Alert))
-        .finally(() => {
-          setLoading(false);
-        });
+      });
+      setData(response.data);
+      setLoading(false);
     },
-    onFilterModelChange: params => {
+    onFilterModelChange: async params => {
       // Set value to 'x' for empty and notEmpty filters to bypass non null check server side
       const newFilters = params.items.map(item => ({
         ...item,
@@ -165,20 +150,16 @@ function Datatable<DataType extends WithId, Model>({
       setLoading(true);
       setFilters(newFilters);
       setFiltersOperator(params.linkOperator || GridLinkOperator.And);
-      getter({
+      const response = await getter({
         page,
         sortOrder,
         rowsPerPage,
         filters: newFilters,
         filtersOperator: params.linkOperator || GridLinkOperator.And,
-      })
-        .then(response => {
-          setData(response.data);
-        })
-        .catch(catchError(Alert))
-        .finally(() => {
-          setLoading(false);
-        });
+      });
+
+      setData(response.data);
+      setLoading(false);
     },
     processRowUpdate: (row: DataType) => {
       if (setter) {
@@ -198,24 +179,21 @@ function Datatable<DataType extends WithId, Model>({
   useEffect(() => {
     let isSubscribed = true;
 
-    setLoading(true);
-    getter({
-      page,
-      sortOrder,
-      rowsPerPage,
-      filters,
-      filtersOperator,
-    })
-      .then(response => {
-        if (isSubscribed) {
-          setData(response.data);
-          setCount(response.count);
-        }
-      })
-      .catch(catchError(Alert))
-      .finally(() => {
-        setLoading(false);
+    (async () => {
+      setLoading(true);
+      const response = await getter({
+        page,
+        sortOrder,
+        rowsPerPage,
+        filters,
+        filtersOperator,
       });
+      if (isSubscribed) {
+        setData(response.data);
+        setCount(response.count);
+        setLoading(false);
+      }
+    })().catch(catchError(Alert));
 
     return () => {
       isSubscribed = false;

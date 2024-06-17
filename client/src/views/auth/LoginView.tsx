@@ -177,11 +177,7 @@ function LoginView() {
       <Box display="flex" flexDirection="column" height="100%">
         <Container maxWidth="sm" sx={{textAlign: 'center'}}>
           <Logo sx={{maxWidth: 200}} />
-          <form
-            onSubmit={() => {
-              handleSubmit(onSubmit);
-            }}
-          >
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Box mb={3}>
               <Text color="textPrimary" h2>
                 {t('signIn')}
@@ -222,11 +218,7 @@ function LoginView() {
         onClose={closeResetDialog}
         disableEscapeKeyDown
       >
-        <form
-          onSubmit={() => {
-            resetHandleSubmit(resetOnSubmit);
-          }}
-        >
+        <form onSubmit={resetHandleSubmit(resetOnSubmit)}>
           <DialogTitle>{t('changePassword')}</DialogTitle>
           <DialogContent>
             <Stack spacing={2}>

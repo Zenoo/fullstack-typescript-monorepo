@@ -5,6 +5,7 @@
   ],
   "rules": {
     "import/extensions": ["error", "never"],
-    "prefer-promise-reject-errors": "off"
+    "prefer-promise-reject-errors": "off",
+    "@typescript-eslint/no-misused-promises": "off"
   }
 }
