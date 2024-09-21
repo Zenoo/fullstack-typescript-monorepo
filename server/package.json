@@ -23,7 +23,7 @@
     "@fullstack-typescript-monorepo/prisma": "*",
     "@prisma/client": "^5.0.0",
     "bcrypt": "^5.1.0",
-    "body-parser": "^1.20.0",
+    "body-parser": "^1.20.3",
     "discord.js": "^14.11.0",
     "dotenv": "^16.3.1",
     "express": "^4.19.2",
