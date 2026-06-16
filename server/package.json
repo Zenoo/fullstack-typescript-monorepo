@@ -30,7 +30,7 @@
     "i18next": "^22.4.9",
     "i18next-fs-backend": "^2.6.4",
     "moment": "^2.29.4",
-    "nodemailer": "^8.0.5"
+    "nodemailer": "^8.0.9"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
