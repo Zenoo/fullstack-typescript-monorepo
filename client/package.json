@@ -31,8 +31,8 @@
     "react-hook-form": "7.41.0",
     "react-i18next": "^11.18.3",
     "react-perfect-scrollbar": "^1.5.8",
-    "react-router": "^6.3.0",
-    "react-router-dom": "^6.3.0",
+    "react-router": "^6.30.4",
+    "react-router-dom": "^6.30.4",
     "react-scripts": "^5.0.1"
   },
   "browserslist": {
