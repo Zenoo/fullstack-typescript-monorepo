@@ -21,7 +21,7 @@
     "@mui/x-data-grid": "^5.17.16",
     "@mui/x-date-pickers": "^5.0.11",
     "file-size": "^1.0.0",
-    "i18next": "^21.9.0",
+    "i18next": "^26.3.4",
     "i18next-xhr-backend": "^3.2.2",
     "moment": "^2.31.0",
     "react": "^18.2.0",
